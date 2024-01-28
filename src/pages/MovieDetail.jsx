@@ -50,18 +50,6 @@ export const MovieDetail = () => {
     <Box mt={"50px"}>
       {status === 'done' ? (
         <Box>
-          {/* Released Date section */}
-          <Flex align="center" mb="2">
-            <Box mr="10px" color={"textColor"}>
-              Released Date:
-            </Box>
-            <Breadcrumb separator="," spacing="3px">
-              <BreadcrumbItem>
-                <Text>{movieDetail?.release_date}</Text>
-              </BreadcrumbItem>
-            </Breadcrumb>
-          </Flex>
-
           {/* Movie info */}
           <Box
             color={"decsColor"}
@@ -163,6 +151,18 @@ export const MovieDetail = () => {
                 })}
               </Breadcrumb>
             </Flex>
+            
+          {/* Released Date section */}
+          <Flex align="center" mb="2">
+            <Box mr="10px" color={"textColor"}>
+              Released Date:
+            </Box>
+            <Breadcrumb separator="," spacing="3px">
+              <BreadcrumbItem>
+                <Text>{movieDetail?.release_date}</Text>
+              </BreadcrumbItem>
+            </Breadcrumb>
+          </Flex>
           </Box>
 
           {/* Video render */}
