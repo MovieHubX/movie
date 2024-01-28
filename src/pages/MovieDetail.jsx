@@ -8,6 +8,7 @@ import {
 import React, { useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { FaYoutube } from "react-icons/fa"; // Import FaYoutube icon
 
 import ListFilmLayout from "src/components/Layout/ListFilmLayout";
 import Loading from "src/components/Loading/Loading";
@@ -111,13 +112,17 @@ export const MovieDetail = () => {
                         window.open(trailerUrl, "_blank");
                       }}
                       variant="outline"
-                      colorScheme="blue"
+                      colorScheme="red" // Set colorScheme to red
                       // Add border styling to the button
                       border="1px solid"
-                      borderColor="blue.500"
+                      borderColor="red.500"
                       borderRadius="md"
+                      // Add padding to the button
+                      px="3"
                     >
-                      Watch Trailer
+                      {/* Replace "Watch" with FaYoutube icon */}
+                      <FaYoutube style={{ marginRight: "5px" }} />
+                      Trailer
                     </Button>
                   </Box>
                 )}
