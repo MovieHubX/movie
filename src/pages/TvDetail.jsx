@@ -1,20 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { StarIcon } from "@chakra-ui/icons";
-import {
-  Box, Breadcrumb,
-  BreadcrumbItem,
-  Center, Heading, Image, Text, Button, Stack
-} from "@chakra-ui/react";
-import React, { useCallback, useEffect, useRef } from "react";
-import "react-lazy-load-image-component/src/effects/blur.css";
+import { Box, Breadcrumb, BreadcrumbItem, Center, Flex, Heading, Text, Button } from "@chakra-ui/react";
+import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getConfigSelector, tvDetailSelector } from "../redux/selector";
-import { getTvDetail } from "../services";
-import { FaYoutube } from "react-icons/fa"; // Import FaYoutube icon
 import { Link, useParams } from "react-router-dom";
-import moment from "moment/moment";
+import { FaYoutube } from "react-icons/fa"; // Import FaYoutube icon
+
 import ListFilmLayout from "../components/Layout/ListFilmLayout";
 import Loading from "../components/Loading/Loading";
+import VideoPlayer from "../components/VideoPlayer/VideoPlayer";
+import { StarIcon } from "@chakra-ui/icons";
+import { getConfigSelector, tvDetailSelector } from "../redux/selector";
+import { getTvDetail } from "../services";
+import moment from "moment/moment";
 
 export const TvDetail = () => {
   const dispatch = useDispatch();
@@ -80,17 +76,53 @@ export const TvDetail = () => {
                 </BreadcrumbItem>
               </Breadcrumb>
 
-              <Stack direction="row" align="center" mb="4">
-                <Text
-                  color="primaryColor"
-                  lineHeight={"0"}
-                  fontWeight="bold"
-                  fontSize={"18px"}
+              <Flex align={"center"}>
+                {/* Adjusted height for the combined Rating and Star Icon */}
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  border="1px solid"
+                  borderColor="primaryColor"
+                  p="2"
+                  borderRadius="md"
+                  mr="4"
                 >
-                  {tvDetail?.vote_average.toFixed(1)}
-                </Text>
-                <StarIcon color="yellow" ml="5px" />
-              </Stack>
+                  <Text
+                    color="primaryColor"
+                    fontWeight="bold"
+                    fontSize="18px"
+                    pr="2"
+                    lineHeight="1.3"
+                  >
+                    {tvDetail?.vote_average.toFixed(1)}
+                  </Text>
+                  <StarIcon color="yellow" boxSize="1em" />
+                </Box>
+
+                {/* Move Watch Trailer button next to Rating and Star */}
+                {trailerKey && (
+                  <Box ml="4">
+                    <Button
+                      onClick={() => {
+                        const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
+                        window.open(trailerUrl, "_blank");
+                      }}
+                      variant="outline"
+                      colorScheme="red" // Set colorScheme to red
+                      // Add border styling to the button
+                      border="1px solid"
+                      borderColor="red.500"
+                      borderRadius="md"
+                      // Add padding to the button
+                      px="3"
+                      // Adjust icon style
+                      leftIcon={<FaYoutube color="red" />}
+                    >
+                      Watch Trailer
+                    </Button>
+                  </Box>
+                )}
+              </Flex>
             </Box>
             {/* overview */}
             <Box
@@ -110,7 +142,7 @@ export const TvDetail = () => {
                 lg: "lg",
               }}
             >
-              <Stack direction="row" align="center">
+              <Flex align="center">
                 <Text mr="10px" color={"textColor"}>
                   Genre :
                 </Text>
@@ -121,31 +153,9 @@ export const TvDetail = () => {
                     </BreadcrumbItem>
                   ))}
                 </Breadcrumb>
-              </Stack>
+              </Flex>
             </Box>
           </Box>
-
-          {/* Trailer Button */}
-          {trailerKey && (
-            <Box mb="4">
-              <Button
-                onClick={() => {
-                  const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
-                  window.open(trailerUrl, "_blank");
-                }}
-                variant="outline"
-                colorScheme="red" // Set colorScheme to red
-                border="1px solid"
-                borderColor="red.500"
-                borderRadius="md"
-                px="3"
-              >
-                {/* Replace "Watch" with FaYoutube icon */}
-                <FaYoutube style={{ marginRight: "5px" }} />
-                Trailer
-              </Button>
-            </Box>
-          )}
 
           {/* season */}
           <Box>
@@ -154,7 +164,7 @@ export const TvDetail = () => {
                 "MMMM Do YYYY"
               );
               return (
-                <Stack
+                <Flex
                   key={i}
                   direction={{ base: "column", sm: "row" }}
                   overflow="hidden"
@@ -163,7 +173,7 @@ export const TvDetail = () => {
                   borderRadius="lg"
                   p="4"
                   mb="8"
-                  alignItems={{ base: "start", sm: "center" }}
+                  alignItems={"start"}
                   columnGap="8"
                   minH={"300px"}
                 >
@@ -199,19 +209,14 @@ export const TvDetail = () => {
                         <Button
                           mb="6"
                           variant="solid"
-                          colorScheme="red" // Set colorScheme to red
-                          // Add border styling to the button
-                          border="1px solid"
-                          borderColor="red.500"
-                          borderRadius="md"
-                          px="3"
+                          colorScheme="blue"
                         >
                           Watch Now
                         </Button>
                       </Link>
                     </Box>
                   </Stack>
-                </Stack>
+                </Flex>
               );
             })}
           </Box>
@@ -224,7 +229,6 @@ export const TvDetail = () => {
               <ListFilmLayout listFilm={tvDetail?.recommendations?.results} />
             </Box>
           )}
-
         </Box>
       ) : (
         <Center mt="50px">
