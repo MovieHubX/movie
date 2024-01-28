@@ -11,11 +11,11 @@ import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
 
 const NavInput = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const searchInput = useRef(null);
-  const [, startTransition] = useTransition()
+  const [, startTransition] = useTransition();
   const [searchText, setSearchText] = useState('');
-  const [queryText, setQueryText] = useState('')
+  const [queryText, setQueryText] = useState('');
   const [isShow, setIsShow] = useState(false);
 
   const handleSearchTextChange = (e) => {
@@ -24,7 +24,7 @@ const NavInput = () => {
       setQueryText(e.target.value);
       setIsShow(true);
       // You can dispatch the search action here if you want real-time results
-    })
+    });
   };
 
   const handleSearchWithKeyword = useCallback(() => {
