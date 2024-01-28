@@ -2,7 +2,7 @@ import { Search2Icon } from "@chakra-ui/icons";
 import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { multiSearch } from "../../services/searchSlice";
 import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
@@ -53,9 +53,7 @@ const NavInput = () => {
         marginRight="15px"
         onClick={toggleSearchBar}
       >
-        <Link to="/search">
-          <Search2Icon />
-        </Link>
+        <Search2Icon />
       </Box>
 
       {/* Search input */}
@@ -97,9 +95,7 @@ const NavInput = () => {
           cursor="pointer"
           onClick={handleSearchWithKeyWord}
         >
-          <Link to="/search">
-            <Search2Icon />
-          </Link>
+          <Search2Icon />
         </Box>
       </Box>
 
