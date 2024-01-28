@@ -80,7 +80,7 @@ export const MovieDetail = () => {
               </Breadcrumb>
 
               <Flex align={"center"}>
-                {/* Combined border for Rating and Star Icon */}
+                {/* Adjusted height for the combined Rating and Star Icon */}
                 <Box
                   display="flex"
                   alignItems="center"
@@ -95,10 +95,11 @@ export const MovieDetail = () => {
                     fontWeight="bold"
                     fontSize="18px"
                     pr="2"
+                    lineHeight="1"
                   >
                     {movieDetail?.vote_average.toFixed(1)}
                   </Text>
-                  <StarIcon color="yellow" />
+                  <StarIcon color="yellow" boxSize="1em" />
                 </Box>
 
                 {/* Move Watch Trailer button next to Rating and Star */}
