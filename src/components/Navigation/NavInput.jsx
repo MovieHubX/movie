@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Search2Icon } from "@chakra-ui/icons";
 import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
@@ -11,45 +12,54 @@ import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
 
 const NavInput = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const searchInput = useRef(null);
-  const [, startTransition] = useTransition();
+  const [, startTransition] = useTransition()
   const [searchText, setSearchText] = useState('');
-  const [queryText, setQueryText] = useState('');
+  const [queryText, setQueryText] = useState('')
   const [isShow, setIsShow] = useState(false);
-
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
     startTransition(() => {
-      setQueryText(e.target.value);
-      setIsShow(true);
-      // You can dispatch the search action here if you want real-time results
-    });
+      setQueryText(e.target.value)
+      dispatch(
+        multiSearch({
+          path: "search/multi",
+          params: {
+            query: e.target.value,
+          },
+        })
+      );
+      setIsShow(true)
+    })
   };
+  useEffect(() => {
+    setIsShow(document.activeElement.tagName === "INPUT")
+  }, [document.activeElement.tagName])
 
-  const handleSearchWithKeyword = useCallback(() => {
-    // Dispatch the search action with the latest query text
-    dispatch(
-      multiSearch({
-        path: "search/multi",
-        params: {
-          query: queryText,
-        },
-      })
-    );
-
-    // Navigate to the search page
-    navigate(`/search`);
-    searchInput.current.blur();
-    setIsShow(false);
-  }, [dispatch, navigate, queryText]);
+  const handleSearchWithKeyWord = useCallback((text = queryText) => {
+    if (text) {
+      dispatch(
+        multiSearch({
+          path: "search/multi",
+          params: {
+            query: text,
+          },
+        })
+      );
+      // navigate to search page
+      setSearchText(text);
+      navigate(`/search`)
+      searchInput.current.blur();
+      setIsShow(false)
+    }
+  }, [queryText]);
 
   const handlePressEnter = (e) => {
     if (e.key === "Enter") {
-      handleSearchWithKeyword();
+      handleSearchWithKeyWord();
     }
   };
-
   return (
     <Box
       w={{
@@ -82,8 +92,7 @@ const NavInput = () => {
           pl="5px"
           onKeyDown={(e) => handlePressEnter(e)}
         />
-
-        {/* Search icon */}
+        {/* search icon */}
         <Box
           position="absolute"
           right="15px"
@@ -93,17 +102,16 @@ const NavInput = () => {
           fontSize="20px"
           color="textColor"
           cursor={"pointer"}
-          onClick={handleSearchWithKeyword}
+          onClick={() => handleSearchWithKeyWord()}
         >
           <Link to="/search">
             <Search2Icon />
           </Link>
         </Box>
       </Box>
-
       {isShow && (
         <SearchTopKeyWordsList
-          handleClickListKeyWords={handleSearchWithKeyword}
+          handleClickListKeyWords={handleSearchWithKeyWord}
         />
       )}
     </Box>
