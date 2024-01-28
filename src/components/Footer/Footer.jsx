@@ -30,7 +30,7 @@ const Footer = () => {
             md: "20px",
           }}
         >
-          <Link to="/">MovieMax</Link>
+          <Link to="/">MovieHubX</Link>
         </Box>
       </Box>
       {/* nav */}
