@@ -1,14 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { Search2Icon } from "@chakra-ui/icons";
-import { Box, Input } from "@chakra-ui/react";
-import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-
-import {
-  multiSearch
-} from "../../services/searchSlice";
-import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
+// ... (unchanged imports)
 
 const NavInput = () => {
   const dispatch = useDispatch();
@@ -18,6 +8,7 @@ const NavInput = () => {
   const [searchText, setSearchText] = useState('');
   const [queryText, setQueryText] = useState('')
   const [isShow, setIsShow] = useState(false);
+
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
     startTransition(() => {
@@ -33,6 +24,7 @@ const NavInput = () => {
       setIsShow(true)
     })
   };
+
   useEffect(() => {
     setIsShow(document.activeElement.tagName === "INPUT")
   }, [document.activeElement.tagName])
@@ -60,6 +52,7 @@ const NavInput = () => {
       handleSearchWithKeyWord();
     }
   };
+
   return (
     <Box
       w={{
