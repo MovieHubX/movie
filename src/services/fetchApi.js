@@ -1,6 +1,6 @@
 import axios from "axios";
 const baseUrl = "https://api.themoviedb.org/3/"
-const token = "3fac70260a5a4a0cc9324207af7f9c8c"
+const token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MDQwNDEzMDU2MTU2N2FjZjNlMDcyNWFlYjA5ZWM1ZCIsInN1YiI6IjY0MDM1NDkyMzgzZGYyMDBhOTU0OWY0NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.SLyeiEqGJwQ6ywCklFaWYBACuPcmuc2ruTuf0dF07QQ"
 let headers = {
   Authorization: `Bearer ${token}`,
   'Content-Type': 'application/json;charset=utf-8'
