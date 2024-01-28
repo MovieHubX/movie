@@ -1,65 +1,57 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Search2Icon } from "@chakra-ui/icons";
 import { Box, Input } from "@chakra-ui/react";
-import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
+import React, { memo, useRef, useState } from "react";
+import { Search2Icon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
 
-import {
-  multiSearch
-} from "../../services/searchSlice";
+import { multiSearch } from "../../services/searchSlice";
 import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
 
 const NavInput = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
   const searchInput = useRef(null);
-  const [, startTransition] = useTransition()
   const [searchText, setSearchText] = useState('');
-  const [queryText, setQueryText] = useState('')
-  const [isShow, setIsShow] = useState(false);
+  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
-    startTransition(() => {
-      setQueryText(e.target.value)
-      dispatch(
-        multiSearch({
-          path: "search/multi",
-          params: {
-            query: e.target.value,
-          },
-        })
-      );
-      setIsShow(true)
-    })
-  };
-  useEffect(() => {
-    setIsShow(document.activeElement.tagName === "INPUT")
-  }, [document.activeElement.tagName])
+    setIsSearchBarOpen(true);
 
-  const handleSearchWithKeyWord = useCallback((text = queryText) => {
-    if (text) {
-      dispatch(
-        multiSearch({
-          path: "search/multi",
-          params: {
-            query: text,
-          },
-        })
-      );
-      // navigate to search page
-      setSearchText(text);
-      navigate(`/search`)
-      searchInput.current.blur();
-      setIsShow(false)
-    }
-  }, [queryText]);
+    // Perform search and update search results
+    dispatch(
+      multiSearch({
+        path: "search/multi",
+        params: {
+          query: e.target.value,
+        },
+      })
+    ).then((results) => {
+      setSearchResults(results); // Update search results
+    });
+  };
+
+  const handleSearchWithKeyWord = () => {
+    // Perform search and update search results
+    dispatch(
+      multiSearch({
+        path: "search/multi",
+        params: {
+          query: searchText,
+        },
+      })
+    ).then((results) => {
+      setSearchResults(results); // Update search results
+    });
+    setIsSearchBarOpen(true);
+  };
 
   const handlePressEnter = (e) => {
     if (e.key === "Enter") {
       handleSearchWithKeyWord();
     }
   };
+
   return (
     <Box
       w={{
@@ -82,7 +74,6 @@ const NavInput = () => {
           }}
           value={searchText}
           onChange={(e) => handleSearchTextChange(e)}
-          ref={searchInput}
           fontSize={{
             base: "sm",
             md: "md",
@@ -104,14 +95,16 @@ const NavInput = () => {
           cursor={"pointer"}
           onClick={() => handleSearchWithKeyWord()}
         >
-          <Link to="/search">
-            <Search2Icon />
-          </Link>
+          <Search2Icon />
         </Box>
       </Box>
-      {isShow && (
+      {isSearchBarOpen && (
         <SearchTopKeyWordsList
-          handleClickListKeyWords={handleSearchWithKeyWord}
+          searchResults={searchResults}
+          handleClickListKeyWords={(text) => {
+            setSearchText(text);
+            setIsSearchBarOpen(false);
+          }}
         />
       )}
     </Box>
