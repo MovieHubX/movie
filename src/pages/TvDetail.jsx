@@ -1,5 +1,15 @@
-import { Box, Breadcrumb, BreadcrumbItem, Center, Flex, Heading, Text, Button } from "@chakra-ui/react";
-import React, { useEffect, useCallback } from "react";
+import { StarIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  Center,
+  Flex,
+  Heading,
+  Text,
+  Button,
+} from "@chakra-ui/react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { FaYoutube } from "react-icons/fa"; // Import FaYoutube icon
@@ -7,26 +17,25 @@ import { FaYoutube } from "react-icons/fa"; // Import FaYoutube icon
 import ListFilmLayout from "../components/Layout/ListFilmLayout";
 import Loading from "../components/Loading/Loading";
 import VideoPlayer from "../components/VideoPlayer/VideoPlayer";
-import { StarIcon } from "@chakra-ui/icons";
+
 import { getConfigSelector, tvDetailSelector } from "../redux/selector";
 import { getTvDetail } from "../services";
 import moment from "moment/moment";
 
 export const TvDetail = () => {
   const dispatch = useDispatch();
+  const player = useRef();
   const params = useParams();
   const { id } = params;
+
   const { tvDetail, status } = useSelector(tvDetailSelector);
   const { config } = useSelector(getConfigSelector);
-  const dateFormated = moment(tvDetail?.release_date).format("YYYY");
 
   const handleFindTrailerKey = useCallback(() => {
     const youtubeVideos = tvDetail?.videos?.results?.filter(
       (item) => item?.site === "YouTube"
     );
-    const trailer = youtubeVideos?.find(
-      (item) => item?.type === "Trailer"
-    );
+    const trailer = youtubeVideos?.find((item) => item?.type === "Trailer");
     return trailer?.key || (youtubeVideos?.length > 0 && youtubeVideos[0]?.key);
   }, [tvDetail]);
 
@@ -43,7 +52,7 @@ export const TvDetail = () => {
 
   return (
     <Box mt={"50px"}>
-      {tvDetail?.seasons?.length > 0 && status === "done" ? (
+      {status === "done" ? (
         <Box>
           {/* info */}
           <Box
@@ -54,13 +63,12 @@ export const TvDetail = () => {
               },
             }}
           >
-            {/* date */}
             <Box>
               <Breadcrumb
                 separator={"  -  "}
                 fontSize={{
-                  base: "2xl",
-                  lg: "4xl",
+                  base: "xl",
+                  lg: "2xl",
                 }}
                 color="textColor"
                 fontWeight="bold"
@@ -72,12 +80,13 @@ export const TvDetail = () => {
                   </Text>
                 </BreadcrumbItem>
                 <BreadcrumbItem>
-                  <Box>{dateFormated}</Box>
+                  <Box>
+                    {moment(tvDetail?.release_date).format("YYYY")}
+                  </Box>
                 </BreadcrumbItem>
               </Breadcrumb>
 
               <Flex align={"center"}>
-                {/* Adjusted height for the combined Rating and Star Icon */}
                 <Box
                   display="flex"
                   alignItems="center"
@@ -99,7 +108,6 @@ export const TvDetail = () => {
                   <StarIcon color="yellow" boxSize="1em" />
                 </Box>
 
-                {/* Move Watch Trailer button next to Rating and Star */}
                 {trailerKey && (
                   <Box ml="4">
                     <Button
@@ -108,23 +116,20 @@ export const TvDetail = () => {
                         window.open(trailerUrl, "_blank");
                       }}
                       variant="outline"
-                      colorScheme="red" // Set colorScheme to red
-                      // Add border styling to the button
+                      colorScheme="red"
                       border="1px solid"
                       borderColor="red.500"
                       borderRadius="md"
-                      // Add padding to the button
                       px="3"
-                      // Adjust icon style
-                      leftIcon={<FaYoutube color="red" />}
                     >
+                      <FaYoutube style={{ marginRight: "5px" }} />
                       Watch Trailer
                     </Button>
                   </Box>
                 )}
               </Flex>
             </Box>
-            {/* overview */}
+
             <Box
               fontSize={{
                 base: "sm",
@@ -134,28 +139,43 @@ export const TvDetail = () => {
             >
               <Text>{tvDetail?.overview}</Text>
             </Box>
-            {/* area & genres */}
-            <Box
-              fontSize={{
-                base: "xs",
-                md: "sm",
-                lg: "lg",
-              }}
-            >
-              <Flex align="center">
-                <Text mr="10px" color={"textColor"}>
-                  Genre :
-                </Text>
-                <Breadcrumb separator="," spacing="3px">
-                  {tvDetail?.genres?.map((item) => (
+
+            <Flex align="center">
+              <Box mr="10px" color={"textColor"}>
+                Genre :
+              </Box>
+              <Breadcrumb separator="," spacing="3px">
+                {tvDetail?.genres?.map((item) => {
+                  return (
                     <BreadcrumbItem key={item.id}>
                       <Link to={`genres/${item.id}`}>{item.name}</Link>
                     </BreadcrumbItem>
-                  ))}
-                </Breadcrumb>
-              </Flex>
-            </Box>
+                  );
+                })}
+              </Breadcrumb>
+            </Flex>
           </Box>
+
+          {/* Trailer Button */}
+          {trailerKey && (
+            <Box mb="4">
+              <Button
+                onClick={() => {
+                  const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
+                  window.open(trailerUrl, "_blank");
+                }}
+                variant="outline"
+                colorScheme="red"
+                border="1px solid"
+                borderColor="red.500"
+                borderRadius="md"
+                px="3"
+              >
+                <FaYoutube style={{ marginRight: "5px" }} />
+                Watch Trailer
+              </Button>
+            </Box>
+          )}
 
           {/* season */}
           <Box>
@@ -209,7 +229,11 @@ export const TvDetail = () => {
                         <Button
                           mb="6"
                           variant="solid"
-                          colorScheme="blue"
+                          colorScheme="red"
+                          border="1px solid"
+                          borderColor="red.500"
+                          borderRadius="md"
+                          px="3"
                         >
                           Watch Now
                         </Button>
@@ -220,13 +244,16 @@ export const TvDetail = () => {
               );
             })}
           </Box>
+
           {/* likeList */}
           {tvDetail?.recommendations?.results?.length > 0 && (
             <Box>
               <Heading fontSize="2xl" mt="50px">
                 Similar
               </Heading>
-              <ListFilmLayout listFilm={tvDetail?.recommendations?.results} />
+              <ListFilmLayout
+                listFilm={tvDetail?.recommendations?.results}
+              />
             </Box>
           )}
         </Box>
