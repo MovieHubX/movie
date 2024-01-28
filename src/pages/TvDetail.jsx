@@ -80,7 +80,7 @@ export const TvDetail = () => {
                   <Text textTransform="uppercase" letterSpacing="2px">
                     {tvDetail?.title || tvDetail?.name}
                   </Text>
-                </BreadcrumbItem>>
+                </BreadcrumbItem>
               </Breadcrumb>
 
               <Flex align={"center"}>
@@ -137,17 +137,17 @@ export const TvDetail = () => {
               <Text>{tvDetail?.overview}</Text>
             </Box>
             
-          {/* Released Date section */}
-          <Flex align="center" mb="2">
-            <Box mr="10px" color={"textColor"}>
-              Released Date:
-            </Box>
-            <Breadcrumb separator="," spacing="3px">
-              <BreadcrumbItem>
-                <Text>{movieDetail?.release_date}</Text>
-              </BreadcrumbItem>
-            </Breadcrumb>
-          </Flex>
+            {/* Released Date section */}
+            <Flex align="center" mb="2">
+              <Box mr="10px" color={"textColor"}>
+                Released Date:
+              </Box>
+              <Breadcrumb separator="," spacing="3px">
+                <BreadcrumbItem>
+                  <Text>{tvDetail?.release_date}</Text>
+                </BreadcrumbItem>
+              </Breadcrumb>
+            </Flex>
             
             <Flex align="center">
               <Box mr="10px" color={"textColor"}>
@@ -166,7 +166,6 @@ export const TvDetail = () => {
           </Box>
 
           {/* season */}
- {/* season */}
           <Box>
             {tvDetail?.seasons?.map((item, i) => {
               const seasonDateFormated = moment(item?.air_date).format("MMMM Do YYYY");
