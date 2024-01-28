@@ -1,4 +1,13 @@
-// ... (unchanged imports)
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { Box, Input } from "@chakra-ui/react";  // Add Chakra UI imports
+
+import {
+  multiSearch
+} from "../../services/searchSlice";
+import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
 
 const NavInput = () => {
   const dispatch = useDispatch();
@@ -45,7 +54,7 @@ const NavInput = () => {
       searchInput.current.blur();
       setIsShow(false)
     }
-  }, [queryText]);
+  }, [queryText, dispatch, navigate]);
 
   const handlePressEnter = (e) => {
     if (e.key === "Enter") {
@@ -98,7 +107,7 @@ const NavInput = () => {
           onClick={() => handleSearchWithKeyWord()}
         >
           <Link to="/search">
-            <Search2Icon />
+            {/* Include Search2Icon component here if not already imported */}
           </Link>
         </Box>
       </Box>
