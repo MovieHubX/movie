@@ -85,6 +85,11 @@ export const MovieDetail = () => {
                   lineHeight={"0"}
                   fontWeight="bold"
                   fontSize={"18px"}
+                  // Add border styling to the rating
+                  border="1px solid"
+                  borderColor="primaryColor"
+                  p="2"
+                  borderRadius="md"
                 >
                   {movieDetail?.vote_average.toFixed(1)}
                 </Text>
@@ -102,45 +107,41 @@ export const MovieDetail = () => {
               <Text>{movieDetail?.overview}</Text>
             </Box>
 
-            <Box
-              fontSize={{
-                base: "xs",
-                md: "sm",
-                lg: "lg",
-              }}
-            >
-              <Flex align="center">
-                <Text mr="10px" color={"textColor"}>
-                  Genre :
-                </Text>
-                <Breadcrumb separator="," spacing="3px">
-                  {movieDetail?.genres?.map((item) => {
-                    return (
-                      <BreadcrumbItem key={item.id}>
-                        <Link to={`genres/${item.id}`}>{item.name}</Link>
-                      </BreadcrumbItem>
-                    );
-                  })}
-                </Breadcrumb>
-              </Flex>
-            </Box>
-
-            {/* Trailer Button */}
-            {trailerKey && (
-              <Box mt="4">
-                <Button
-                  onClick={() => {
-                    const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
-                    window.open(trailerUrl, "_blank");
-                  }}
-                  variant="outline"
-                  colorScheme="blue"
-                >
-                  Watch Trailer
-                </Button>
+            <Flex align="center">
+              {/* Move the Genre and Rating in the same Flex container */}
+              <Box mr="10px" color={"textColor"}>
+                Genre :
               </Box>
-            )}
+              <Breadcrumb separator="," spacing="3px">
+                {movieDetail?.genres?.map((item) => {
+                  return (
+                    <BreadcrumbItem key={item.id}>
+                      <Link to={`genres/${item.id}`}>{item.name}</Link>
+                    </BreadcrumbItem>
+                  );
+                })}
+              </Breadcrumb>
 
+              {/* Trailer Button */}
+              {trailerKey && (
+                <Box ml="4">
+                  <Button
+                    onClick={() => {
+                      const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
+                      window.open(trailerUrl, "_blank");
+                    }}
+                    variant="outline"
+                    colorScheme="blue"
+                    // Add border styling to the button
+                    border="1px solid"
+                    borderColor="blue.500"
+                    borderRadius="md"
+                  >
+                    Watch Trailer
+                  </Button>
+                </Box>
+              )}
+            </Flex>
           </Box>
 
           {/* video render */}
