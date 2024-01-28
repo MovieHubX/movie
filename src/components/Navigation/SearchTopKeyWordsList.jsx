@@ -1,13 +1,24 @@
-import {
-  Box, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverBody, Divider, Heading, ListItem, OrderedList, Text
-} from "@chakra-ui/react";
 import React from "react";
 import { useSelector } from "react-redux";
+import {
+  Box,
+  Divider,
+  Heading,
+  ListItem,
+  OrderedList,
+  Text,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverBody,
+} from "@chakra-ui/react";
 import { multiSearchSelector } from "../../redux/selector";
 
 const SearchTopKeyWordsList = ({ handleClickListKeyWords }) => {
   const data = useSelector(multiSearchSelector);
-  if(data.length > 0) {
+
+  if (data.length > 0) {
     return (
       <Popover placement="bottom-start">
         <PopoverTrigger>
@@ -65,6 +76,8 @@ const SearchTopKeyWordsList = ({ handleClickListKeyWords }) => {
       </Popover>
     );
   }
+
+  return null; // Return null if there is no data
 };
 
 export default SearchTopKeyWordsList;
