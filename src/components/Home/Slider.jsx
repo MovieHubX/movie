@@ -120,16 +120,26 @@ const Slider = () => {
   return (
     <Box mt={{ base: '55px', md: '0' }} mx="auto" w="full" maxW="full" h={{ base: '80vh', md: '60vh', lg: '50vh' }}>
       <Swiper {...sliderSettings}>
-        {sortByVote?.map((item, i) => (
-          <SwiperSlide
-            key={i}
-            style={{
-              position: "relative",
-              height: "100%",
-              width: "100%",
-            }}
-          >
-            <Center position="relative" h="full" w="full">
+        {sortByVote?.map((item, i) => {
+          // get short description
+          let subString = item?.overview.split(' ');
+          if (subString.length < 25) {
+            subString = item?.overview;
+          } else {
+            subString = subString.slice(0, 25).join(' ') + ' ...';
+          }
+
+          if (i < 10) {
+            return (
+              <SwiperSlide
+                key={i}
+                style={{
+                  position: "relative",
+                  height: "100%",
+                  width: "100%",
+                }}
+              >
+                <Center position="relative" h="full" w="full">
                   {/* background image */}
                   <Box
                     position='absolute'
@@ -163,7 +173,7 @@ const Slider = () => {
                   </Box>
                   {/* name, desc */}
                   <Box
-                    pos={'absolute'} maxW={'600px'} zIndex={20} transform={'translateY(-50%)'}
+                    pos='absolute' maxW={'600px'} zIndex={20} transform={'translateY(-50%)'}
                     mx={{ base: '10px', md: 'unset' }}
                     top={{ base: '47%', md: '55%', }}
                     left={{ base: '0', md: '130px', }}
@@ -239,7 +249,6 @@ const Slider = () => {
                       transition={{ duration: 0.7, delay: 1.2, ease: "easeOut" }}
                       variants={variants}
                     >
-
                       <Box textAlign='right' mb='15px'>
                         <Text color={'primaryColor'} fontWeight={'bold'} fontSize='22px'>Genres</Text>
                       </Box>
@@ -266,9 +275,13 @@ const Slider = () => {
                     </Text>
                     <StarIcon boxSize={{ base: "5", md: '7' }} color="starColor" ml="8px" />
                   </Box>
-            </Center>
-          </SwiperSlide>
-        ))}
+                </Center>
+              </SwiperSlide>
+            );
+          }
+
+          return null; // Add this to handle cases where i >= 10
+        })}
         <SliderButton icon={ChevronLeftIcon} ref={prevRef} direction="left" />
         <SliderButton icon={ChevronRightIcon} ref={nextRef} direction="right" />
       </Swiper>
