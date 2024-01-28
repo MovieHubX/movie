@@ -158,27 +158,6 @@ export const TvDetail = () => {
             </Flex>
           </Box>
 
-          {/* Trailer Button */}
-          {trailerKey && (
-            <Box mb="4">
-              <Button
-                onClick={() => {
-                  const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
-                  window.open(trailerUrl, "_blank");
-                }}
-                variant="outline"
-                colorScheme="red"
-                border="1px solid"
-                borderColor="red.500"
-                borderRadius="md"
-                px="3"
-              >
-                <FaYoutube style={{ marginRight: "5px" }} />
-                Watch Trailer
-              </Button>
-            </Box>
-          )}
-
           {/* season */}
           <Box>
             {tvDetail?.seasons?.map((item, i) => {
@@ -231,7 +210,7 @@ export const TvDetail = () => {
                         <Button
                           mb="6"
                           variant="solid"
-                          colorScheme="red"
+                          // Remove colorScheme="red" here
                           border="1px solid"
                           borderColor="red.500"
                           borderRadius="md"
