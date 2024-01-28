@@ -80,7 +80,7 @@ export const MovieDetail = () => {
               </Breadcrumb>
 
               <Flex align={"center"}>
-                {/* Enhanced styling for the combined rating and star */}
+                {/* Combined border for Rating and Star Icon */}
                 <Box
                   display="flex"
                   alignItems="center"
@@ -100,6 +100,26 @@ export const MovieDetail = () => {
                   </Text>
                   <StarIcon color="yellow" />
                 </Box>
+
+                {/* Move Watch Trailer button next to Rating and Star */}
+                {trailerKey && (
+                  <Box ml="4">
+                    <Button
+                      onClick={() => {
+                        const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
+                        window.open(trailerUrl, "_blank");
+                      }}
+                      variant="outline"
+                      colorScheme="blue"
+                      // Add border styling to the button
+                      border="1px solid"
+                      borderColor="blue.500"
+                      borderRadius="md"
+                    >
+                      Watch Trailer
+                    </Button>
+                  </Box>
+                )}
               </Flex>
             </Box>
 
@@ -114,7 +134,7 @@ export const MovieDetail = () => {
             </Box>
 
             <Flex align="center">
-              {/* Move the Genre and Watch Trailer button in the same Flex container */}
+              {/* Move the Genre in the same Flex container */}
               <Box mr="10px" color={"textColor"}>
                 Genre :
               </Box>
@@ -127,25 +147,6 @@ export const MovieDetail = () => {
                   );
                 })}
               </Breadcrumb>
-
-              {trailerKey && (
-                <Box ml="4">
-                  <Button
-                    onClick={() => {
-                      const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
-                      window.open(trailerUrl, "_blank");
-                    }}
-                    variant="outline"
-                    colorScheme="blue"
-                    // Add border styling to the button
-                    border="1px solid"
-                    borderColor="blue.500"
-                    borderRadius="md"
-                  >
-                    Watch Trailer
-                  </Button>
-                </Box>
-              )}
             </Flex>
           </Box>
 
