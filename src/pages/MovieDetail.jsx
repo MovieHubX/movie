@@ -59,6 +59,18 @@ export const MovieDetail = () => {
               },
             }}
           >
+            {/* New Flex container for the released date */}
+            <Flex align="center" mb="2">
+              <Box mr="10px" color={"textColor"}>
+                Released Date:
+              </Box>
+              <Breadcrumb separator="," spacing="3px">
+                <BreadcrumbItem>
+                  <Text>{movieDetail?.release_date}</Text>
+                </BreadcrumbItem>
+              </Breadcrumb>
+            </Flex>
+
             <Box>
               <Breadcrumb
                 separator={"  -  "}
@@ -75,25 +87,7 @@ export const MovieDetail = () => {
                     {movieDetail?.title || movieDetail?.name}
                   </Text>
                 </BreadcrumbItem>
-                {/* Add a new BreadcrumbItem for Released Date */}
-                <BreadcrumbItem>
-                  <Text textTransform="uppercase" letterSpacing="2px">
-                    Released Date: {movieDetail?.release_date}
-                  </Text>
-                </BreadcrumbItem>
               </Breadcrumb>
-
-              {/* New Flex container for the released date */}
-              <Flex align="center">
-                <Box mr="10px" color={"textColor"}>
-                  Released Date:
-                </Box>
-                <Breadcrumb separator="," spacing="3px">
-                  <BreadcrumbItem>
-                    <Text>{movieDetail?.release_date}</Text>
-                  </BreadcrumbItem>
-                </Breadcrumb>
-              </Flex>
 
               <Flex align={"center"}>
                 {/* Adjusted height for the combined Rating and Star Icon */}
