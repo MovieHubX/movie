@@ -52,7 +52,7 @@ const NavInput = () => {
   return (
     <>
       <Box
-        w={{
+        width={{
           base: "55%",
           lg: "40%",
         }}
