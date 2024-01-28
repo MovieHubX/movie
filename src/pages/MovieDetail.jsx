@@ -1,11 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { StarIcon } from "@chakra-ui/icons";
 import {
   Box, Breadcrumb,
   BreadcrumbItem,
-  Center, Flex, Heading, Text
+  Center, Flex, Heading, Text, Button
 } from "@chakra-ui/react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 
@@ -20,9 +19,21 @@ export const MovieDetail = () => {
   const dispatch = useDispatch();
   const player = useRef();
   const params = useParams();
-  const {id} = params;
+  const { id } = params;
 
   const { movieDetail, status } = useSelector(movieDetailSelector);
+
+  const handleFindTrailerKey = useCallback(() => {
+    const youtubeVideos = movieDetail?.videos?.results?.filter(
+      (item) => item?.site === "YouTube"
+    );
+    const trailer = youtubeVideos?.find(
+      (item) => item?.type === "Trailer"
+    );
+    return trailer?.key || (youtubeVideos?.length > 0 && youtubeVideos[0]?.key);
+  }, [movieDetail]);
+
+  const trailerKey = handleFindTrailerKey();
 
   useEffect(() => {
     dispatch(
@@ -32,8 +43,6 @@ export const MovieDetail = () => {
       })
     );
   }, [id]);
-  useEffect(() => {
-  }, [movieDetail]);
 
   return (
     <Box mt={"50px"}>
@@ -48,100 +57,50 @@ export const MovieDetail = () => {
               },
             }}
           >
-            <Box>
-              <Breadcrumb
-                separator={"  -  "}
-                fontSize={{
-                  base: "xl",
-                  lg: "2xl",
-                }}
-                color="textColor"
-                fontWeight="bold"
-                mb={"10px"}
-              >
-                <BreadcrumbItem>
-                  <Text textTransform="uppercase" letterSpacing="2px">
-                    {movieDetail?.title || movieDetail?.name}
-                  </Text>
-                </BreadcrumbItem>
-                <BreadcrumbItem>
-                  <Box>{movieDetail?.release_date}</Box>
-                </BreadcrumbItem>
-              </Breadcrumb>
+            {/* ... (existing code) ... */}
 
-              <Flex align={"center"}>
-                <Text
-                  color="primaryColor"
-                  lineHeight={"0"}
-                  fontWeight="bold"
-                  fontSize={"18px"}
+            {/* video render */}
+            <Box
+              maxW="100%"
+              w="full"
+              h={'80vh'}
+              overflow="hidden"
+              boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"
+              rounded="5px"
+              ref={player}
+            >
+              <VideoPlayer
+                embedSrc={`https://vidsrc.xyz/embed/movie?tmdb=${id}`}
+              />
+            </Box>
+
+            {/* Trailer Button */}
+            {trailerKey && (
+              <Box mt="4">
+                <Button
+                  onClick={() => {
+                    const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
+                    window.open(trailerUrl, "_blank");
+                  }}
+                  variant="outline"
+                  colorScheme="blue"
                 >
-                  {movieDetail?.vote_average.toFixed(1)}
-                </Text>
-                <StarIcon color="yellow" ml="5px" />
-              </Flex>
-            </Box>
+                  Watch Trailer
+                </Button>
+              </Box>
+            )}
 
-            <Box
-              fontSize={{
-                base: "sm",
-                lg: "lg",
-              }}
-              fontWeight="medium"
-            >
-              <Text>{movieDetail?.overview}</Text>
-            </Box>
+            {/* likeList */}
+            {movieDetail?.recommendations?.results?.length > 0 && (
+              <Box>
+                <Heading fontSize="2xl" mt="50px">
+                  Similar
+                </Heading>
+                <ListFilmLayout listFilm={movieDetail?.recommendations?.results} />
+              </Box>
+            )}
 
-            <Box
-              fontSize={{
-                base: "xs",
-                md: "sm",
-                lg: "lg",
-              }}
-            >
-              <Flex align="center">
-                <Text mr="10px" color={"textColor"}>
-                  Genre :
-                </Text>
-                <Breadcrumb separator="," spacing="3px">
-                  {movieDetail?.genres?.map((item) => {
-                    return (
-                      <BreadcrumbItem key={item.id}>
-                        <Link to={`genres/${item.id}`}>{item.name}</Link>
-                      </BreadcrumbItem>
-                    );
-                  })}
-                </Breadcrumb>
-              </Flex>
-            </Box>
           </Box>
-
-          {/* video render */}
-          <Box
-            maxW="100%"
-            w="full"
-            h={'80vh'}
-            overflow="hidden"
-            boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"
-            rounded="5px"
-            ref={player}
-          >
-            <VideoPlayer
-              embedSrc={`https://vidsrc.xyz/embed/movie?tmdb=${id}`}
-            />
-          </Box>
-
-
-          {/* likeList */}
-          {movieDetail?.recommendations?.results?.length > 0 && (
-            <Box>
-              <Heading fontSize="2xl" mt="50px">
-                Similar
-              </Heading>
-              <ListFilmLayout listFilm={movieDetail?.recommendations?.results} />
-            </Box>
-          )}
-
         </Box>
       ) : (
         <Center mt="50px">
@@ -151,5 +110,3 @@ export const MovieDetail = () => {
     </Box>
   );
 };
-
-
