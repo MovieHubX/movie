@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { Search2Icon } from "@chakra-ui/icons";
+import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Box, Input } from "@chakra-ui/react";  // Add Chakra UI imports
 
 import {
   multiSearch
@@ -17,7 +18,6 @@ const NavInput = () => {
   const [searchText, setSearchText] = useState('');
   const [queryText, setQueryText] = useState('')
   const [isShow, setIsShow] = useState(false);
-
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
     startTransition(() => {
@@ -33,7 +33,6 @@ const NavInput = () => {
       setIsShow(true)
     })
   };
-
   useEffect(() => {
     setIsShow(document.activeElement.tagName === "INPUT")
   }, [document.activeElement.tagName])
@@ -54,14 +53,13 @@ const NavInput = () => {
       searchInput.current.blur();
       setIsShow(false)
     }
-  }, [queryText, dispatch, navigate]);
+  }, [queryText]);
 
   const handlePressEnter = (e) => {
     if (e.key === "Enter") {
       handleSearchWithKeyWord();
     }
   };
-
   return (
     <Box
       w={{
@@ -107,7 +105,7 @@ const NavInput = () => {
           onClick={() => handleSearchWithKeyWord()}
         >
           <Link to="/search">
-            {/* Include Search2Icon component here if not already imported */}
+            <Search2Icon />
           </Link>
         </Box>
       </Box>
