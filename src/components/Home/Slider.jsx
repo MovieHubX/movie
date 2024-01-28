@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from "@chakra-ui/icons";
-import { Box, Center, Flex, Heading, Icon, Image, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Center, CircularProgress, CircularProgressLabel, Flex, Heading, Icon, Image, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import React, { forwardRef, memo, useEffect, useRef, useState } from "react";
 import { AiFillHeart } from 'react-icons/ai';
@@ -28,7 +28,7 @@ const SliderButton = memo(forwardRef(({ icon, direction = 'left' || 'right' }, r
       display={{ base: "none", md: "block" }}
       transform="translateY(-50%)"
       {
-        ...direction === 'left' ? { left: "0" } : { right: "0" }
+      ...direction === 'left' ? { left: "0" } : { right: "0" }
       }
       zIndex="10"
       color="rgba(50, 138, 241, .6)"
@@ -42,19 +42,18 @@ const SliderButton = memo(forwardRef(({ icon, direction = 'left' || 'right' }, r
       }}
     />
   )
-}));
+}))
 
 const Slider = () => {
   const dispatch = useDispatch();
+
   const { genres } = useSelector(getGenresSelector);
   const { data, status } = useSelector(getHomeSliderSelector);
   const { config } = useSelector(getConfigSelector);
-
-  let sortByVote;
+  let sortByVote
   if (status === 'done') {
-    sortByVote = sortByValue(data, 'vote_average');
+    sortByVote = sortByValue(data, 'vote_average')
   }
-
   useEffect(() => {
     dispatch(
       getHomeSlider({
@@ -62,17 +61,14 @@ const Slider = () => {
       })
     );
   }, [dispatch]);
-
+  // ref for swiper
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const variants = {
     show: { opacity: 1, y: 0 },
     hidden: { opacity: 0, y: 50 },
-  };
-
-  const sliderWidth = useBreakpointValue({ base: "100vw", md: "80vw", lg: "60vw" });
-
+  }
   const sliderSettings = {
     initialSlide: 0,
     spaceBetween: 10,
@@ -109,26 +105,27 @@ const Slider = () => {
       },
     },
     modules: [Autoplay, Pagination, Navigation, Keyboard, Lazy, EffectCreative],
-    onSlideChange: (e) => setActiveSlide(e.realIndex),
-    style: {
-      width: sliderWidth,
-      height: "80vh",
-      margin: "0 auto",
-    },
-  };
+    onSlideChange: (e) => setActiveSlide(e.realIndex)
+  }
 
   return (
-    <Box mt={{ base: '55px', md: '0' }} mx="auto" w="full" maxW="full" h={{ base: '80vh', md: '60vh', lg: '50vh' }}>
-      <Swiper {...sliderSettings}>
+    <Box mt='55px' mx="auto" w='full' maxW="full" h={'80vh'}>
+      <Swiper
+        {...sliderSettings}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      >
         {sortByVote?.map((item, i) => {
-          // get short description
-          let subString = item?.overview.split(' ');
-          if (subString.length < 25) {
-            subString = item?.overview;
-          } else {
-            subString = subString.slice(0, 25).join(' ') + ' ...';
-          }
 
+          /* get short description */
+          let subString = item?.overview.split(' ')
+          if (subString.length < 25) {
+            subString = item?.overview
+          } else {
+            subString = subString.slice(0, 25).join(' ') + ' ...'
+          }
           if (i < 10) {
             return (
               <SwiperSlide
@@ -173,7 +170,7 @@ const Slider = () => {
                   </Box>
                   {/* name, desc */}
                   <Box
-                    pos='absolute' maxW={'600px'} zIndex={20} transform={'translateY(-50%)'}
+                    pos={'absolute'} maxW={'600px'} zIndex={20} transform={'translateY(-50%)'}
                     mx={{ base: '10px', md: 'unset' }}
                     top={{ base: '47%', md: '55%', }}
                     left={{ base: '0', md: '130px', }}
@@ -249,6 +246,7 @@ const Slider = () => {
                       transition={{ duration: 0.7, delay: 1.2, ease: "easeOut" }}
                       variants={variants}
                     >
+
                       <Box textAlign='right' mb='15px'>
                         <Text color={'primaryColor'} fontWeight={'bold'} fontSize='22px'>Genres</Text>
                       </Box>
@@ -279,9 +277,8 @@ const Slider = () => {
               </SwiperSlide>
             );
           }
-
-          return null; // Add this to handle cases where i >= 10
         })}
+        {/* button */}
         <SliderButton icon={ChevronLeftIcon} ref={prevRef} direction="left" />
         <SliderButton icon={ChevronRightIcon} ref={nextRef} direction="right" />
       </Swiper>
