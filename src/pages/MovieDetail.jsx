@@ -154,7 +154,7 @@ export const MovieDetail = () => {
           {movieDetail?.recommendations?.results?.length > 0 && (
             <Box>
               <Heading fontSize="2xl" mt="50px">
-                You may Like
+                Similar
               </Heading>
               <ListFilmLayout listFilm={movieDetail?.recommendations?.results} />
             </Box>
