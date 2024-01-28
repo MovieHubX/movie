@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Search2Icon } from "@chakra-ui/icons";
+import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { HiOutlineSearch } from "react-icons/hi";
-import { VscChromeClose } from "react-icons/vsc";
-import { Box, Input } from "@chakra-ui/react";
-import { Search2Icon } from "@chakra-ui/icons";
+
 import {
   multiSearch
 } from "../../services/searchSlice";
@@ -18,7 +18,6 @@ const NavInput = () => {
   const [searchText, setSearchText] = useState('');
   const [queryText, setQueryText] = useState('')
   const [isShow, setIsShow] = useState(false);
-  
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
     startTransition(() => {
@@ -34,7 +33,6 @@ const NavInput = () => {
       setIsShow(true)
     })
   };
-
   useEffect(() => {
     setIsShow(document.activeElement.tagName === "INPUT")
   }, [document.activeElement.tagName])
@@ -62,7 +60,6 @@ const NavInput = () => {
       handleSearchWithKeyWord();
     }
   };
-
   return (
     <Box
       w={{
@@ -105,14 +102,11 @@ const NavInput = () => {
           fontSize="20px"
           color="textColor"
           cursor={"pointer"}
-          onClick={() => setSearchText('')}
+          onClick={() => handleSearchWithKeyWord()}
         >
-          {/* Modified search icon with conditional rendering */}
-          {searchText ? (
-            <VscChromeClose />
-          ) : (
-            <HiOutlineSearch />
-          )}
+          <Link to="/search">
+            <Search2Icon />
+          </Link>
         </Box>
       </Box>
       {isShow && (
