@@ -64,11 +64,11 @@ const NavInput = () => {
     <Box
       w={{
         base: "55%",
-        lg: "40%",
+        lg: "10%",
       }}
       position="relative"
       ml="auto"
-      mr={{ lg: "10px" }}
+      mr={{ lg: "50px" }}
     >
       <Box position="relative" overflow="hidden">
         <Input
