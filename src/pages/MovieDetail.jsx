@@ -83,6 +83,18 @@ export const MovieDetail = () => {
                 </BreadcrumbItem>
               </Breadcrumb>
 
+              {/* New Flex container for the released date */}
+              <Flex align="center">
+                <Box mr="10px" color={"textColor"}>
+                  Released Date:
+                </Box>
+                <Breadcrumb separator="," spacing="3px">
+                  <BreadcrumbItem>
+                    <Text>{movieDetail?.release_date}</Text>
+                  </BreadcrumbItem>
+                </Breadcrumb>
+              </Flex>
+
               <Flex align={"center"}>
                 {/* Adjusted height for the combined Rating and Star Icon */}
                 <Box
@@ -145,7 +157,7 @@ export const MovieDetail = () => {
             <Flex align="center">
               {/* Move the Genre in the same Flex container */}
               <Box mr="10px" color={"textColor"}>
-                Genre :
+                Genre:
               </Box>
               <Breadcrumb separator="," spacing="3px">
                 {movieDetail?.genres?.map((item) => {
