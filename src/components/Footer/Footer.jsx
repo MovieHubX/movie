@@ -1,6 +1,6 @@
 import { Box, Flex, HStack, Icon, Text } from "@chakra-ui/react";
 import React, { memo } from "react";
-import { BsGithub, BsLinkedin } from 'react-icons/bs';
+import { BsGithub } from 'react-icons/bs';
 import { FiMail } from 'react-icons/fi';
 import { Link } from "react-router-dom";
 
@@ -61,16 +61,6 @@ const Footer = () => {
         }}
         textAlign="right"
       >
-        <Text
-          textAlign="right"
-          fontSize={{
-            base: "16px",
-            md: "18px",
-          }}
-          mb='4'
-        >
-          Contact
-        </Text>
         <Box
           color="decsColor"
           fontSize={{
@@ -79,13 +69,10 @@ const Footer = () => {
           }}
         >
           <Flex w={'full'} justify={'end'} align={'center'} columnGap={'5'}>
-            <Link target="_blank" to={'https://www.linkedin.com/in/khangng2100/'}>
-              <Icon boxSize={'6'} color={'rgba(50,138,241,.8)'} transition={'all .2s ease'} _hover={{ color: 'primaryColor' }} as={BsLinkedin} />
-            </Link>
-            <Link target="_blank" to={'https://github.com/khangnguyen2100/'}>
+            <Link target="_blank" to={'https://github.com/moviehubx/'}>
               <Icon boxSize={'6'} color={'rgba(50,138,241,.8)'} transition={'all .2s ease'} _hover={{ color: 'primaryColor' }} as={BsGithub} />
             </Link>
-            <Link target="_blank" to={'mailto:khangng2100@gmail.com'}>
+            <Link target="_blank" to={'mailto:moviehubx.pro@gmail.com'}>
               <Icon boxSize={'6'} color={'rgba(50,138,241,.8)'} transition={'all .2s ease'} _hover={{ color: 'primaryColor' }} as={FiMail} />
             </Link>
           </Flex>
