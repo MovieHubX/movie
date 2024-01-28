@@ -100,26 +100,8 @@ export const MovieDetail = () => {
               }}
             >
               <Flex align="center">
-                <Text color={"textColor"} mr="10px">
-                  Area :
-                </Text>
-                <Breadcrumb
-                  separator=","
-                  spacing="3px"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="flex-start"
-                >
-                  {movieDetail?.spoken_languages?.map((item, i) => (
-                    <BreadcrumbItem key={i}>
-                      <Box>{item?.name}</Box>
-                    </BreadcrumbItem>
-                  ))}
-                </Breadcrumb>
-              </Flex>
-              <Flex align="center">
                 <Text mr="10px" color={"textColor"}>
-                  Types :
+                  Genre :
                 </Text>
                 <Breadcrumb separator="," spacing="3px">
                   {movieDetail?.genres?.map((item) => {
