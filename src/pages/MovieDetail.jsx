@@ -95,7 +95,7 @@ export const MovieDetail = () => {
                     fontWeight="bold"
                     fontSize="18px"
                     pr="2"
-                    lineHeight="1.5"
+                    lineHeight="1.2"
                   >
                     {movieDetail?.vote_average.toFixed(1)}
                   </Text>
