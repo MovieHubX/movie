@@ -124,6 +124,23 @@ export const MovieDetail = () => {
                 </Breadcrumb>
               </Flex>
             </Box>
+
+            {/* Trailer Button */}
+            {trailerKey && (
+              <Box mt="4">
+                <Button
+                  onClick={() => {
+                    const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
+                    window.open(trailerUrl, "_blank");
+                  }}
+                  variant="outline"
+                  colorScheme="blue"
+                >
+                  Watch Trailer
+                </Button>
+              </Box>
+            )}
+
           </Box>
 
           {/* video render */}
@@ -140,22 +157,6 @@ export const MovieDetail = () => {
               embedSrc={`https://vidsrc.xyz/embed/movie?tmdb=${id}`}
             />
           </Box>
-
-          {/* Trailer Button */}
-          {trailerKey && (
-            <Box mt="4">
-              <Button
-                onClick={() => {
-                  const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
-                  window.open(trailerUrl, "_blank");
-                }}
-                variant="outline"
-                colorScheme="blue"
-              >
-                Watch Trailer
-              </Button>
-            </Box>
-          )}
 
           {/* likeList */}
           {movieDetail?.recommendations?.results?.length > 0 && (
