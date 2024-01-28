@@ -1,5 +1,5 @@
 
-import { Box, Center, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Center, Heading, Image, Text, Button } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useRef } from "react";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { StarIcon } from "@chakra-ui/icons";
 import {
   Breadcrumb,
-  BreadcrumbItem, Button, Flex, Stack
+  BreadcrumbItem,
+  Flex,
+  Stack
 } from "@chakra-ui/react";
 
 import { Link, useParams } from "react-router-dom";
@@ -33,7 +35,7 @@ export const TvDetail = () => {
   const dateFormated = moment(tvDetail?.release_date).format("YYYY");
 
   const handleFindTrailerKey = useCallback(() => {
-    // get youtube trailer key of not have trailer get first video
+    // get youtube trailer key or if not have trailer get the first video key
     const youtubeVideos = tvDetail?.videos?.results?.filter(
       (item) => item?.site === "YouTube"
     );
@@ -53,13 +55,12 @@ export const TvDetail = () => {
       })
     );
   }, [id]);
-  useEffect(() => {
-  }, [tvDetail]);
+
   return (
     <Box mt={"50px"}>
       {(tvDetail?.seasons?.length > 0 && status === 'done') ? (
         <Box>
-          {/* info  */}
+          {/* info */}
           <Box
             color={"decsColor"}
             _notLast={{
@@ -136,10 +137,27 @@ export const TvDetail = () => {
               </Flex>
             </Box>
           </Box>
+
+          {/* Trailer Button */}
+          <Box mb="4">
+            <Button
+              onClick={() => {
+                if (trailerKey) {
+                  const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
+                  window.open(trailerUrl, '_blank');
+                }
+              }}
+              variant="outline"
+              colorScheme="blue"
+            >
+              Watch Trailer
+            </Button>
+          </Box>
+
           {/* Trailer */}
           <Box 
-          overflow={'hidden'} w='full' mb='50px'
-          h={{base: '60vw', md: '80vh'}}
+            overflow={'hidden'} w='full' mb='50px'
+            h={{base: '60vw', md: '80vh'}}
           >
             {
               trailerKey ? (
@@ -159,6 +177,7 @@ export const TvDetail = () => {
               )
             }
           </Box>
+
           {/* season */}
           <Box>
             {tvDetail?.seasons?.map((item, i) => {
