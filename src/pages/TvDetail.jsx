@@ -8,6 +8,8 @@ import {
   Heading,
   Text,
   Button,
+  Image,
+  Stack,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
