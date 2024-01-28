@@ -75,8 +75,11 @@ export const MovieDetail = () => {
                     {movieDetail?.title || movieDetail?.name}
                   </Text>
                 </BreadcrumbItem>
+                {/* Add a new BreadcrumbItem for Released Date */}
                 <BreadcrumbItem>
-                  <Box>{movieDetail?.release_date}</Box>
+                  <Text textTransform="uppercase" letterSpacing="2px">
+                    Released Date: {movieDetail?.release_date}
+                  </Text>
                 </BreadcrumbItem>
               </Breadcrumb>
 
