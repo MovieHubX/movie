@@ -1,11 +1,12 @@
 
-import { Box, Center, Heading, Text, Button } from "@chakra-ui/react";
-import React, { useCallback, useEffect } from "react";
+import { Box, Center, Heading, Image, Text, Button } from "@chakra-ui/react";
+import React, { useCallback, useEffect, useRef } from "react";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getConfigSelector, tvDetailSelector } from "../redux/selector";
 import { getTvDetail } from "../services";
 import { StarIcon } from "@chakra-ui/icons";
-import { Breadcrumb, BreadcrumbItem, Flex } from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem, Flex, Stack } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment/moment";
 import ListFilmLayout from "../components/Layout/ListFilmLayout";
