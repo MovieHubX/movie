@@ -80,12 +80,7 @@ export const TvDetail = () => {
                   <Text textTransform="uppercase" letterSpacing="2px">
                     {tvDetail?.title || tvDetail?.name}
                   </Text>
-                </BreadcrumbItem>
-                <BreadcrumbItem>
-                  <Box>
-                    {moment(tvDetail?.release_date).format("YYYY")}
-                  </Box>
-                </BreadcrumbItem>
+                </BreadcrumbItem>>
               </Breadcrumb>
 
               <Flex align={"center"}>
