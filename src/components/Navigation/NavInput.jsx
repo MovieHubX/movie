@@ -68,7 +68,7 @@ const NavInput = () => {
       }}
       position="relative"
       ml="auto"
-      mr={{ lg: "50px" }}
+      mr={{ lg: "10px" }}
     >
       <Box position="relative" overflow="hidden">
         <Input
@@ -88,7 +88,7 @@ const NavInput = () => {
             md: "md",
           }}
           w="full"
-          pr="20px"
+          pr="40px"
           pl="5px"
           onKeyDown={(e) => handlePressEnter(e)}
         />
