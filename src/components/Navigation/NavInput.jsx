@@ -64,7 +64,7 @@ const NavInput = () => {
     <Box
       w={{
         base: "55%",
-        lg: "10%",
+        lg: "20%",
       }}
       position="relative"
       ml="auto"
