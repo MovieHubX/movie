@@ -50,83 +50,74 @@ const NavInput = () => {
   };
 
   return (
-    <Box
-      w="100%" // Full width
-      position="fixed"
-      top="0"
-      bg="white" // Adjust the background color as needed
-      boxShadow="sm" // Add shadow as needed
-      zIndex="1000" // Ensure it's above other elements
-      p="2"
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-    >
-      {/* Left side of the nav bar, you can place your logo or other items here */}
-      <Box>
-        {/* Your logo or other items */}
-      </Box>
-
-      {/* Right side of the nav bar, the search input and icon */}
-      <Box position="relative" overflow="hidden">
-        <Input
-          variant="flushed"
-          autoCapitalize="off"
-          position="relative"
-          focusBorderColor="primaryColor"
-          placeholder="Search..."
-          _placeholder={{
-            color: "decsColor",
-          }}
-          value={searchText}
-          onChange={(e) => handleSearchTextChange(e)}
-          fontSize={{
-            base: "sm",
-            md: "md",
-          }}
-          w="full"
-          pr="40px"
-          pl="5px"
-          onKeyDown={(e) => handlePressEnter(e)}
-        />
-        {/* search icon */}
-        <Box
-          position="absolute"
-          right="15px"
-          top="50%"
-          transform="translateY(-50%)"
-          zIndex={500}
-          fontSize="20px"
-          color="textColor"
-          cursor={"pointer"}
-          onClick={() => handleSearchWithKeyWord()}
-        >
-          <Search2Icon />
+    <>
+      <Box
+        w={{
+          base: "55%",
+          lg: "40%",
+        }}
+        position="relative"
+        ml="auto"
+        mr={{ lg: "10px" }}
+      >
+        <Box position="relative" overflow="hidden">
+          <Input
+            variant="flushed"
+            autoCapitalize="off"
+            position="relative"
+            focusBorderColor="primaryColor"
+            placeholder="-_-"
+            _placeholder={{
+              color: "decsColor",
+            }}
+            value={searchText}
+            onChange={(e) => handleSearchTextChange(e)}
+            fontSize={{
+              base: "sm",
+              md: "md",
+            }}
+            w="full"
+            pr="40px"
+            pl="5px"
+            onKeyDown={(e) => handlePressEnter(e)}
+          />
+          {/* search icon */}
+          <Box
+            position="absolute"
+            right="15px"
+            top="50%"
+            transform="translateY(-50%)"
+            zIndex={500}
+            fontSize="20px"
+            color="textColor"
+            cursor={"pointer"}
+            onClick={() => handleSearchWithKeyWord()}
+          >
+            <Search2Icon />
+          </Box>
         </Box>
       </Box>
 
-      {/* Optionally, you can add other elements on the right side of the nav bar */}
-    </Box>
-
-    {/* Below the nav bar, the separate search bar */}
-    <Box
-      w="100%" // Full width
-      position="fixed"
-      top="60px" // Adjust the top position based on your nav bar's height
-      bg="white" // Adjust the background color as needed
-      boxShadow="sm" // Add shadow as needed
-      zIndex="999" // Ensure it's above other elements
-      p="2"
-    >
-      {/* Your separate search bar content */}
-      <SearchTopKeyWordsList
-        searchResults={searchResults}
-        handleClickListKeyWords={(text) => {
-          setSearchText(text);
-          handleSearchWithKeyWord();
-        }}
-      />
-    </Box>
+      {/* Below the nav bar, the separate search bar */}
+      <Box
+        w="100%" // Full width
+        position="fixed"
+        top="60px" // Adjust the top position based on your nav bar's height
+        bg="white" // Adjust the background color as needed
+        boxShadow="sm" // Add shadow as needed
+        zIndex="999" // Ensure it's above other elements
+        p="2"
+      >
+        {/* Your separate search bar content */}
+        <SearchTopKeyWordsList
+          searchResults={searchResults}
+          handleClickListKeyWords={(text) => {
+            setSearchText(text);
+            handleSearchWithKeyWord();
+          }}
+        />
+      </Box>
+    </>
   );
 };
 
