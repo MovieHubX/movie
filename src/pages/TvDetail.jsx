@@ -3,31 +3,17 @@ import { Box, Center, Heading, Image, Text, Button } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useRef } from "react";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Autoplay, Keyboard, Lazy, Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import { StarIcon } from "@chakra-ui/icons";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  Flex,
-  Stack
-} from "@chakra-ui/react";
-
-import { Link, useParams } from "react-router-dom";
-
-import moment from "moment/moment";
-import ReactPlayer from "react-player";
-import ListFilmLayout from "../components/Layout/ListFilmLayout";
-import Loading from "../components/Loading/Loading";
 import { getConfigSelector, tvDetailSelector } from "../redux/selector";
 import { getTvDetail } from "../services";
+import { StarIcon } from "@chakra-ui/icons";
+import { Breadcrumb, BreadcrumbItem, Flex, Stack } from "@chakra-ui/react";
+import { Link, useParams } from "react-router-dom";
+import moment from "moment/moment";
+import ListFilmLayout from "../components/Layout/ListFilmLayout";
+import Loading from "../components/Loading/Loading";
 
 export const TvDetail = () => {
   const dispatch = useDispatch();
-  const player = useRef();
   const params = useParams();
   const { id } = params;
   const { tvDetail, status } = useSelector(tvDetailSelector);
@@ -35,16 +21,15 @@ export const TvDetail = () => {
   const dateFormated = moment(tvDetail?.release_date).format("YYYY");
 
   const handleFindTrailerKey = useCallback(() => {
-    // get youtube trailer key or if not have trailer get the first video key
     const youtubeVideos = tvDetail?.videos?.results?.filter(
       (item) => item?.site === "YouTube"
     );
     const trailer = youtubeVideos?.find(
       (item) => item?.type === "Trailer"
     );
-    if (trailer) return trailer.key;
-    return youtubeVideos?.videos?.results[0]?.key;
+    return trailer?.key || (youtubeVideos?.length > 0 && youtubeVideos[0]?.key);
   }, [tvDetail]);
+
   const trailerKey = handleFindTrailerKey();
 
   useEffect(() => {
@@ -58,7 +43,7 @@ export const TvDetail = () => {
 
   return (
     <Box mt={"50px"}>
-      {(tvDetail?.seasons?.length > 0 && status === 'done') ? (
+      {tvDetail?.seasons?.length > 0 && status === "done" ? (
         <Box>
           {/* info */}
           <Box
@@ -126,111 +111,95 @@ export const TvDetail = () => {
                   Genre :
                 </Text>
                 <Breadcrumb separator="," spacing="3px">
-                  {tvDetail?.genres?.map((item) => {
-                    return (
-                      <BreadcrumbItem key={item.id}>
-                        <Link to={`genres/${item.id}`}>{item.name}</Link>
-                      </BreadcrumbItem>
-                    );
-                  })}
+                  {tvDetail?.genres?.map((item) => (
+                    <BreadcrumbItem key={item.id}>
+                      <Link to={`genres/${item.id}`}>{item.name}</Link>
+                    </BreadcrumbItem>
+                  ))}
                 </Breadcrumb>
               </Flex>
             </Box>
           </Box>
 
           {/* Trailer Button */}
-          <Box mb="4">
-            <Button
-              onClick={() => {
-                if (trailerKey) {
+          {trailerKey && (
+            <Box mb="4">
+              <Button
+                onClick={() => {
                   const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
-                  window.open(trailerUrl, '_blank');
-                }
-              }}
-              variant="outline"
-              colorScheme="blue"
-            >
-              Watch Trailer
-            </Button>
-          </Box>
-
-          {/* Trailer */}
-          <Box 
-            overflow={'hidden'} w='full' mb='50px'
-            h={{base: '60vw', md: '80vh'}}
-          >
-            {
-              trailerKey ? (
-                <ReactPlayer
-                  ref={player}
-                  url={`https://www.youtube.com/watch?v=${handleFindTrailerKey()}`}
-                  width='100%'
-                  height='100%'
-                  controls
-                />
-              ) : (
-                <Image
-                  src={`${config?.images?.base_url}/original/${tvDetail?.backdrop_path}`}
-                  alt={`${tvDetail?.title || tvDetail?.name} poster`}
-                  objectFit='cover'
-                />
-              )
-            }
-          </Box>
+                  window.open(trailerUrl, "_blank");
+                }}
+                variant="outline"
+                colorScheme="blue"
+              >
+                Watch Trailer
+              </Button>
+            </Box>
+          )}
 
           {/* season */}
           <Box>
             {tvDetail?.seasons?.map((item, i) => {
-              const seasonDateFormated = moment(item?.air_date).format("MMMM Do YYYY");
+              const seasonDateFormated = moment(item?.air_date).format(
+                "MMMM Do YYYY"
+              );
               return (
                 <Flex
                   key={i}
-                  direction={{ base: 'column', sm: 'row' }}
-                  overflow='hidden'
-                  variant='outline'
-                  borderWidth='1px'
-                  borderRadius='lg'
-                  p='4'
-                  mb='8'
-                  alignItems={'start'}
-                  columnGap='8'
-                  minH={'300px'}
+                  direction={{ base: "column", sm: "row" }}
+                  overflow="hidden"
+                  variant="outline"
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  p="4"
+                  mb="8"
+                  alignItems={"start"}
+                  columnGap="8"
+                  minH={"300px"}
                 >
                   <Image
-                    objectFit='cover'
-                    display={{ base: 'none', md: 'block' }}
-                    maxW={{ base: '100%', sm: '200px' }}
+                    objectFit="cover"
+                    display={{ base: "none", md: "block" }}
+                    maxW={{ base: "100%", sm: "200px" }}
                     src={`${config?.images?.base_url}/original/${item.poster_path}`}
                     alt={`${item.name} poster`}
                   />
 
-                  <Stack flexGrow={1} minH={'300px'}>
-                    <Stack flexGrow={1} mt='4'>
+                  <Stack flexGrow={1} minH={"300px"}>
+                    <Stack flexGrow={1} mt="4">
                       <Heading
-                        size='lg' display={'inline-block'} mb='2'
+                        size="lg"
+                        display={"inline-block"}
+                        mb="2"
                       >
-                        {item.name} - {seasonDateFormated || ''}
+                        {item.name} - {seasonDateFormated || ""}
                       </Heading>
-                      <Heading size={'md'} mb={'6'}>
+                      <Heading size={"md"} mb={"6"}>
                         {item.episode_count} episodes
                       </Heading>
-                      <Text flexGrow={1} h='full' py='2' color={'decsColor'}>
-                        {item.overview || `${item.name} of ${tvDetail?.title || tvDetail?.name} premiered on ${seasonDateFormated || 'N/A'}`}
+                      <Text flexGrow={1} h="full" py="2" color={"decsColor"}>
+                        {item.overview ||
+                          `${item.name} of ${
+                            tvDetail?.title || tvDetail?.name
+                          } premiered on ${seasonDateFormated || "N/A"}`}
                       </Text>
                     </Stack>
-                    <Box display={'block'}>
+                    <Box display={"block"}>
                       <Link to={`/tv/${id}/season/${item.season_number}`}>
-                        <Button mb='6' variant='solid' colorScheme='blue'>
+                        <Button
+                          mb="6"
+                          variant="solid"
+                          colorScheme="blue"
+                        >
                           Watch Now
                         </Button>
                       </Link>
                     </Box>
                   </Stack>
                 </Flex>
-              )
+              );
             })}
           </Box>
-
           {/* likeList */}
           {tvDetail?.recommendations?.results?.length > 0 && (
             <Box>
