@@ -13,34 +13,34 @@ const NavInput = () => {
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearchTextChange = (e) => {
+  const handleSearchTextChange = async (e) => {
     setSearchText(e.target.value);
 
     // Perform search and update search results
-    dispatch(
+    const results = await dispatch(
       multiSearch({
         path: "search/multi",
         params: {
           query: e.target.value,
         },
       })
-    ).then((results) => {
-      setSearchResults(results); // Update search results
-    });
+    );
+
+    setSearchResults(results); // Update search results
   };
 
-  const handleSearchWithKeyWord = () => {
+  const handleSearchWithKeyWord = async () => {
     // Perform search and update search results
-    dispatch(
+    const results = await dispatch(
       multiSearch({
         path: "search/multi",
         params: {
           query: searchText,
         },
       })
-    ).then((results) => {
-      setSearchResults(results); // Update search results
-    });
+    );
+
+    setSearchResults(results); // Update search results
   };
 
   const handlePressEnter = (e) => {
