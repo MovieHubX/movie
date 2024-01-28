@@ -76,7 +76,7 @@ const NavInput = () => {
           autoCapitalize="off"
           position="relative"
           focusBorderColor="primaryColor"
-          placeholder="Search by name"
+          placeholder="-_-"
           _placeholder={{
             color: "decsColor",
           }}
@@ -88,7 +88,7 @@ const NavInput = () => {
             md: "md",
           }}
           w="full"
-          pr="40px"
+          pr="20px"
           pl="5px"
           onKeyDown={(e) => handlePressEnter(e)}
         />
