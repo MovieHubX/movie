@@ -11,12 +11,10 @@ const NavInput = () => {
   const dispatch = useDispatch();
   const searchInput = useRef(null);
   const [searchText, setSearchText] = useState('');
-  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
-    setIsSearchBarOpen(true);
 
     // Perform search and update search results
     dispatch(
@@ -43,7 +41,6 @@ const NavInput = () => {
     ).then((results) => {
       setSearchResults(results); // Update search results
     });
-    setIsSearchBarOpen(true);
   };
 
   const handlePressEnter = (e) => {
@@ -54,21 +51,30 @@ const NavInput = () => {
 
   return (
     <Box
-      w={{
-        base: "55%",
-        lg: "40%",
-      }}
-      position="relative"
-      ml="auto"
-      mr={{ lg: "10px" }}
+      w="100%" // Full width
+      position="fixed"
+      top="0"
+      bg="white" // Adjust the background color as needed
+      boxShadow="sm" // Add shadow as needed
+      zIndex="1000" // Ensure it's above other elements
+      p="2"
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
     >
+      {/* Left side of the nav bar, you can place your logo or other items here */}
+      <Box>
+        {/* Your logo or other items */}
+      </Box>
+
+      {/* Right side of the nav bar, the search input and icon */}
       <Box position="relative" overflow="hidden">
         <Input
           variant="flushed"
           autoCapitalize="off"
           position="relative"
           focusBorderColor="primaryColor"
-          placeholder="-_-"
+          placeholder="Search..."
           _placeholder={{
             color: "decsColor",
           }}
@@ -98,15 +104,28 @@ const NavInput = () => {
           <Search2Icon />
         </Box>
       </Box>
-      {isSearchBarOpen && (
-        <SearchTopKeyWordsList
-          searchResults={searchResults}
-          handleClickListKeyWords={(text) => {
-            setSearchText(text);
-            setIsSearchBarOpen(false);
-          }}
-        />
-      )}
+
+      {/* Optionally, you can add other elements on the right side of the nav bar */}
+    </Box>
+
+    {/* Below the nav bar, the separate search bar */}
+    <Box
+      w="100%" // Full width
+      position="fixed"
+      top="60px" // Adjust the top position based on your nav bar's height
+      bg="white" // Adjust the background color as needed
+      boxShadow="sm" // Add shadow as needed
+      zIndex="999" // Ensure it's above other elements
+      p="2"
+    >
+      {/* Your separate search bar content */}
+      <SearchTopKeyWordsList
+        searchResults={searchResults}
+        handleClickListKeyWords={(text) => {
+          setSearchText(text);
+          handleSearchWithKeyWord();
+        }}
+      />
     </Box>
   );
 };
