@@ -4,7 +4,7 @@ const baseUrl = "https://api.themoviedb.org/3/";
 const token = process.env.REACT_APP_TMDB_TOKEN || '3fac70260a5a4a0cc9324207af7f9c8c';
 
 let headers = {
-  Authorization: `Bearer ${apiKey}`,
+  Authorization: `Bearer ${token}`,
   'Content-Type': 'application/json;charset=utf-8',
 };
 
