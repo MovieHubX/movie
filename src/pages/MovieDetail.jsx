@@ -50,7 +50,19 @@ export const MovieDetail = () => {
     <Box mt={"50px"}>
       {status === 'done' ? (
         <Box>
-          {/* info  */}
+          {/* Released Date section */}
+          <Flex align="center" mb="2">
+            <Box mr="10px" color={"textColor"}>
+              Released Date:
+            </Box>
+            <Breadcrumb separator="," spacing="3px">
+              <BreadcrumbItem>
+                <Text>{movieDetail?.release_date}</Text>
+              </BreadcrumbItem>
+            </Breadcrumb>
+          </Flex>
+
+          {/* Movie info */}
           <Box
             color={"decsColor"}
             _notLast={{
@@ -59,18 +71,6 @@ export const MovieDetail = () => {
               },
             }}
           >
-            {/* New Flex container for the released date */}
-            <Flex align="center" mb="2">
-              <Box mr="10px" color={"textColor"}>
-                Released Date:
-              </Box>
-              <Breadcrumb separator="," spacing="3px">
-                <BreadcrumbItem>
-                  <Text>{movieDetail?.release_date}</Text>
-                </BreadcrumbItem>
-              </Breadcrumb>
-            </Flex>
-
             <Box>
               <Breadcrumb
                 separator={"  -  "}
@@ -148,8 +148,8 @@ export const MovieDetail = () => {
               <Text>{movieDetail?.overview}</Text>
             </Box>
 
+            {/* Genre section */}
             <Flex align="center">
-              {/* Move the Genre in the same Flex container */}
               <Box mr="10px" color={"textColor"}>
                 Genre:
               </Box>
@@ -165,7 +165,7 @@ export const MovieDetail = () => {
             </Flex>
           </Box>
 
-          {/* video render */}
+          {/* Video render */}
           <Box
             maxW="100%"
             w="full"
@@ -180,7 +180,7 @@ export const MovieDetail = () => {
             />
           </Box>
 
-          {/* likeList */}
+          {/* Like list */}
           {movieDetail?.recommendations?.results?.length > 0 && (
             <Box>
               <Heading fontSize="2xl" mt="50px">
