@@ -136,7 +136,19 @@ export const TvDetail = () => {
             >
               <Text>{tvDetail?.overview}</Text>
             </Box>
-
+            
+          {/* Released Date section */}
+          <Flex align="center" mb="2">
+            <Box mr="10px" color={"textColor"}>
+              Released Date:
+            </Box>
+            <Breadcrumb separator="," spacing="3px">
+              <BreadcrumbItem>
+                <Text>{movieDetail?.release_date}</Text>
+              </BreadcrumbItem>
+            </Breadcrumb>
+          </Flex>
+            
             <Flex align="center">
               <Box mr="10px" color={"textColor"}>
                 Genre :
