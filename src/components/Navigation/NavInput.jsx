@@ -68,7 +68,7 @@ const NavInput = () => {
       }}
       position="relative"
       ml="auto"
-      mr={{ lg: "50px" }}
+      mr={{ lg: "10px" }}
     >
       <Box position="relative" overflow="hidden">
         <Input
@@ -76,7 +76,7 @@ const NavInput = () => {
           autoCapitalize="off"
           position="relative"
           focusBorderColor="primaryColor"
-          placeholder="Search by name"
+          placeholder="-_-"
           _placeholder={{
             color: "decsColor",
           }}
