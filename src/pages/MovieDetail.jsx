@@ -80,8 +80,10 @@ export const MovieDetail = () => {
               </Breadcrumb>
 
               <Flex align={"center"}>
-                {/* Combined border for Rating and Star Icon */}
+                {/* Enhanced styling for the combined rating and star */}
                 <Box
+                  display="flex"
+                  alignItems="center"
                   border="1px solid"
                   borderColor="primaryColor"
                   p="2"
@@ -90,19 +92,13 @@ export const MovieDetail = () => {
                 >
                   <Text
                     color="primaryColor"
-                    lineHeight={"0"}
                     fontWeight="bold"
-                    fontSize={"18px"}
+                    fontSize="18px"
+                    pr="2"
                   >
                     {movieDetail?.vote_average.toFixed(1)}
                   </Text>
-                  <StarIcon
-                    color="yellow"
-                    ml="2"
-                    // Additional styling for the star icon
-                    border="none"
-                    p="0"
-                  />
+                  <StarIcon color="yellow" />
                 </Box>
               </Flex>
             </Box>
