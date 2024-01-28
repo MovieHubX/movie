@@ -80,20 +80,30 @@ export const MovieDetail = () => {
               </Breadcrumb>
 
               <Flex align={"center"}>
-                <Text
-                  color="primaryColor"
-                  lineHeight={"0"}
-                  fontWeight="bold"
-                  fontSize={"18px"}
-                  // Add border styling to the rating
+                {/* Combined border for Rating and Star Icon */}
+                <Box
                   border="1px solid"
                   borderColor="primaryColor"
                   p="2"
                   borderRadius="md"
+                  mr="4"
                 >
-                  {movieDetail?.vote_average.toFixed(1)}
-                </Text>
-                <StarIcon color="yellow" ml="5px" />
+                  <Text
+                    color="primaryColor"
+                    lineHeight={"0"}
+                    fontWeight="bold"
+                    fontSize={"18px"}
+                  >
+                    {movieDetail?.vote_average.toFixed(1)}
+                  </Text>
+                  <StarIcon
+                    color="yellow"
+                    ml="2"
+                    // Additional styling for the star icon
+                    border="none"
+                    p="0"
+                  />
+                </Box>
               </Flex>
             </Box>
 
@@ -108,7 +118,7 @@ export const MovieDetail = () => {
             </Box>
 
             <Flex align="center">
-              {/* Move the Genre and Rating in the same Flex container */}
+              {/* Move the Genre and Watch Trailer button in the same Flex container */}
               <Box mr="10px" color={"textColor"}>
                 Genre :
               </Box>
@@ -122,7 +132,6 @@ export const MovieDetail = () => {
                 })}
               </Breadcrumb>
 
-              {/* Trailer Button */}
               {trailerKey && (
                 <Box ml="4">
                   <Button
