@@ -1,20 +1,24 @@
 import { Search2Icon } from "@chakra-ui/icons";
 import { Box, Input } from "@chakra-ui/react";
-import React, { memo, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { memo, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-import { multiSearch } from "../../services/searchSlice";
+import { multiSearch, clearSearchResults } from "../../services/searchSlice";
 import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
 
 const NavInput = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const searchInput = useRef(null);
   const [searchText, setSearchText] = useState("");
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
+  const searchResults = useSelector((state) => state.search.results);
 
   const handleSearchTextChange = (e) => {
-    setSearchText(e.target.value);
+    const newSearchText = e.target.value;
+    setSearchText(newSearchText);
+    dispatch(multiSearch({ path: "search/multi", params: { query: newSearchText } }));
   };
 
   const handleSearchWithKeyWord = () => {
@@ -28,15 +32,32 @@ const NavInput = () => {
           },
         })
       );
-      setSearchText("");
       navigate(`/search`);
-      setIsSearchBarVisible(false);
     }
   };
 
   const toggleSearchBar = () => {
     setIsSearchBarVisible(!isSearchBarVisible);
   };
+
+  const handlePressEnter = (e) => {
+    if (e.key === "Enter") {
+      handleSearchWithKeyWord();
+    }
+  };
+
+  useEffect(() => {
+    if (isSearchBarVisible) {
+      searchInput.current.focus();
+    }
+  }, [isSearchBarVisible]);
+
+  useEffect(() => {
+    // Clear search results when the component unmounts
+    return () => {
+      dispatch(clearSearchResults());
+    };
+  }, [dispatch]);
 
   return (
     <Box
@@ -79,9 +100,8 @@ const NavInput = () => {
           }}
           pr="40px"
           pl="5px"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleSearchWithKeyWord();
-          }}
+          onKeyDown={(e) => handlePressEnter(e)}
+          ref={searchInput}
         />
         {/* Search icon within the input */}
         <Box
@@ -99,9 +119,10 @@ const NavInput = () => {
         </Box>
       </Box>
 
-      {isSearchBarVisible && (
+      {isSearchBarVisible && searchResults && searchResults.length > 0 && (
         <SearchTopKeyWordsList
           handleClickListKeyWords={handleSearchWithKeyWord}
+          searchResults={searchResults}
         />
       )}
     </Box>
