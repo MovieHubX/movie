@@ -203,7 +203,7 @@ const Slider = () => {
                       transition={{ duration: 0.5, delay: 0.7, ease: "easeOut" }}
                       variants={variants}
                     >
-                      <Text my='20px' fontSize={{
+                      <Text my='15px' fontSize={{
                         base: '15px',
                         md: '18px',
                       }}>{subString}</Text>
@@ -221,7 +221,7 @@ const Slider = () => {
                         alignItems='center' 
                         columnGap='4'
                         h={{ base: '45px', md: '55px' }}
-                        mt={{ base: '15%', md: '60px' }}
+                        mt={{ base: '5%', md: '40px' }}
                       >
                         <ButtonWhite href={`/${item?.media_type}/${item?.id}`} >
                           <BsFillPlayFill size={'30px'} style={{ marginRight: '10px' }} />
