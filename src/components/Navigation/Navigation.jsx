@@ -140,7 +140,7 @@ const NavInput = () => {
       <Box
         position="absolute"
         top="55px"  // Adjust the top position based on your navigation bar height
-        right="100px"   // Align to the rightmost part
+        right="0px"   // Align to the rightmost part
         bg="rgba(21, 31, 50, 1)"
         zIndex={999}  // Lower zIndex to appear below navigation bar
         p="10px"
@@ -171,7 +171,7 @@ const NavInput = () => {
           />
           <Box
             position="absolute"
-            right="15px"
+            right="100px"
             top="50%"
             transform="translateY(-50%)"
             zIndex={500}
