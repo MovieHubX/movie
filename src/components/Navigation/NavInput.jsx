@@ -12,16 +12,17 @@ import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
 
 const NavInput = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const searchInput = useRef(null);
-  const [, startTransition] = useTransition()
+  const [, startTransition] = useTransition();
   const [searchText, setSearchText] = useState('');
-  const [queryText, setQueryText] = useState('')
+  const [queryText, setQueryText] = useState('');
   const [isShow, setIsShow] = useState(false);
+
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
     startTransition(() => {
-      setQueryText(e.target.value)
+      setQueryText(e.target.value);
       dispatch(
         multiSearch({
           path: "search/multi",
@@ -30,12 +31,13 @@ const NavInput = () => {
           },
         })
       );
-      setIsShow(true)
-    })
+      setIsShow(true);
+    });
   };
+
   useEffect(() => {
-    setIsShow(document.activeElement.tagName === "INPUT")
-  }, [document.activeElement.tagName])
+    setIsShow(document.activeElement.tagName === "INPUT");
+  }, [document.activeElement.tagName]);
 
   const handleSearchWithKeyWord = useCallback((text = queryText) => {
     if (text) {
@@ -49,17 +51,21 @@ const NavInput = () => {
       );
       // navigate to search page
       setSearchText(text);
-      navigate(`/search`)
+      navigate(`/search`);
       searchInput.current.blur();
-      setIsShow(false)
+      setIsShow(false);
+    } else {
+      // If search bar is empty, focus on the input field
+      searchInput.current.focus();
     }
-  }, [queryText]);
+  }, [queryText, navigate]);
 
   const handlePressEnter = (e) => {
     if (e.key === "Enter") {
       handleSearchWithKeyWord();
     }
   };
+
   return (
     <Box
       w={{
