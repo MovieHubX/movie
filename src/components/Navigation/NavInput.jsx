@@ -36,7 +36,7 @@ const NavInput = () => {
     });
   };
 
-  const handleSearchWithKeyWord = useCallback((text = queryText) => {
+  const handleSearchWithKeyWord = useCallback((text = queryText, shouldNavigate = true) => {
     if (text) {
       dispatch(
         multiSearch({
@@ -46,12 +46,15 @@ const NavInput = () => {
           },
         })
       );
-      // navigate to search page
-      setSearchText(text);
-      navigate(`/search`);
-      searchInput.current.blur();
-      setIsShow(false);
-      setIsSearchOpen(false); // Close search bar after search
+
+      if (shouldNavigate) {
+        // navigate to search page
+        setSearchText(text);
+        navigate(`/search`);
+        searchInput.current.blur();
+        setIsShow(false);
+        setIsSearchOpen(false); // Close search bar after search
+      }
     }
   }, [queryText, navigate]);
 
@@ -62,9 +65,12 @@ const NavInput = () => {
   };
 
   const handleSearchIconClick = () => {
-    if (searchText) {
-      // Trigger search only if there is a keyword
-      handleSearchWithKeyWord();
+    if (isSearchOpen) {
+      // Trigger search directly if in the new search bar
+      handleSearchWithKeyWord(searchText, false);
+    } else {
+      setIsSearchOpen(!isSearchOpen);
+      handleSearchWithKeyWord(); // Call handleSearchWithKeyWord on search icon click for the main nav bar
     }
   };
 
@@ -176,7 +182,7 @@ const NavInput = () => {
             fontSize="20px"
             color="textColor"
             cursor="pointer"
-            onClick={() => handleSearchIconClick()}
+            onClick={() => handleSearchWithKeyWord()}
           >
             <Link to="/search">
               <Search2Icon />
