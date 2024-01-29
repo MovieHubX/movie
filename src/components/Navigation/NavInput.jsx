@@ -65,7 +65,7 @@ const NavInput = () => {
   };
 
   const handleSearchIconClick = () => {
-    // Trigger search directly when clicking the search icon in the new search bar
+    // Trigger search directly without closing the new search bar
     handleSearchWithKeyWord(searchText, false);
   };
 
@@ -124,17 +124,15 @@ const NavInput = () => {
           {/* Add your navigation links here */}
         </Box>
 
-        {/* Conditional rendering of the Search Icon */}
-        {!isSearchOpen && (
-          <Box
-            fontSize="20px"
-            color="textColor"
-            cursor="pointer"
-            onClick={handleSearchIconClick}
-          >
-            <Search2Icon />
-          </Box>
-        )}
+        {/* Search Icon */}
+        <Box
+          fontSize="20px"
+          color="textColor"
+          cursor="pointer"
+          onClick={handleSearchIconClick}
+        >
+          <Search2Icon />
+        </Box>
       </Box>
 
       {/* Search Bar */}
