@@ -1,13 +1,4 @@
-import { Search2Icon } from "@chakra-ui/icons";
-import { Box, Input } from "@chakra-ui/react";
-import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-
-import {
-  multiSearch
-} from "../../services/searchSlice";
-import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
+// ... (import statements)
 
 const NavInput = () => {
   const dispatch = useDispatch();
@@ -70,20 +61,20 @@ const NavInput = () => {
     const handleEscapeKey = (e) => {
       if (e.key === "Escape") {
         setIsShow(false);
-        setIsSearchOpen(false); // Close search bar on escape key
+        setIsSearchOpen(false);
       }
     };
 
     const handleOutsideClick = (e) => {
       if (!searchInput.current.contains(e.target)) {
         setIsShow(false);
-        setIsSearchOpen(false); // Close search bar on outside click
+        setIsSearchOpen(false);
       }
     };
 
     const handleInputFocus = () => {
       setIsShow(true);
-      setIsSearchOpen(true); // Open search bar on input focus
+      setIsSearchOpen(true);
     };
 
     const handleInputBlur = () => {
@@ -106,13 +97,12 @@ const NavInput = () => {
   return (
     <Box
       w="100%"
-      position="absolute"
-      top={isSearchOpen ? "55px" : "0"}  // Adjust the top position based on your navigation bar height
-      left="0"
+      position="fixed"  // Fixed positioning
+      top="0"  // Always at the top
       bg="rgba(21, 31, 50, 1)"
       zIndex={1000}
       p="10px"
-      transition="top 0.3s ease-in-out"  // Add transition effect
+      transition="top 0.3s ease-in-out"
     >
       <Box position="relative" overflow="hidden">
         <Input
