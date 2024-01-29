@@ -165,7 +165,7 @@ const NavInput = () => {
               md: "md",
             }}
             w="full"
-            pr="100px"
+            pr="40px"
             pl="5px"
             onKeyDown={(e) => handlePressEnter(e)}
           />
