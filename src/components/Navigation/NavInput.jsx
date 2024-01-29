@@ -50,6 +50,7 @@ const NavInput = () => {
       navigate(`/search`);
       searchInput.current.blur();
       setIsShow(false);
+      setIsSearchOpen(false); // Close search bar after search
     } else {
       // If search bar is empty, focus on the input field
       searchInput.current.focus();
@@ -104,30 +105,26 @@ const NavInput = () => {
   }, []);
 
   return (
-    <>
+    <Box
+      w="100%"
+      position="relative"
+      bg="rgba(21, 31, 50, 1)"
+      zIndex={1000}
+      p="10px"
+    >
       {/* Navigation Bar */}
-      <Box
-        w="100%"
-        position="fixed"
-        top="0"
-        left="0"
-        bg="rgba(21, 31, 50, 1)"
-        zIndex={1000}
-        p="10px"
-      >
-        {/* Add your navigation links and logo here */}
-      </Box>
+      {/* Add your navigation links and logo here */}
 
       {/* Search Bar */}
       <Box
-        w="100%"
         position="absolute"
-        top={isSearchOpen ? "55px" : "0"}  // Adjust the top position based on your navigation bar height
+        top="55px"  // Adjust the top position based on your navigation bar height
         left="0"
         bg="rgba(21, 31, 50, 1)"
         zIndex={999}  // Lower zIndex to appear below navigation bar
         p="10px"
         transition="top 0.3s ease-in-out"  // Add transition effect
+        display={isSearchOpen ? "block" : "none"}  // Control display based on search bar open state
       >
         <Box position="relative" overflow="hidden">
           <Input
@@ -173,7 +170,7 @@ const NavInput = () => {
           />
         )}
       </Box>
-    </>
+    </Box>
   );
 };
 
