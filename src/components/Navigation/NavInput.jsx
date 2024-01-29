@@ -39,23 +39,22 @@ const NavInput = () => {
     setIsShow(document.activeElement.tagName === "INPUT");
   }, [document.activeElement.tagName]);
 
-  const handleSearchWithKeyWord = useCallback((text = queryText) => {
-    if (text) {
+  const handleSearchWithKeyWord = useCallback(() => {
+    if (queryText) {
       dispatch(
         multiSearch({
           path: "search/multi",
           params: {
-            query: text,
+            query: queryText,
           },
         })
       );
       // navigate to search page
-      setSearchText(text);
       navigate(`/search`);
       searchInput.current.blur();
       setIsShow(false);
     }
-  }, [queryText, navigate]);
+  }, [queryText, dispatch, navigate]);
 
   const handlePressEnter = (e) => {
     if (e.key === "Enter") {
@@ -64,7 +63,7 @@ const NavInput = () => {
   };
 
   const handleSearchIconClick = () => {
-    handleSearchWithKeyWord(searchText);
+    handleSearchWithKeyWord();
   };
 
   return (
