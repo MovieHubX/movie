@@ -65,13 +65,8 @@ const NavInput = () => {
   };
 
   const handleSearchIconClick = () => {
-    if (isSearchOpen) {
-      // Trigger search directly if in the new search bar
-      handleSearchWithKeyWord(searchText, false);
-    } else {
-      setIsSearchOpen(!isSearchOpen);
-      handleSearchWithKeyWord(); // Call handleSearchWithKeyWord on search icon click for the main nav bar
-    }
+    // Trigger search directly when clicking the search icon in the new search bar
+    handleSearchWithKeyWord(searchText, false);
   };
 
   useEffect(() => {
