@@ -36,10 +36,8 @@ const NavInput = () => {
   };
 
   useEffect(() => {
-    // Destructure activeElement to prevent spread operator error
-    const { tagName } = document.activeElement || {};
-    
-    setIsShow(tagName === "INPUT");
+    // Use Optional Chaining operator to avoid spread operator error
+    setIsShow(document.activeElement?.tagName === "INPUT");
   }, [document.activeElement.tagName]);
 
   const handleSearchWithKeyWord = useCallback((text = queryText) => {
