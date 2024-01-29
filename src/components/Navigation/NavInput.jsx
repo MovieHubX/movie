@@ -10,7 +10,7 @@ import {
 } from "../../services/searchSlice";
 import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
 
-const SearchBar = () => {
+const NavInput = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const searchInput = useRef(null);
@@ -18,6 +18,7 @@ const SearchBar = () => {
   const [searchText, setSearchText] = useState('');
   const [queryText, setQueryText] = useState('');
   const [isShow, setIsShow] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
@@ -50,6 +51,7 @@ const SearchBar = () => {
       navigate(`/search`);
       searchInput.current.blur();
       setIsShow(false);
+      setIsSearchOpen(false); // Close search bar after search
     } else {
       // If search bar is empty, focus on the input field
       searchInput.current.focus();
@@ -62,21 +64,28 @@ const SearchBar = () => {
     }
   };
 
+  const handleSearchIconClick = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
+
   useEffect(() => {
     const handleEscapeKey = (e) => {
       if (e.key === "Escape") {
         setIsShow(false);
+        setIsSearchOpen(false); // Close search bar on escape key
       }
     };
 
     const handleOutsideClick = (e) => {
       if (!searchInput.current.contains(e.target)) {
         setIsShow(false);
+        setIsSearchOpen(false); // Close search bar on outside click
       }
     };
 
     const handleInputFocus = () => {
       setIsShow(true);
+      setIsSearchOpen(true); // Open search bar on input focus
     };
 
     const handleInputBlur = () => {
@@ -98,13 +107,13 @@ const SearchBar = () => {
 
   return (
     <Box
-      position="fixed"
-      top="55px" // Adjust the top position based on your navigation bar height
+      position="absolute"
       left="0"
       right="0"
-      zIndex={999}
+      zIndex={999}  // Adjust zIndex as needed
       bg="rgba(21, 31, 50, 1)"
-      display={isShow ? "block" : "none"}
+      transition="top 0.3s ease-in-out"  // Add transition effect
+      display={isSearchOpen ? "block" : "none"}  // Control display based on search bar open state
     >
       <Box position="relative" overflow="hidden">
         <Input
@@ -150,50 +159,4 @@ const SearchBar = () => {
   );
 };
 
-const NavInput = () => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-
-  const handleSearchIconClick = () => {
-    setIsSearchOpen(!isSearchOpen);
-  };
-
-  return (
-    <Box
-      w="100%"
-      position="relative"
-      bg="rgba(21, 31, 50, 1)"
-      zIndex={1000}
-      p="10px"
-    >
-      {/* Navigation Bar */}
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        {/* Logo and Navigation Links */}
-        <Box>
-          {/* Add your logo here */}
-          {/* Add your navigation links here */}
-        </Box>
-
-        {/* Search Icon */}
-        <Box
-          fontSize="20px"
-          color="textColor"
-          cursor="pointer"
-          onClick={handleSearchIconClick}
-        >
-          <Search2Icon />
-        </Box>
-      </Box>
-    </Box>
-  );
-};
-
-export default memo(() => (
-  <>
-    <NavInput />
-    <SearchBar />
-  </>
-));
+export default memo(NavInput);
