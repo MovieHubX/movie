@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Search2Icon } from "@chakra-ui/icons";
-import { Box, Flex, Input, Stack } from "@chakra-ui/react";
+import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { multiSearch } from "../../services/searchSlice";
+
+import {
+  multiSearch
+} from "../../services/searchSlice";
 import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
-import MenuMobile from "./MenuMobile";
 
 const NavInput = () => {
   const dispatch = useDispatch();
@@ -44,6 +46,7 @@ const NavInput = () => {
           },
         })
       );
+      // navigate to search page
       setSearchText(text);
       navigate(`/search`);
       searchInput.current.blur();
@@ -103,114 +106,89 @@ const NavInput = () => {
   }, []);
 
   return (
-    <Box
-      position="absolute"
-      left="0"
-      right="0"
-      zIndex={999}  // Adjust zIndex as needed
-      bg="rgba(21, 31, 50, 1)"
-      transition="top 0.3s ease-in-out"  // Add transition effect
-      display={isSearchOpen ? "block" : "none"}  // Control display based on search bar open state
-    >
-      <Box position="relative" overflow="hidden">
-        <Input
-          variant="flushed"
-          autoCapitalize="off"
-          position="relative"
-          focusBorderColor="primaryColor"
-          placeholder="-_-"
-          _placeholder={{
-            color: "decsColor",
-          }}
-          value={searchText}
-          onChange={(e) => handleSearchTextChange(e)}
-          ref={searchInput}
-          fontSize={{
-            base: "sm",
-            md: "md",
-          }}
-          onKeyDown={(e) => handlePressEnter(e)}
-        />
+    <>
+      {/* Navigation Bar */}
+      <Box
+        w="100%"
+        bg="rgba(21, 31, 50, 1)"
+        zIndex={1000}
+        p="10px"
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        {/* Logo and Navigation Links */}
+        <Box>
+          {/* Add your logo here */}
+          {/* Add your navigation links here */}
+        </Box>
+
+        {/* Search Icon */}
         <Box
-          position="absolute"
-          right="15px"
-          top="50%"
-          transform="translateY(-50%)"
-          zIndex={500}
           fontSize="20px"
           color="textColor"
           cursor="pointer"
-          onClick={() => handleSearchWithKeyWord()}
+          onClick={handleSearchIconClick}
         >
-          <Link to="/search">
-            <Search2Icon />
-          </Link>
-        </Box>
-      </Box>
-      {isShow && (
-        <SearchTopKeyWordsList
-          handleClickListKeyWords={handleSearchWithKeyWord}
-        />
-      )}
-    </Box>
-  );
-};
-
-const Menu = () => {
-  return (
-    <Flex alignItems={"center"}>
-      <Stack direction={"row"} spacing={7}>
-        {/* Search Icon */}
-        <Box fontSize="20px" color="textColor" cursor="pointer" onClick={handleSearchIconClick}>
           <Search2Icon />
         </Box>
-
-        {/* Menu desktop */}
-        <HStack spacing="30px" display={{ base: "none", lg: "flex" }}>
-          {/* ... (previous code for desktop menu) */}
-        </HStack>
-
-        {/* Menu mobile */}
-        <MenuMobile navs={navs} />
-      </Stack>
-    </Flex>
-  );
-};
-
-const Navigation = () => {
-  return (
-    <Box zIndex="100" position={"relative"}>
-      <Box
-        position="fixed"
-        top="0"
-        left="0"
-        right="0"
-        w="full"
-        zIndex="100"
-        boxShadow="rgba(0, 0, 0, 0.15) 0px 5px 15px"
-        bg={'primaryDarkColor'}
-      >
-        <Box layerStyle={"containerStyles"}>
-          <Flex
-            h={"55px"}
-            alignItems={"center"}
-            justifyContent={"space-between"}
-          >
-            {/* Logo */}
-            <Box fontWeight="extrabold" color="primaryColor" fontSize="lg">
-              <Link to="/">MovieHubX</Link>
-            </Box>
-
-            {/* Input */}
-            <NavInput />
-
-            {/* Menu */}
-            <Menu />
-          </Flex>
-        </Box>
       </Box>
-    </Box>
+
+      {/* Search Bar */}
+      <Box
+        position="absolute"
+        top="55px"  // Adjust the top position based on your navigation bar height
+        left="0"
+        right="0"  // Set right to 0 to extend to the right edge
+        bg="rgba(21, 31, 50, 1)"
+        zIndex={999}  // Lower zIndex to appear below navigation bar
+        transition="top 0.3s ease-in-out"  // Add transition effect
+        display={isSearchOpen ? "block" : "none"}  // Control display based on search bar open state
+        p="10px"
+      >
+        <Box position="relative" overflow="hidden">
+          <Input
+            variant="flushed"
+            autoCapitalize="off"
+            position="relative"
+            focusBorderColor="primaryColor"
+            placeholder="-_-"
+            _placeholder={{
+              color: "decsColor",
+            }}
+            value={searchText}
+            onChange={(e) => handleSearchTextChange(e)}
+            ref={searchInput}
+            fontSize={{
+              base: "sm",
+              md: "md",
+            }}
+            onKeyDown={(e) => handlePressEnter(e)}
+          />
+          <Box
+            position="absolute"
+            right="15px"
+            top="50%"
+            transform="translateY(-50%)"
+            zIndex={500}
+            fontSize="20px"
+            color="textColor"
+            cursor="pointer"
+            onClick={() => handleSearchWithKeyWord()}
+          >
+            <Link to="/search">
+              <Search2Icon />
+            </Link>
+          </Box>
+        </Box>
+        {isShow && (
+          <SearchTopKeyWordsList
+            handleClickListKeyWords={handleSearchWithKeyWord}
+          />
+        )}
+      </Box>
+    </>
   );
 };
 
-export default memo(Navigation);
+export default memo(NavInput);
