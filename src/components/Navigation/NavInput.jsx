@@ -36,7 +36,10 @@ const NavInput = () => {
   };
 
   useEffect(() => {
-    setIsShow(document.activeElement.tagName === "INPUT");
+    // Destructure activeElement to prevent spread operator error
+    const { tagName } = document.activeElement || {};
+    
+    setIsShow(tagName === "INPUT");
   }, [document.activeElement.tagName]);
 
   const handleSearchWithKeyWord = useCallback((text = queryText) => {
