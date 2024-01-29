@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Search2Icon } from "@chakra-ui/icons";
 import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
@@ -18,6 +17,7 @@ const NavInput = () => {
   const [searchText, setSearchText] = useState('');
   const [queryText, setQueryText] = useState('');
   const [isShow, setIsShow] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
@@ -62,21 +62,28 @@ const NavInput = () => {
     }
   };
 
+  const handleSearchClick = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
+
   useEffect(() => {
     const handleEscapeKey = (e) => {
       if (e.key === "Escape") {
         setIsShow(false);
+        setIsSearchOpen(false); // Close search bar on escape key
       }
     };
 
     const handleOutsideClick = (e) => {
       if (!searchInput.current.contains(e.target)) {
         setIsShow(false);
+        setIsSearchOpen(false); // Close search bar on outside click
       }
     };
 
     const handleInputFocus = () => {
       setIsShow(true);
+      setIsSearchOpen(true); // Open search bar on input focus
     };
 
     const handleInputBlur = () => {
@@ -98,13 +105,14 @@ const NavInput = () => {
 
   return (
     <Box
-      w={{
-        base: "55%",
-        lg: "20%",
-      }}
-      position="relative"
-      ml="auto"
-      mr={{ lg: "50px" }}
+      w="100%"
+      position="absolute"
+      top={isSearchOpen ? "55px" : "0"}  // Adjust the top position based on your navigation bar height
+      left="0"
+      bg="rgba(21, 31, 50, 1)"
+      zIndex={1000}
+      p="10px"
+      transition="top 0.3s ease-in-out"  // Add transition effect
     >
       <Box position="relative" overflow="hidden">
         <Input
@@ -128,7 +136,6 @@ const NavInput = () => {
           pl="5px"
           onKeyDown={(e) => handlePressEnter(e)}
         />
-        {/* search icon */}
         <Box
           position="absolute"
           right="15px"
