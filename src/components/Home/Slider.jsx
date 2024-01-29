@@ -28,7 +28,7 @@ const SliderButton = memo(forwardRef(({ icon, direction = 'left' || 'right' }, r
       display={{ base: "none", md: "block" }}
       transform="translateY(-50%)"
       {
-        ...direction === 'left' ? { left: "0" } : { right: "0" }
+        ...(direction === 'left' ? { left: "0" } : { right: "0" })
       }
       zIndex="10"
       color="rgba(50, 138, 241, .6)"
