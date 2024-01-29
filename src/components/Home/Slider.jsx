@@ -203,7 +203,7 @@ const Slider = () => {
                       transition={{ duration: 0.5, delay: 0.7, ease: "easeOut" }}
                       variants={variants}
                     >
-                      <Text my='15px' fontSize={{
+                      <Text my='20px' fontSize={{
                         base: '15px',
                         md: '18px',
                       }}>{subString}</Text>
@@ -212,7 +212,7 @@ const Slider = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 50 }}
                       animate={i === activeSlide ? 'show' : 'hidden'}
-                      transition={{ duration: 0.5, delay: 1, ease: "easeOut" }}
+                      transition={{ duration: 0.5, delay: 0.9, ease: "easeOut" }}
                       variants={variants}
                     >
                       <Box
@@ -221,7 +221,7 @@ const Slider = () => {
                         alignItems='center' 
                         columnGap='4'
                         h={{ base: '45px', md: '55px' }}
-                        mt={{ base: '10%', md: '50px' }}
+                        mt={{ base: '15%', md: '60px' }}
                       >
                         <ButtonWhite href={`/${item?.media_type}/${item?.id}`} >
                           <BsFillPlayFill size={'30px'} style={{ marginRight: '10px' }} />
