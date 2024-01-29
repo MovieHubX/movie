@@ -140,15 +140,14 @@ const NavInput = () => {
       <Box
         position="absolute"
         top="55px"  // Adjust the top position based on your navigation bar height
-        left="0"   // Align to the leftmost part
-        width="100%"  // Take the whole width
+        right="100px"   // Align to the rightmost part
         bg="rgba(21, 31, 50, 1)"
         zIndex={999}  // Lower zIndex to appear below navigation bar
         p="10px"
         transition="top 0.3s ease-in-out"  // Add transition effect
         display={isSearchOpen ? "block" : "none"}  // Control display based on search bar open state
       >
-        <Box position="relative" overflow="hidden" w="100%"> {/* Added width property */}
+        <Box position="relative" overflow="hidden">
           <Input
             variant="flushed"
             autoCapitalize="off"
