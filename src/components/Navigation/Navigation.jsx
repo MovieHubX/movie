@@ -123,6 +123,9 @@ const NavInput = () => {
         <Box>
           {/* Add your logo here */}
           {/* Add your navigation links here */}
+          <Link to="/">Home</Link>
+          <Link to="/movies">Movies</Link>
+          {/* Add more navigation links as needed */}
         </Box>
 
         {/* Search Icon */}
