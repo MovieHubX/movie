@@ -68,27 +68,17 @@ const NavInput = () => {
 
   const handleEscapeKey = (e) => {
     if (e.key === "Escape") {
-      // Handle escape key press, go back to previous state
+      // Handle escape key press, go back to the previous state
       setIsShow(false);
     }
   };
 
   const handleOutsideClick = (e) => {
-    // Handle click outside the component, go back to previous state
+    // Handle click outside the component, go back to the previous state
     if (!searchInput.current.contains(e.target)) {
       setIsShow(false);
     }
   };
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleEscapeKey);
-    document.addEventListener("mousedown", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscapeKey);
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
 
   return (
     <Box
@@ -132,7 +122,7 @@ const NavInput = () => {
           fontSize="20px"
           color="textColor"
           cursor={"pointer"}
-          onClick={() => handleSearchWithKeyWord()}
+          onClick={() => handleSearchWithKeyWord(queryText)} {/* Pass queryText as an argument */}
         >
           <Link to="/search">
             <Search2Icon />
