@@ -35,11 +35,6 @@ const NavInput = () => {
     });
   };
 
-  useEffect(() => {
-    // Use Optional Chaining operator to avoid spread operator error
-    setIsShow(document.activeElement?.tagName === "INPUT");
-  }, [document.activeElement.tagName]);
-
   const handleSearchWithKeyWord = useCallback((text = queryText) => {
     if (text) {
       dispatch(
@@ -67,19 +62,39 @@ const NavInput = () => {
     }
   };
 
-  const handleEscapeKey = (e) => {
-    if (e.key === "Escape") {
-      // Handle escape key press, go back to the previous state
-      setIsShow(false);
-    }
-  };
+  useEffect(() => {
+    const handleEscapeKey = (e) => {
+      if (e.key === "Escape") {
+        setIsShow(false);
+      }
+    };
 
-  const handleOutsideClick = (e) => {
-    // Handle click outside the component, go back to the previous state
-    if (!searchInput.current.contains(e.target)) {
+    const handleOutsideClick = (e) => {
+      if (!searchInput.current.contains(e.target)) {
+        setIsShow(false);
+      }
+    };
+
+    const handleInputFocus = () => {
+      setIsShow(true);
+    };
+
+    const handleInputBlur = () => {
       setIsShow(false);
-    }
-  };
+    };
+
+    document.addEventListener("keydown", handleEscapeKey);
+    document.addEventListener("mousedown", handleOutsideClick);
+    searchInput.current.addEventListener("focus", handleInputFocus);
+    searchInput.current.addEventListener("blur", handleInputBlur);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscapeKey);
+      document.removeEventListener("mousedown", handleOutsideClick);
+      searchInput.current.removeEventListener("focus", handleInputFocus);
+      searchInput.current.removeEventListener("blur", handleInputBlur);
+    };
+  }, []);
 
   return (
     <Box
@@ -123,7 +138,7 @@ const NavInput = () => {
           fontSize="20px"
           color="textColor"
           cursor={"pointer"}
-          onClick={() => handleSearchWithKeyWord(queryText)} {/* Pass queryText as an argument */}
+          onClick={() => handleSearchWithKeyWord()}
         >
           <Link to="/search">
             <Search2Icon />
