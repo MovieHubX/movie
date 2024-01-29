@@ -1,14 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Search2Icon } from "@chakra-ui/icons";
-import { Box, Input } from "@chakra-ui/react";
+import { Box, Flex, Input, Stack } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-
-import {
-  multiSearch
-} from "../../services/searchSlice";
+import { multiSearch } from "../../services/searchSlice";
 import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
+import MenuMobile from "./MenuMobile";
 
 const NavInput = () => {
   const dispatch = useDispatch();
@@ -46,7 +44,6 @@ const NavInput = () => {
           },
         })
       );
-      // navigate to search page
       setSearchText(text);
       navigate(`/search`);
       searchInput.current.blur();
@@ -159,4 +156,61 @@ const NavInput = () => {
   );
 };
 
-export default memo(NavInput);
+const Menu = () => {
+  return (
+    <Flex alignItems={"center"}>
+      <Stack direction={"row"} spacing={7}>
+        {/* Search Icon */}
+        <Box fontSize="20px" color="textColor" cursor="pointer" onClick={handleSearchIconClick}>
+          <Search2Icon />
+        </Box>
+
+        {/* Menu desktop */}
+        <HStack spacing="30px" display={{ base: "none", lg: "flex" }}>
+          {/* ... (previous code for desktop menu) */}
+        </HStack>
+
+        {/* Menu mobile */}
+        <MenuMobile navs={navs} />
+      </Stack>
+    </Flex>
+  );
+};
+
+const Navigation = () => {
+  return (
+    <Box zIndex="100" position={"relative"}>
+      <Box
+        position="fixed"
+        top="0"
+        left="0"
+        right="0"
+        w="full"
+        zIndex="100"
+        boxShadow="rgba(0, 0, 0, 0.15) 0px 5px 15px"
+        bg={'primaryDarkColor'}
+      >
+        <Box layerStyle={"containerStyles"}>
+          <Flex
+            h={"55px"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+          >
+            {/* Logo */}
+            <Box fontWeight="extrabold" color="primaryColor" fontSize="lg">
+              <Link to="/">MovieHubX</Link>
+            </Box>
+
+            {/* Input */}
+            <NavInput />
+
+            {/* Menu */}
+            <Menu />
+          </Flex>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+export default memo(Navigation);
