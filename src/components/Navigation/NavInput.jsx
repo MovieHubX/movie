@@ -123,15 +123,17 @@ const NavInput = () => {
           {/* Add your navigation links here */}
         </Box>
 
-        {/* Search Icon */}
-        <Box
-          fontSize="20px"
-          color="textColor"
-          cursor="pointer"
-          onClick={handleSearchIconClick}
-        >
-          <Search2Icon />
-        </Box>
+        {/* Conditional rendering of the Search Icon */}
+        {!isSearchOpen && (
+          <Box
+            fontSize="20px"
+            color="textColor"
+            cursor="pointer"
+            onClick={handleSearchIconClick}
+          >
+            <Search2Icon />
+          </Box>
+        )}
       </Box>
 
       {/* Search Bar */}
