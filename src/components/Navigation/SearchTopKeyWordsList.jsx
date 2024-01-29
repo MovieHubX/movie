@@ -7,7 +7,11 @@ import { multiSearchSelector } from "../../redux/selector";
 
 const SearchTopKeyWordsList = ({ handleClickListKeyWords }) => {
   const data = useSelector(multiSearchSelector);
-  if(data.length > 0) {
+
+  // Filter out duplicate titles
+  const uniqueTitles = Array.from(new Set(data.map(item => item.title)));
+
+  if (uniqueTitles.length > 0) {
     return (
       <Box
         w="full"
@@ -25,43 +29,48 @@ const SearchTopKeyWordsList = ({ handleClickListKeyWords }) => {
         boxShadow="rgba(0, 0, 0, 0.35) 0px 5px 15px"
       >
         <OrderedList fontSize="14px" fontWeight="light">
-          {data?.map((item, i) => {
-            if(!item.title) return null;
-            return (
-              <ListItem
-                key={item.id}
-                display="flex"
-                alignItems="center"
-                cursor="pointer"
-                columnGap={"10px"}
-                _notLast={{ marginBottom: "5px" }}
-                onClick={() => handleClickListKeyWords(item.title)}
-                _hover={{
-                  color: "primaryColor",
-                }}
-                w="full"
-              >
-                <Text
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                  whiteSpace="nowrap"
+          {uniqueTitles.map((title, i) => {
+            // Find the first item with the matching title
+            const matchingItem = data.find(item => item.title === title);
+
+            // Check if matchingItem exists and has a title
+            if (matchingItem && matchingItem.title) {
+              return (
+                <ListItem
+                  key={matchingItem.id}
+                  display="flex"
+                  alignItems="center"
                   cursor="pointer"
+                  columnGap={"10px"}
+                  _notLast={{ marginBottom: "5px" }}
+                  onClick={() => handleClickListKeyWords(matchingItem.title)}
+                  _hover={{
+                    color: "primaryColor",
+                  }}
+                  w="full"
                 >
-                  {item.title}
-                </Text>
-              </ListItem>
-            );
+                  <Text
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                    whiteSpace="nowrap"
+                    cursor="pointer"
+                  >
+                    {matchingItem.title}
+                  </Text>
+                </ListItem>
+              );
+            }
+
+            return null; // Ignore items without a title
           })}
-          {
-            data?.length === 0 &&
-            <Text
-              ml='-10px'
-            >
-              No result, please try something else.
-            </Text>
-          }
         </OrderedList>
       </Box>
+    );
+  } else {
+    return (
+      <Text ml="-10px">
+        No result, please try something else.
+      </Text>
     );
   }
 };
