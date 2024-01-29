@@ -10,7 +10,7 @@ import {
 } from "../../services/searchSlice";
 import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
 
-const NavInput = () => {
+const SearchBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const searchInput = useRef(null);
@@ -18,7 +18,6 @@ const NavInput = () => {
   const [searchText, setSearchText] = useState('');
   const [queryText, setQueryText] = useState('');
   const [isShow, setIsShow] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
@@ -51,7 +50,6 @@ const NavInput = () => {
       navigate(`/search`);
       searchInput.current.blur();
       setIsShow(false);
-      setIsSearchOpen(false); // Close search bar after search
     } else {
       // If search bar is empty, focus on the input field
       searchInput.current.focus();
@@ -64,28 +62,21 @@ const NavInput = () => {
     }
   };
 
-  const handleSearchIconClick = () => {
-    setIsSearchOpen(!isSearchOpen);
-  };
-
   useEffect(() => {
     const handleEscapeKey = (e) => {
       if (e.key === "Escape") {
         setIsShow(false);
-        setIsSearchOpen(false); // Close search bar on escape key
       }
     };
 
     const handleOutsideClick = (e) => {
       if (!searchInput.current.contains(e.target)) {
         setIsShow(false);
-        setIsSearchOpen(false); // Close search bar on outside click
       }
     };
 
     const handleInputFocus = () => {
       setIsShow(true);
-      setIsSearchOpen(true); // Open search bar on input focus
     };
 
     const handleInputBlur = () => {
@@ -104,6 +95,67 @@ const NavInput = () => {
       searchInput.current.removeEventListener("blur", handleInputBlur);
     };
   }, []);
+
+  return (
+    <Box
+      position="fixed"
+      top="55px" // Adjust the top position based on your navigation bar height
+      left="0"
+      right="0"
+      zIndex={999}
+      bg="rgba(21, 31, 50, 1)"
+      display={isShow ? "block" : "none"}
+    >
+      <Box position="relative" overflow="hidden">
+        <Input
+          variant="flushed"
+          autoCapitalize="off"
+          position="relative"
+          focusBorderColor="primaryColor"
+          placeholder="-_-"
+          _placeholder={{
+            color: "decsColor",
+          }}
+          value={searchText}
+          onChange={(e) => handleSearchTextChange(e)}
+          ref={searchInput}
+          fontSize={{
+            base: "sm",
+            md: "md",
+          }}
+          onKeyDown={(e) => handlePressEnter(e)}
+        />
+        <Box
+          position="absolute"
+          right="15px"
+          top="50%"
+          transform="translateY(-50%)"
+          zIndex={500}
+          fontSize="20px"
+          color="textColor"
+          cursor="pointer"
+          onClick={() => handleSearchWithKeyWord()}
+        >
+          <Link to="/search">
+            <Search2Icon />
+          </Link>
+        </Box>
+      </Box>
+      {isShow && (
+        <SearchTopKeyWordsList
+          handleClickListKeyWords={handleSearchWithKeyWord}
+        />
+      )}
+    </Box>
+  );
+};
+
+const NavInput = () => {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const handleSearchIconClick = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
 
   return (
     <Box
@@ -135,61 +187,13 @@ const NavInput = () => {
           <Search2Icon />
         </Box>
       </Box>
-
-      {/* Search Bar */}
-      <Box
-        position="absolute"
-        top="55px"  // Adjust the top position based on your navigation bar height
-        left="0"
-        right="0"  // Set right to 0 to extend to the right edge
-        bg="rgba(21, 31, 50, 1)"
-        zIndex={999}  // Lower zIndex to appear below navigation bar
-        transition="top 0.3s ease-in-out"  // Add transition effect
-        display={isSearchOpen ? "block" : "none"}  // Control display based on search bar open state
-      >
-        <Box position="relative" overflow="hidden">
-          <Input
-            variant="flushed"
-            autoCapitalize="off"
-            position="relative"
-            focusBorderColor="primaryColor"
-            placeholder="-_-"
-            _placeholder={{
-              color: "decsColor",
-            }}
-            value={searchText}
-            onChange={(e) => handleSearchTextChange(e)}
-            ref={searchInput}
-            fontSize={{
-              base: "sm",
-              md: "md",
-            }}
-            onKeyDown={(e) => handlePressEnter(e)}
-          />
-          <Box
-            position="absolute"
-            right="15px"
-            top="50%"
-            transform="translateY(-50%)"
-            zIndex={500}
-            fontSize="20px"
-            color="textColor"
-            cursor="pointer"
-            onClick={() => handleSearchWithKeyWord()}
-          >
-            <Link to="/search">
-              <Search2Icon />
-            </Link>
-          </Box>
-        </Box>
-        {isShow && (
-          <SearchTopKeyWordsList
-            handleClickListKeyWords={handleSearchWithKeyWord}
-          />
-        )}
-      </Box>
     </Box>
   );
 };
 
-export default memo(NavInput);
+export default memo(() => (
+  <>
+    <NavInput />
+    <SearchBar />
+  </>
+));
