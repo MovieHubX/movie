@@ -1,5 +1,5 @@
 import {
-  Box, Divider, Heading, ListItem, OrderedList, Text
+  Box, ListItem, OrderedList, Text
 } from "@chakra-ui/react";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -30,10 +30,8 @@ const SearchTopKeyWordsList = ({ handleClickListKeyWords }) => {
       >
         <OrderedList fontSize="14px" fontWeight="light">
           {uniqueTitles.map((title, i) => {
-            // Find the first item with the matching title
             const matchingItem = data.find(item => item.title === title);
 
-            // Check if matchingItem exists and has a title
             if (matchingItem && matchingItem.title) {
               return (
                 <ListItem
@@ -61,10 +59,14 @@ const SearchTopKeyWordsList = ({ handleClickListKeyWords }) => {
               );
             }
 
-            return null; // Ignore items without a title
+            return null;
           })}
         </OrderedList>
       </Box>
     );
+  } else {
+    return null; // Don't render anything if there are no suggestions
+  }
+};
 
 export default SearchTopKeyWordsList;
