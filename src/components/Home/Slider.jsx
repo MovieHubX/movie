@@ -109,7 +109,7 @@ const Slider = () => {
   }
 
   return (
-    <Box mt={{ base: '45px', md: '0' }} mx="auto" w='full' maxW="full" h={{ base: '50vh', md: '70vh' }}>
+    <Box mt={{ base: '55px', md: '0' }} mx="auto" w='full' maxW="full" h={{ base: '60vh', md: '80vh' }}>
       <Swiper
         {...sliderSettings}
         style={{
@@ -220,8 +220,8 @@ const Slider = () => {
                         flexGrow={'1'} 
                         alignItems='center' 
                         columnGap='4'
-                        h={{ base: '30px', md: '40px' }}
-                        mt={{ base: '15%', md: '30px' }}
+                        h={{ base: '45px', md: '55px' }}
+                        mt={{ base: '15%', md: '60px' }}
                       >
                         <ButtonWhite href={`/${item?.media_type}/${item?.id}`} >
                           <BsFillPlayFill size={'30px'} style={{ marginRight: '10px' }} />
