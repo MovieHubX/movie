@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from "@chakra-ui/icons";
-import { Box, Center, CircularProgress, CircularProgressLabel, Flex, Heading, Icon, Image, Text } from "@chakra-ui/react";
+import { Box, Center, Heading, Icon, Image, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import React, { forwardRef, memo, useEffect, useRef, useState } from "react";
 import { AiFillHeart } from 'react-icons/ai';
@@ -28,7 +28,7 @@ const SliderButton = memo(forwardRef(({ icon, direction = 'left' || 'right' }, r
       display={{ base: "none", md: "block" }}
       transform="translateY(-50%)"
       {
-      ...direction === 'left' ? { left: "0" } : { right: "0" }
+        ...direction === 'left' ? { left: "0" } : { right: "0" }
       }
       zIndex="10"
       color="rgba(50, 138, 241, .6)"
@@ -216,14 +216,15 @@ const Slider = () => {
                       variants={variants}
                     >
                       <Box
-                        display={'flex'} flexGrow={'1'} alignItems='center' columnGap='4'
+                        display={'flex'} 
+                        flexGrow={'1'} 
+                        alignItems='center' 
+                        columnGap='4'
                         h={{ base: '45px', md: '55px' }}
-                        mt={{ base: '30%', md: '60px' }}
+                        mt={{ base: '15%', md: '60px' }} {/* Adjust the margin-top for mobile devices */}
                       >
                         <ButtonWhite href={`/${item?.media_type}/${item?.id}`} >
-                          <BsFillPlayFill size={'30px'} style={{
-                            marginRight: '10px'
-                          }} />
+                          <BsFillPlayFill size={'30px'} style={{ marginRight: '10px' }} />
                           WATCH NOW
                         </ButtonWhite>
                         {/* <Box display={'flex'} h='full' w='55px' alignItems='center' justifyContent={'center'} rounded='sm' border={'1px solid #fff'} boxShadow='xs'>
