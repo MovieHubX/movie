@@ -148,7 +148,7 @@ const NavInput = () => {
         transition="top 0.3s ease-in-out"  // Add transition effect
         display={isSearchOpen ? "block" : "none"}  // Control display based on search bar open state
       >
-        <Box position="relative" overflow="hidden">
+        <Box position="relative" overflow="hidden" w="100%"> {/* Added width property */}
           <Input
             variant="flushed"
             autoCapitalize="off"
