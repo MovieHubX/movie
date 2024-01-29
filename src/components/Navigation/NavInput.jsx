@@ -65,8 +65,8 @@ const NavInput = () => {
   };
 
   const handleSearchIconClick = () => {
-    // Toggle the state of isSearchOpen
-    setIsSearchOpen(!isSearchOpen);
+    // Trigger search directly without closing the new search bar
+    handleSearchWithKeyWord(searchText, false);
   };
 
   useEffect(() => {
