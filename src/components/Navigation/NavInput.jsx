@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Search2Icon } from "@chakra-ui/icons";
 import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
@@ -118,7 +119,11 @@ const NavInput = () => {
         alignItems="center"
         justifyContent="space-between"
       >
-        {/* Add your navigation links and logo here */}
+        {/* Logo and Navigation Links */}
+        <Box>
+          {/* Add your logo here */}
+          {/* Add your navigation links here */}
+        </Box>
 
         {/* Search Icon */}
         <Box
