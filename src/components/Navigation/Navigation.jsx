@@ -140,7 +140,7 @@ const NavInput = () => {
       <Box
         position="absolute"
         top="55px"  // Adjust the top position based on your navigation bar height
-        right="0"   // Align to the rightmost part
+        left="0"
         bg="rgba(21, 31, 50, 1)"
         zIndex={999}  // Lower zIndex to appear below navigation bar
         p="10px"
@@ -165,7 +165,7 @@ const NavInput = () => {
               md: "md",
             }}
             w="full"
-            pr="40px"
+            pr="100px"
             pl="5px"
             onKeyDown={(e) => handlePressEnter(e)}
           />
