@@ -123,9 +123,6 @@ const NavInput = () => {
         <Box>
           {/* Add your logo here */}
           {/* Add your navigation links here */}
-          <Link to="/">Home</Link>
-          <Link to="/movies">Movies</Link>
-          {/* Add more navigation links as needed */}
         </Box>
 
         {/* Search Icon */}
@@ -143,8 +140,8 @@ const NavInput = () => {
       <Box
         position="absolute"
         top="55px"  // Adjust the top position based on your navigation bar height
-        left="0"   // Align to the left
-        right="0"  // Take the whole width
+        left="0"   // Align to the leftmost part
+        width="100%"  // Take the whole width
         bg="rgba(21, 31, 50, 1)"
         zIndex={999}  // Lower zIndex to appear below navigation bar
         p="10px"
