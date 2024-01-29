@@ -221,15 +221,12 @@ const Slider = () => {
                         alignItems='center' 
                         columnGap='4'
                         h={{ base: '45px', md: '55px' }}
-                        mt={{ base: '15%', md: '60px' }} {/* Adjust the margin-top for mobile devices */}
+                        mt={{ base: '15%', md: '60px' }}
                       >
                         <ButtonWhite href={`/${item?.media_type}/${item?.id}`} >
                           <BsFillPlayFill size={'30px'} style={{ marginRight: '10px' }} />
                           WATCH NOW
                         </ButtonWhite>
-                        {/* <Box display={'flex'} h='full' w='55px' alignItems='center' justifyContent={'center'} rounded='sm' border={'1px solid #fff'} boxShadow='xs'>
-                          <AiFillHeart color="#fff" size={'30px'} />
-                        </Box> */}
                       </Box>
                     </motion.div>
                   </Box>
