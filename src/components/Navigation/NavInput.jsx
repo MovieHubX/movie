@@ -62,9 +62,9 @@ const NavInput = () => {
   };
 
   const handleSearchIconClick = () => {
-    setIsSearchOpen(!isSearchOpen);
-    if (isSearchOpen) {
-      handleSearchWithKeyWord(); // Call handleSearchWithKeyWord on search icon click
+    if (searchText) {
+      // Trigger search only if there is a keyword
+      handleSearchWithKeyWord();
     }
   };
 
@@ -176,7 +176,7 @@ const NavInput = () => {
             fontSize="20px"
             color="textColor"
             cursor="pointer"
-            onClick={() => handleSearchWithKeyWord()}
+            onClick={() => handleSearchIconClick()}
           >
             <Link to="/search">
               <Search2Icon />
