@@ -65,8 +65,8 @@ const NavInput = () => {
   };
 
   const handleSearchIconClick = () => {
-    // Trigger search directly without closing the new search bar
-    handleSearchWithKeyWord(searchText, false);
+    // Toggle the state of isSearchOpen
+    setIsSearchOpen(!isSearchOpen);
   };
 
   useEffect(() => {
@@ -86,7 +86,6 @@ const NavInput = () => {
 
     const handleInputFocus = () => {
       setIsShow(true);
-      setIsSearchOpen(true); // Open search bar on input focus
     };
 
     const handleInputBlur = () => {
@@ -125,16 +124,14 @@ const NavInput = () => {
         </Box>
 
         {/* Conditional rendering of the Search Icon */}
-        {!isSearchOpen && (
-          <Box
-            fontSize="20px"
-            color="textColor"
-            cursor="pointer"
-            onClick={handleSearchIconClick}
-          >
-            <Search2Icon />
-          </Box>
-        )}
+        <Box
+          fontSize="20px"
+          color="textColor"
+          cursor="pointer"
+          onClick={handleSearchIconClick}
+        >
+          <Search2Icon />
+        </Box>
       </Box>
 
       {/* Search Bar */}
