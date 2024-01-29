@@ -104,60 +104,76 @@ const NavInput = () => {
   }, []);
 
   return (
-    <Box
-      w="100%"
-      position="absolute"
-      top="0"
-      left="0"
-      bg="rgba(21, 31, 50, 1)"
-      zIndex={1000}
-      p="10px"
-      transition="top 0.3s ease-in-out"  // Add transition effect
-    >
-      <Box position="relative" overflow="hidden">
-        <Input
-          variant="flushed"
-          autoCapitalize="off"
-          position="relative"
-          focusBorderColor="primaryColor"
-          placeholder="-_-"
-          _placeholder={{
-            color: "decsColor",
-          }}
-          value={searchText}
-          onChange={(e) => handleSearchTextChange(e)}
-          ref={searchInput}
-          fontSize={{
-            base: "sm",
-            md: "md",
-          }}
-          w="full"
-          pr="40px"
-          pl="5px"
-          onKeyDown={(e) => handlePressEnter(e)}
-        />
-        <Box
-          position="absolute"
-          right="15px"
-          top="50%"
-          transform="translateY(-50%)"
-          zIndex={500}
-          fontSize="20px"
-          color="textColor"
-          cursor={"pointer"}
-          onClick={() => handleSearchWithKeyWord()}
-        >
-          <Link to="/search">
-            <Search2Icon />
-          </Link>
-        </Box>
+    <>
+      {/* Navigation Bar */}
+      <Box
+        w="100%"
+        position="fixed"
+        top="0"
+        left="0"
+        bg="rgba(21, 31, 50, 1)"
+        zIndex={1000}
+        p="10px"
+      >
+        {/* Add your navigation links and logo here */}
       </Box>
-      {isShow && (
-        <SearchTopKeyWordsList
-          handleClickListKeyWords={handleSearchWithKeyWord}
-        />
-      )}
-    </Box>
+
+      {/* Search Bar */}
+      <Box
+        w="100%"
+        position="absolute"
+        top={isSearchOpen ? "55px" : "0"}  // Adjust the top position based on your navigation bar height
+        left="0"
+        bg="rgba(21, 31, 50, 1)"
+        zIndex={999}  // Lower zIndex to appear below navigation bar
+        p="10px"
+        transition="top 0.3s ease-in-out"  // Add transition effect
+      >
+        <Box position="relative" overflow="hidden">
+          <Input
+            variant="flushed"
+            autoCapitalize="off"
+            position="relative"
+            focusBorderColor="primaryColor"
+            placeholder="-_-"
+            _placeholder={{
+              color: "decsColor",
+            }}
+            value={searchText}
+            onChange={(e) => handleSearchTextChange(e)}
+            ref={searchInput}
+            fontSize={{
+              base: "sm",
+              md: "md",
+            }}
+            w="full"
+            pr="40px"
+            pl="5px"
+            onKeyDown={(e) => handlePressEnter(e)}
+          />
+          <Box
+            position="absolute"
+            right="15px"
+            top="50%"
+            transform="translateY(-50%)"
+            zIndex={500}
+            fontSize="20px"
+            color="textColor"
+            cursor={"pointer"}
+            onClick={() => handleSearchWithKeyWord()}
+          >
+            <Link to="/search">
+              <Search2Icon />
+            </Link>
+          </Box>
+        </Box>
+        {isShow && (
+          <SearchTopKeyWordsList
+            handleClickListKeyWords={handleSearchWithKeyWord}
+          />
+        )}
+      </Box>
+    </>
   );
 };
 
