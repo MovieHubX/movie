@@ -119,7 +119,7 @@ export const MovieDetail = () => {
                     >
                       {/* Replace "Watch" with FaYoutube icon */}
                       <FaYoutube style={{ marginRight: "5px" }} />
-                      Trailer
+                      Watch Trailer
                     </Button>
                   </Box>
                 )}
