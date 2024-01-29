@@ -66,13 +66,5 @@ const SearchTopKeyWordsList = ({ handleClickListKeyWords }) => {
         </OrderedList>
       </Box>
     );
-  } else {
-    return (
-      <Text ml="-10px">
-        No result, please try something else.
-      </Text>
-    );
-  }
-};
 
 export default SearchTopKeyWordsList;
