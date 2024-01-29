@@ -63,7 +63,7 @@ const NavInput = () => {
     }
   };
 
-  const handleSearchClick = () => {
+  const handleSearchIconClick = () => {
     setIsSearchOpen(!isSearchOpen);
   };
 
@@ -113,7 +113,23 @@ const NavInput = () => {
       p="10px"
     >
       {/* Navigation Bar */}
-      {/* Add your navigation links and logo here */}
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        {/* Add your navigation links and logo here */}
+
+        {/* Search Icon */}
+        <Box
+          fontSize="20px"
+          color="textColor"
+          cursor="pointer"
+          onClick={handleSearchIconClick}
+        >
+          <Search2Icon />
+        </Box>
+      </Box>
 
       {/* Search Bar */}
       <Box
@@ -156,7 +172,7 @@ const NavInput = () => {
             zIndex={500}
             fontSize="20px"
             color="textColor"
-            cursor={"pointer"}
+            cursor="pointer"
             onClick={() => handleSearchWithKeyWord()}
           >
             <Link to="/search">
