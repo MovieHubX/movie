@@ -188,7 +188,7 @@ const Slider = () => {
                         color="#fff"
                         fontWeight="extrabold"
                         fontSize={{
-                          base: "2xl", // Adjust the font size for mobile screens
+                          base: "3xl", // Adjusted font size for mobile screens
                           md: "4xl",
                           lg: "60px",
                         }}
@@ -204,7 +204,7 @@ const Slider = () => {
                       variants={variants}
                     >
                       <Text my='15px' fontSize={{
-                        base: '12px', // Adjust the font size for mobile screens
+                        base: '14px', // Adjusted font size for mobile screens
                         md: '18px',
                       }}>{subString}</Text>
                     </motion.div>
