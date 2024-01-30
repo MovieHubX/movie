@@ -18,7 +18,6 @@ const NavInput = () => {
   const [searchText, setSearchText] = useState('');
   const [queryText, setQueryText] = useState('')
   const [isShow, setIsShow] = useState(false);
-
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
     startTransition(() => {
@@ -34,7 +33,6 @@ const NavInput = () => {
       setIsShow(true)
     })
   };
-
   useEffect(() => {
     setIsShow(document.activeElement.tagName === "INPUT")
   }, [document.activeElement.tagName])
@@ -62,7 +60,6 @@ const NavInput = () => {
       handleSearchWithKeyWord();
     }
   };
-
   return (
     <Box
       w={{
