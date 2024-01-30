@@ -1,5 +1,6 @@
+/* eslint-disable array-callback-return */
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from "@chakra-ui/icons";
-import { Box, Center, Heading, Icon, Image, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Center, Heading, Icon, Image, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import React, { forwardRef, memo, useEffect, useRef, useState } from "react";
 import { AiFillHeart } from 'react-icons/ai';
@@ -111,18 +112,18 @@ const Slider = () => {
 
   return (
     <Box
-      mt={{ base: '55px', md: '0' }}
+      mt={isMobile ? { base: '55px', md: '0' } : '55px'}
       mx="auto"
       w='full'
       maxW="full"
-      h={isMobile ? '60vh' : '80vh'}  // Adjust the height only for mobile screens
+      h={isMobile ? { base: '60vh', md: '80vh' } : '80vh'}
       zIndex="1"
     >
       <Swiper
         {...sliderSettings}
         style={{
           width: "100%",
-          height: isMobile ? "70vh" : "100%",  // Scale down the height for mobile screens
+          height: "100%",
         }}
       >
         {sortByVote?.map((item, i) => {
@@ -219,7 +220,7 @@ const Slider = () => {
                     {/* actions */}
                     <motion.div
                       initial={{ opacity: 0, y: 50 }}
-                      animate={i === activeSlide ? 'show' or 'hidden'}
+                      animate={i === activeSlide ? 'show' : 'hidden'}
                       transition={{ duration: 0.5, delay: 0.9, ease: "easeOut" }}
                       variants={variants}
                     >
@@ -248,7 +249,7 @@ const Slider = () => {
                       md: 'unset',
                     }} >
                     <motion.div
-                      animate={i === activeSlide ? 'show' or 'hidden'}
+                      animate={i === activeSlide ? 'show' : 'hidden'}
                       transition={{ duration: 0.7, delay: 1.2, ease: "easeOut" }}
                       variants={variants}
                     >
