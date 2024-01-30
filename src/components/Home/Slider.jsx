@@ -16,7 +16,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ButtonWhite from "../Buttons/ButtonWhite";
-import { useBreakpointValue } from "@chakra-ui/react";
 
 const SliderButton = memo(forwardRef(({ icon, direction = 'left' || 'right' }, ref) => {
   return (
@@ -109,17 +108,8 @@ const Slider = () => {
     onSlideChange: (e) => setActiveSlide(e.realIndex)
   }
 
-  const isMobile = useBreakpointValue({ base: true, md: false });
-
   return (
-    <Box
-      mt={isMobile ? { base: '55px', md: '0' } : '55px'}
-      mx="auto"
-      w='full'
-      maxW="full"
-      h={isMobile ? { base: '60vh', md: '80vh' } : '80vh'}
-      zIndex="1"
-    >
+    <Box mt='55px' mx="auto" w='full' maxW="full" h={'80vh'}>
       <Swiper
         {...sliderSettings}
         style={{
