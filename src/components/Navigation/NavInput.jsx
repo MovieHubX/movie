@@ -56,7 +56,7 @@ const NavInput = () => {
         navigate(`/search`);
         searchInput.current.blur();
         setIsShow(false);
-        setIsSearchOpen(true); // Close search bar after search
+        setIsSearchOpen(false); // Close search bar after search
       }
     }
   }, [queryText, navigate]);
@@ -91,7 +91,7 @@ const NavInput = () => {
     const handleOutsideClick = (e) => {
       if (!searchInput.current.contains(e.target)) {
         setIsShow(false);
-        setIsSearchOpen(false); // Close search bar on outside click
+        setIsSearchOpen(true); // Close search bar on outside click
       }
     };
 
