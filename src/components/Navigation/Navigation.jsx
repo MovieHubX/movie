@@ -72,7 +72,7 @@ const Navigation = () => {
           >
             {/* Logo  */}
             <Box fontWeight="extrabold" color="primaryColor" fontSize="lg">
-              <Link to="/">MovieHubX</Link>
+              <Link to="/">MovieMax</Link>
             </Box>
 
             {/* Input  */}
