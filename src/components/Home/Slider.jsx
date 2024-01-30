@@ -109,7 +109,7 @@ const Slider = () => {
   }
 
   return (
-    <Box mt={{ base: '55px', md: '0' }} mx="auto" w='full' maxW="full" h={{ base: '60vh', md: '80vh' }} zIndex="1">
+    <Box mt='55px' mx="auto" w='full' maxW="full" h={'80vh'}>
       <Swiper
         {...sliderSettings}
         style={{
