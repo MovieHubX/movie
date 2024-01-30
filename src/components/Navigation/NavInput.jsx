@@ -36,27 +36,33 @@ const NavInput = () => {
     });
   };
 
-  const handleSearchWithKeyWord = useCallback((text = queryText, shouldNavigate = true) => {
-    if (text) {
-      dispatch(
-        multiSearch({
-          path: "search/multi",
-          params: {
-            query: text,
-          },
-        })
-      );
+  const handleSearchWithKeyWord = useCallback(
+    (text = queryText, shouldNavigate = true, shouldCloseSearchBar = true) => {
+      if (text) {
+        dispatch(
+          multiSearch({
+            path: "search/multi",
+            params: {
+              query: text,
+            },
+          })
+        );
 
-      if (shouldNavigate) {
-        // navigate to search page
-        setSearchText(text);
-        navigate(`/search`);
-        searchInput.current.blur();
-        setIsShow(false);
-        setIsSearchOpen(false); // Close search bar after search
+        if (shouldNavigate) {
+          // navigate to search page
+          setSearchText(text);
+          navigate(`/search`);
+          searchInput.current.blur();
+
+          if (shouldCloseSearchBar) {
+            setIsShow(false);
+            setIsSearchOpen(false); // Close search bar after search
+          }
+        }
       }
-    }
-  }, [queryText, navigate]);
+    },
+    [queryText, navigate]
+  );
 
   const handlePressEnter = (e) => {
     if (e.key === "Enter") {
@@ -67,7 +73,7 @@ const NavInput = () => {
   const handleSearchIconClick = () => {
     if (isSearchOpen) {
       // Trigger search directly if in the new search bar
-      handleSearchWithKeyWord(searchText, false);
+      handleSearchWithKeyWord(searchText, false, false);
     } else {
       setIsSearchOpen(!isSearchOpen);
       handleSearchWithKeyWord(); // Call handleSearchWithKeyWord on search icon click for the main nav bar
