@@ -1,24 +1,28 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Search2Icon } from "@chakra-ui/icons";
 import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { multiSearch } from "../../services/searchSlice";
+
+import {
+  multiSearch
+} from "../../services/searchSlice";
 import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
 
 const NavInput = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const searchInput = useRef(null);
-  const [, startTransition] = useTransition();
+  const [, startTransition] = useTransition()
   const [searchText, setSearchText] = useState('');
-  const [queryText, setQueryText] = useState('');
+  const [queryText, setQueryText] = useState('')
   const [isShow, setIsShow] = useState(false);
 
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
     startTransition(() => {
-      setQueryText(e.target.value);
+      setQueryText(e.target.value)
       dispatch(
         multiSearch({
           path: "search/multi",
@@ -27,9 +31,13 @@ const NavInput = () => {
           },
         })
       );
-      setIsShow(true);
-    });
+      setIsShow(true)
+    })
   };
+
+  useEffect(() => {
+    setIsShow(document.activeElement.tagName === "INPUT")
+  }, [document.activeElement.tagName])
 
   const handleSearchWithKeyWord = useCallback((text = queryText) => {
     if (text) {
@@ -41,12 +49,13 @@ const NavInput = () => {
           },
         })
       );
+      // navigate to search page
       setSearchText(text);
-      navigate(`/search`);
+      navigate(`/search`)
       searchInput.current.blur();
-      setIsShow(false);
+      setIsShow(false)
     }
-  }, [queryText, navigate]);
+  }, [queryText]);
 
   const handlePressEnter = (e) => {
     if (e.key === "Enter") {
@@ -55,89 +64,60 @@ const NavInput = () => {
   };
 
   return (
-    <>
-      {/* Navigation Bar */}
-      <Box
-        w="100%"
-        bg="rgba(21, 31, 50, 1)"
-        zIndex={1000}
-        p="10px"
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        {/* Logo and Navigation Links */}
-        <Box>
-          {/* Add your logo here */}
-          {/* Add your navigation links here */}
-        </Box>
-
-        {/* Conditional rendering of the Search Icon */}
+    <Box
+      w={{
+        base: "55%",
+        lg: "40%",
+      }}
+      position="relative"
+      ml="auto"
+      mr={{ lg: "50px" }}
+    >
+      <Box position="relative" overflow="hidden">
+        <Input
+          variant="flushed"
+          autoCapitalize="off"
+          position="relative"
+          focusBorderColor="primaryColor"
+          placeholder="Search by name"
+          _placeholder={{
+            color: "decsColor",
+          }}
+          value={searchText}
+          onChange={(e) => handleSearchTextChange(e)}
+          ref={searchInput}
+          fontSize={{
+            base: "sm",
+            md: "md",
+          }}
+          w="full"
+          pr="40px"
+          pl="5px"
+          onKeyDown={(e) => handlePressEnter(e)}
+        />
+        {/* search icon */}
         <Box
+          position="absolute"
+          right="15px"
+          top="50%"
+          transform="translateY(-50%)"
+          zIndex={500}
           fontSize="20px"
           color="textColor"
-          cursor="pointer"
-          onClick={() => handleSearchIconClick()}
+          cursor={"pointer"}
+          onClick={() => handleSearchWithKeyWord()}
         >
-          <Search2Icon />
+          <Link to="/search">
+            <Search2Icon />
+          </Link>
         </Box>
       </Box>
-
-      {/* Search Bar */}
-      <Box
-        position="relative"
-        marginTop="20px"
-      >
-        <Box position="relative" overflow="hidden">
-          {/* Search Input */}
-          <Input
-            variant="flushed"
-            autoCapitalize="off"
-            position="relative"
-            focusBorderColor="primaryColor"
-            placeholder="-_-"
-            _placeholder={{
-              color: "decsColor",
-            }}
-            value={searchText}
-            onChange={(e) => handleSearchTextChange(e)}
-            ref={searchInput}
-            fontSize={{
-              base: "sm",
-              md: "md",
-            }}
-            onKeyDown={(e) => handlePressEnter(e)}
-          />
-          {/* Search Icon */}
-          <Box
-            position="absolute"
-            right="15px"
-            top="50%"
-            transform="translateY(-50%)"
-            zIndex={500}
-            fontSize="20px"
-            color="textColor"
-            cursor="pointer"
-            onClick={() => handleSearchWithKeyWord()}
-          >
-            <Link to="/search">
-              <Search2Icon />
-            </Link>
-          </Box>
-        </Box>
-        {/* Display top search keywords */}
-        {isShow && (
-          <SearchTopKeyWordsList
-            handleClickListKeyWords={handleSearchWithKeyWord}
-          />
-        )}
-      </Box>
-
-      {/* Slider */}
-      <Box marginTop="20px">
-        {/* Your Slider component content goes here */}
-      </Box>
-    </>
+      {isShow && (
+        <SearchTopKeyWordsList
+          handleClickListKeyWords={handleSearchWithKeyWord}
+        />
+      )}
+    </Box>
   );
 };
 
