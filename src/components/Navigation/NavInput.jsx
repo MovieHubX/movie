@@ -6,9 +6,7 @@ import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  multiSearch
-} from "../../services/searchSlice";
+import { multiSearch } from "../../services/searchSlice";
 import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
 
 const NavInput = () => {
@@ -97,7 +95,7 @@ const NavInput = () => {
 
     const handleInputFocus = () => {
       setIsShow(true);
-      setIsSearchOpen(true); // Open search bar on input focus
+      setIsSearchOpen(false); // Open search bar on input focus
     };
 
     const handleInputBlur = () => {
@@ -137,14 +135,21 @@ const NavInput = () => {
         </Box>
 
         {/* Conditional rendering of the Search Icon */}
-        {!isSearchOpen && (
+        {isSearchOpen && (
           <Box
+            position="absolute"
+            right="15px"
+            top="50%"
+            transform="translateY(-50%)"
+            zIndex={500}
             fontSize="20px"
             color="textColor"
             cursor="pointer"
             onClick={handleSearchIconClick}
           >
-            <Search2Icon />
+            <Link to="/search">
+              <Search2Icon />
+            </Link>
           </Box>
         )}
       </Box>
