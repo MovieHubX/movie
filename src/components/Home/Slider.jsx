@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from "@chakra-ui/icons";
 import { Box, Center, Heading, Icon, Image, Text, useBreakpointValue } from "@chakra-ui/react";
 import { motion } from "framer-motion";
@@ -116,7 +115,7 @@ const Slider = () => {
       mx="auto"
       w='full'
       maxW="full"
-      h={isMobile ? '60vh' : '80vh'}  // Adjust the height based on the breakpoint
+      h={isMobile ? '60vh' : '80vh'}  // Adjust the height only for mobile screens
       zIndex="1"
     >
       <Swiper
