@@ -16,6 +16,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ButtonWhite from "../Buttons/ButtonWhite";
+import { useBreakpointValue } from "@chakra-ui/react";
 
 const SliderButton = memo(forwardRef(({ icon, direction = 'left' || 'right' }, ref) => {
   return (
