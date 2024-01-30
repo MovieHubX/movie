@@ -188,7 +188,11 @@ const NavInput = () => {
             fontSize="20px"
             color="textColor"
             cursor="pointer"
-            onClick={() => handleSearchWithKeyWord()}
+            onClick={() => {
+              // Remove the extra call to handleSearchWithKeyWord
+              // handleSearchWithKeyWord();
+              navigate(`/search`);
+            }}
           >
             <Link to="/search">
               <Search2Icon />
