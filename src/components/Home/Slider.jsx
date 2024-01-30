@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from "@chakra-ui/icons";
-import { Box, Center, Heading, Icon, Image, Text } from "@chakra-ui/react";
+import { Box, Center, Heading, Icon, Image, Text, useBreakpointValue } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import React, { forwardRef, memo, useEffect, useRef, useState } from "react";
 import { AiFillHeart } from 'react-icons/ai';
@@ -108,13 +108,15 @@ const Slider = () => {
     onSlideChange: (e) => setActiveSlide(e.realIndex)
   }
 
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   return (
     <Box
       mt={{ base: '55px', md: '0' }}
       mx="auto"
       w='full'
       maxW="full"
-      h={{ base: '60vh', md: '80vh' }}
+      h={isMobile ? '60vh' : '80vh'}  // Adjust the height based on the breakpoint
       zIndex="1"
     >
       <Swiper
