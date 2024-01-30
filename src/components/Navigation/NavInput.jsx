@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+// Disabling exhaustive-deps rule for React hooks to avoid unnecessary warnings
+
+import { Search2Icon } from "@chakra-ui/icons";
+import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Search2Icon } from "@chakra-ui/icons";
-import { Box, Input } from "@chakra-ui/react";
 import {
   multiSearch
 } from "../../services/searchSlice";
@@ -149,8 +151,32 @@ const NavInput = () => {
           {/* Add your navigation links here */}
         </Box>
 
-        {/* Search Bar */}
-        <Box position="relative" flexGrow="1" maxWidth="400px">
+        {/* Conditional rendering of the Search Icon */}
+        {!isSearchOpen && (
+          <Box
+            fontSize="20px"
+            color="textColor"
+            cursor="pointer"
+            onClick={handleSearchIconClick}
+          >
+            <Search2Icon />
+          </Box>
+        )}
+      </Box>
+
+      {/* Search Bar */}
+      <Box
+        position="absolute"
+        top="55px"
+        left="0"
+        right="0"
+        bg="rgba(21, 31, 50, 1)"
+        zIndex={999}
+        transition="top 0.3s ease-in-out"
+        display={isSearchOpen ? "block" : "none"}
+        p="10px"
+      >
+        <Box position="relative" overflow="hidden">
           {/* Search Input */}
           <Input
             variant="flushed"
@@ -173,7 +199,7 @@ const NavInput = () => {
           {/* Search Icon */}
           <Box
             position="absolute"
-            right="10px"
+            right="15px"
             top="50%"
             transform="translateY(-50%)"
             zIndex={500}
@@ -187,7 +213,6 @@ const NavInput = () => {
             </Link>
           </Box>
         </Box>
-
         {/* Display top search keywords */}
         {isShow && (
           <SearchTopKeyWordsList
@@ -198,5 +223,3 @@ const NavInput = () => {
     </>
   );
 };
-
-export default memo(NavInput);
