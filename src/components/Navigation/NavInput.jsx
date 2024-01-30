@@ -223,3 +223,5 @@ const NavInput = () => {
     </>
   );
 };
+
+export default memo(NavInput);
