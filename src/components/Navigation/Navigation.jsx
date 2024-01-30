@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
-
 import { Box, Flex, HStack, Stack } from "@chakra-ui/react";
 import MenuMobile from "./MenuMobile";
 import NavInput from "./NavInput";
@@ -72,10 +71,10 @@ const Navigation = () => {
 
             {/* Menu */}
             <Menu />
-            
+
             {/* Input */}
             <NavInput />
-            
+
           </Flex>
         </Box>
       </Box>
