@@ -6,7 +6,9 @@ import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { multiSearch } from "../../services/searchSlice";
+import {
+  multiSearch
+} from "../../services/searchSlice";
 import SearchTopKeyWordsList from "./SearchTopKeyWordsList";
 
 const NavInput = () => {
@@ -135,21 +137,14 @@ const NavInput = () => {
         </Box>
 
         {/* Conditional rendering of the Search Icon */}
-        {isSearchOpen && (
+        {!isSearchOpen && (
           <Box
-            position="absolute"
-            right="15px"
-            top="50%"
-            transform="translateY(-50%)"
-            zIndex={500}
             fontSize="20px"
             color="textColor"
             cursor="pointer"
             onClick={handleSearchIconClick}
           >
-            <Link to="/search">
-              <Search2Icon />
-            </Link>
+            <Search2Icon />
           </Box>
         )}
       </Box>
@@ -215,3 +210,4 @@ const NavInput = () => {
 };
 
 export default memo(NavInput);
+,
