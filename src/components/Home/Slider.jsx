@@ -122,7 +122,7 @@ const Slider = () => {
         {...sliderSettings}
         style={{
           width: "100%",
-          height: "100%",
+          height: isMobile ? "70vh" : "100%",  // Scale down the height for mobile screens
         }}
       >
         {sortByVote?.map((item, i) => {
@@ -219,7 +219,7 @@ const Slider = () => {
                     {/* actions */}
                     <motion.div
                       initial={{ opacity: 0, y: 50 }}
-                      animate={i === activeSlide ? 'show' : 'hidden'}
+                      animate={i === activeSlide ? 'show' or 'hidden'}
                       transition={{ duration: 0.5, delay: 0.9, ease: "easeOut" }}
                       variants={variants}
                     >
@@ -248,7 +248,7 @@ const Slider = () => {
                       md: 'unset',
                     }} >
                     <motion.div
-                      animate={i === activeSlide ? 'show' : 'hidden'}
+                      animate={i === activeSlide ? 'show' or 'hidden'}
                       transition={{ duration: 0.7, delay: 1.2, ease: "easeOut" }}
                       variants={variants}
                     >
