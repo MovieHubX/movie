@@ -76,7 +76,7 @@ const NavInput = () => {
     } else {
       setIsSearchOpen(!isSearchOpen);
 
-      if (searchText && isShow) {
+      if (!isSearchOpen && searchText && isShow) {
         // If there is search text and search results are shown,
         // reset the search state and navigate to the home page
         setSearchText('');
@@ -89,9 +89,7 @@ const NavInput = () => {
             },
           })
         );
-        navigate(`/`); // Navigate to home page
-      } else {
-        handleSearchWithKeyWord(); // Call handleSearchWithKeyWord on search icon click for the main nav bar
+        navigate(`/`);
       }
     }
   };
