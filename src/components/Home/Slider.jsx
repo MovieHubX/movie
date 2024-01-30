@@ -109,7 +109,7 @@ const Slider = () => {
   }
 
   return (
-    <Box mt={{ base: '80px', md: '0' }} mx="auto" w='full' maxW="full" h={{ base: '60vh', md: '80vh' }}>
+    <Box mt={{ base: '55px', md: '0' }} mx="auto" w='full' maxW="full" h={{ base: '60vh', md: '80vh' }}>
       <Swiper
         {...sliderSettings}
         style={{
@@ -263,9 +263,18 @@ const Slider = () => {
                     </motion.div>
                   </Box>
                   {/* score */}
-                  <Box pos='absolute' top='7%' right='4%' display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                  <Box
+                    pos='absolute'
+                    top='17%'  {/* Adjusted the top value */}
+                    right='4%'
+                    display={'flex'}
+                    alignItems={'center'}
+                    justifyContent={'center'}
+                  >
                     <Text
-                      fontSize={{ base: '20px', md: '24px' }} color='#fff' fontWeight={'bold'}
+                      fontSize={{ base: '20px', md: '24px' }}
+                      color='#fff'
+                      fontWeight={'bold'}
                     >
                       {item?.vote_average.toFixed(1)}
                     </Text>
