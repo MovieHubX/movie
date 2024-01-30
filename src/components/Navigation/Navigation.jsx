@@ -69,11 +69,12 @@ const Navigation = () => {
               <Link to="/">MovieHubX</Link>
             </Box>
 
+            {/* Input */}
+            <NavInput />
+            
             {/* Menu */}
             <Menu />
 
-            {/* Input */}
-            <NavInput />
 
           </Flex>
         </Box>
