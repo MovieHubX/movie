@@ -167,7 +167,7 @@ const NavInput = () => {
       {/* Search Bar */}
       <Box
         position="absolute"
-        top="105px"
+        top="55px"
         left="0"
         right="0"
         bg="rgba(21, 31, 50, 1)"
