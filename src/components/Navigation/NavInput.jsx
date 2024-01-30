@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+// Disabling exhaustive-deps rule for React hooks to avoid unnecessary warnings
+
 import { Search2Icon } from "@chakra-ui/icons";
 import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-
 import {
   multiSearch
 } from "../../services/searchSlice";
@@ -20,6 +21,7 @@ const NavInput = () => {
   const [isShow, setIsShow] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  // Handles the change in search input text
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
     startTransition(() => {
@@ -36,6 +38,7 @@ const NavInput = () => {
     });
   };
 
+  // Handles search with a keyword and optionally navigates to the search page
   const handleSearchWithKeyWord = useCallback((text = queryText, shouldNavigate = true) => {
     if (text) {
       dispatch(
@@ -53,27 +56,30 @@ const NavInput = () => {
         navigate(`/search`);
         searchInput.current.blur();
         setIsShow(false);
-        setIsSearchOpen(false); // Close search bar after search
+        setIsSearchOpen(true); // Close search bar after search
       }
     }
   }, [queryText, navigate]);
 
+  // Handles the press of the Enter key in the search input
   const handlePressEnter = (e) => {
     if (e.key === "Enter") {
       handleSearchWithKeyWord();
     }
   };
 
+  // Handles the click event on the search icon
   const handleSearchIconClick = () => {
     if (isSearchOpen) {
       // Trigger search directly if in the new search bar
       handleSearchWithKeyWord(searchText, false);
     } else {
-      setIsSearchOpen(true); // Open the new search bar
+      setIsSearchOpen(!isSearchOpen);
       handleSearchWithKeyWord(); // Call handleSearchWithKeyWord on search icon click for the main nav bar
     }
   };
 
+  // Effect to handle keyboard and outside clicks for closing the search bar
   useEffect(() => {
     const handleEscapeKey = (e) => {
       if (e.key === "Escape") {
@@ -103,6 +109,7 @@ const NavInput = () => {
     searchInput.current.addEventListener("focus", handleInputFocus);
     searchInput.current.addEventListener("blur", handleInputBlur);
 
+    // Cleanup event listeners on component unmount
     return () => {
       document.removeEventListener("keydown", handleEscapeKey);
       document.removeEventListener("mousedown", handleOutsideClick);
@@ -155,6 +162,7 @@ const NavInput = () => {
         p="10px"
       >
         <Box position="relative" overflow="hidden">
+          {/* Search Input */}
           <Input
             variant="flushed"
             autoCapitalize="off"
@@ -173,6 +181,7 @@ const NavInput = () => {
             }}
             onKeyDown={(e) => handlePressEnter(e)}
           />
+          {/* Search Icon */}
           <Box
             position="absolute"
             right="15px"
@@ -182,13 +191,14 @@ const NavInput = () => {
             fontSize="20px"
             color="textColor"
             cursor="pointer"
-            onClick={() => handleSearchWithKeyWord(searchText, false)}
+            onClick={() => handleSearchWithKeyWord()}
           >
             <Link to="/search">
               <Search2Icon />
             </Link>
           </Box>
         </Box>
+        {/* Display top search keywords */}
         {isShow && (
           <SearchTopKeyWordsList
             handleClickListKeyWords={handleSearchWithKeyWord}
