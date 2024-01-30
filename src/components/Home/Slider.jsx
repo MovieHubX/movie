@@ -109,7 +109,7 @@ const Slider = () => {
   }
 
   return (
-    <Box mt='55px' mx="auto" w='full' maxW="full" h={'80vh'}>
+    <Box mt='55px' mx="auto" w='full' maxW="full" h={{ base: '60vh', md: '80vh' }}>
       <Swiper
         {...sliderSettings}
         style={{
@@ -151,7 +151,7 @@ const Slider = () => {
                       effect="blur"
                       mx="auto"
                       overflow="hidden"
-                      h="full"
+                      h={{ base: "60vh", md: "100%" }}
                       w="full"
                       fallback={<Box bg={'#333'} position='absolute' inset={'0'} />}
                       objectFit="cover"
@@ -188,7 +188,7 @@ const Slider = () => {
                         color="#fff"
                         fontWeight="extrabold"
                         fontSize={{
-                          base: "4xl",
+                          base: "2xl", // Adjust the font size for mobile screens
                           md: "4xl",
                           lg: "60px",
                         }}
@@ -204,7 +204,7 @@ const Slider = () => {
                       variants={variants}
                     >
                       <Text my='15px' fontSize={{
-                        base: '15px',
+                        base: '12px', // Adjust the font size for mobile screens
                         md: '18px',
                       }}>{subString}</Text>
                     </motion.div>
