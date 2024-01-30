@@ -75,7 +75,24 @@ const NavInput = () => {
       handleSearchWithKeyWord(searchText, false);
     } else {
       setIsSearchOpen(!isSearchOpen);
-      handleSearchWithKeyWord(); // Call handleSearchWithKeyWord on search icon click for the main nav bar
+
+      if (searchText && isShow) {
+        // If there is search text and search results are shown,
+        // reset the search state and navigate to the home page
+        setSearchText('');
+        setIsShow(false);
+        dispatch(
+          multiSearch({
+            path: "search/multi",
+            params: {
+              query: '', // Reset the query
+            },
+          })
+        );
+        navigate(`/`); // Navigate to home page
+      } else {
+        handleSearchWithKeyWord(); // Call handleSearchWithKeyWord on search icon click for the main nav bar
+      }
     }
   };
 
@@ -91,13 +108,13 @@ const NavInput = () => {
     const handleOutsideClick = (e) => {
       if (!searchInput.current.contains(e.target)) {
         setIsShow(false);
-        setIsSearchOpen(true); // Close search bar on outside click
+        setIsSearchOpen(false); // Close search bar on outside click
       }
     };
 
     const handleInputFocus = () => {
       setIsShow(true);
-      setIsSearchOpen(false); // Open search bar on input focus
+      setIsSearchOpen(true); // Open search bar on input focus
     };
 
     const handleInputBlur = () => {
@@ -210,4 +227,3 @@ const NavInput = () => {
 };
 
 export default memo(NavInput);
-,
