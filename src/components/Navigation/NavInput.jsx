@@ -82,12 +82,25 @@ const NavInput = () => {
       if (!isSearchOpen && searchText && isShow) {
         // If there is search text and search results are shown,
         // reset the search state and navigate to the home page
-        handleSearchWithKeyWord('', false); // Pass an empty string to trigger search without navigating
         setSearchText('');
         setIsShow(false);
+        dispatch(
+          multiSearch({
+            path: "search/multi",
+            params: {
+              query: '', // Reset the query
+            },
+          })
+        );
         navigate(`/`);
       }
     }
+  };
+
+  // Handles the click event on the new search icon in the search bar
+  const handleNewSearchIconClick = () => {
+    // Trigger search directly with the current search text
+    handleSearchWithKeyWord(searchText, true);
   };
 
   // Effect to handle keyboard for closing the search bar
@@ -193,7 +206,7 @@ const NavInput = () => {
             fontSize="20px"
             color="textColor"
             cursor="pointer"
-            onClick={() => handleSearchWithKeyWord(searchText, false)}
+            onClick={handleNewSearchIconClick}
           >
             <Search2Icon />
           </Box>
