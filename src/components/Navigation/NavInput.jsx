@@ -94,14 +94,6 @@ const NavInput = () => {
     }
   };
 
-  // Effect to handle keyboard and outside clicks for closing the search bar
-  useEffect(() => {
-    const handleEscapeKey = (e) => {
-      if (e.key === "Escape") {
-        setIsShow(false);
-        setIsSearchOpen(false); // Close search bar on escape key
-      }
-    };
 
     const handleOutsideClick = (e) => {
       if (!searchInput.current.contains(e.target)) {
