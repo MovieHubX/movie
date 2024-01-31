@@ -39,27 +39,30 @@ const NavInput = () => {
   };
 
   // Handles search with a keyword and optionally navigates to the search page
-  const handleSearchWithKeyWord = useCallback((text = queryText, shouldNavigate = true) => {
-    if (text) {
-      dispatch(
-        multiSearch({
-          path: "search/multi",
-          params: {
-            query: text,
-          },
-        })
-      );
+  const handleSearchWithKeyWord = useCallback(
+    (text = queryText, shouldNavigate = true) => {
+      if (text) {
+        dispatch(
+          multiSearch({
+            path: "search/multi",
+            params: {
+              query: text,
+            },
+          })
+        );
 
-      if (shouldNavigate) {
-        // navigate to search page
-        setSearchText(text);
-        navigate(`/search`);
-        searchInput.current.blur();
-        setIsShow(false);
-        setIsSearchOpen(false); // Close search bar after search
+        if (shouldNavigate) {
+          // navigate to search page
+          setSearchText(text);
+          navigate(`/search`);
+          searchInput.current.blur();
+          setIsShow(false);
+          setIsSearchOpen(false); // Close search bar after search
+        }
       }
-    }
-  }, [queryText, navigate]);
+    },
+    [queryText, navigate]
+  );
 
   // Handles the press of the Enter key in the search input
   const handlePressEnter = (e) => {
@@ -79,16 +82,9 @@ const NavInput = () => {
       if (!isSearchOpen && searchText && isShow) {
         // If there is search text and search results are shown,
         // reset the search state and navigate to the home page
+        handleSearchWithKeyWord('', false); // Pass an empty string to trigger search without navigating
         setSearchText('');
         setIsShow(false);
-        dispatch(
-          multiSearch({
-            path: "search/multi",
-            params: {
-              query: '', // Reset the query
-            },
-          })
-        );
         navigate(`/`);
       }
     }
