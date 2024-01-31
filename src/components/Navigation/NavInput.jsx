@@ -94,11 +94,12 @@ const NavInput = () => {
     }
   };
 
-
-    const handleOutsideClick = (e) => {
-      if (!searchInput.current.contains(e.target)) {
+  // Effect to handle keyboard for closing the search bar
+  useEffect(() => {
+    const handleEscapeKey = (e) => {
+      if (e.key === "Escape") {
         setIsShow(false);
-        setIsSearchOpen(false); // Close search bar on outside click
+        setIsSearchOpen(false); // Close search bar on escape key
       }
     };
 
@@ -112,14 +113,12 @@ const NavInput = () => {
     };
 
     document.addEventListener("keydown", handleEscapeKey);
-    document.addEventListener("mousedown", handleOutsideClick);
     searchInput.current.addEventListener("focus", handleInputFocus);
     searchInput.current.addEventListener("blur", handleInputBlur);
 
     // Cleanup event listeners on component unmount
     return () => {
       document.removeEventListener("keydown", handleEscapeKey);
-      document.removeEventListener("mousedown", handleOutsideClick);
       searchInput.current.removeEventListener("focus", handleInputFocus);
       searchInput.current.removeEventListener("blur", handleInputBlur);
     };
