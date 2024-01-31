@@ -68,7 +68,7 @@ const NavInput = () => {
     }
   };
 
-  // Handles the click event on the search icon
+  // Handles the click event on the search icon in the main nav bar
   const handleSearchIconClick = () => {
     if (isSearchOpen) {
       // Trigger search directly if in the new search bar
@@ -151,7 +151,7 @@ const NavInput = () => {
           {/* Add your navigation links here */}
         </Box>
 
-        {/* Conditional rendering of the Search Icon */}
+        {/* Conditional rendering of the Search Icon in the main nav bar */}
         {!isSearchOpen && (
           <Box
             fontSize="20px"
@@ -177,7 +177,7 @@ const NavInput = () => {
         p="10px"
       >
         <Box position="relative" overflow="hidden">
-          {/* Search Input */}
+          {/* Search Input in the new search bar */}
           <Input
             variant="flushed"
             autoCapitalize="off"
@@ -196,7 +196,7 @@ const NavInput = () => {
             }}
             onKeyDown={(e) => handlePressEnter(e)}
           />
-          {/* Search Icon */}
+          {/* Search Icon in the new search bar */}
           <Box
             position="absolute"
             right="15px"
@@ -206,7 +206,7 @@ const NavInput = () => {
             fontSize="20px"
             color="textColor"
             cursor="pointer"
-            onClick={() => handleSearchWithKeyWord()}
+            onClick={() => handleSearchWithKeyWord()} // Added onClick to trigger search
           >
             <Link to="/search">
               <Search2Icon />
