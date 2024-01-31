@@ -196,7 +196,7 @@ const NavInput = () => {
             }}
             onKeyDown={(e) => handlePressEnter(e)}
           />
-          {/* Search Icon in the new search bar (Now triggers search) */}
+          {/* Search Icon in the new search bar */}
           <Box
             position="absolute"
             right="15px"
@@ -206,9 +206,9 @@ const NavInput = () => {
             fontSize="20px"
             color="textColor"
             cursor="pointer"
-            onClick={() => handleSearchWithKeyWord()}
+            onClick={() => handleSearchWithKeyWord()} {/* Updated onClick here */}
           >
-            {/* Removed the Link component */}
+            {/* Removed unnecessary Link component */}
             <Search2Icon />
           </Box>
         </Box>
