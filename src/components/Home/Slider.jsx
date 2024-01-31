@@ -168,7 +168,7 @@ const Slider = () => {
                   <Box
                     pos={'absolute'} maxW={'600px'} zIndex={20} transform={'translateY(-50%)'}
                     mx={{ base: '10px', md: 'unset' }}
-                    top={{ base: '40%', md: '45%', }}
+                    top={{ base: '45%', md: '50%', }}  // Adjusted top position
                     left={{ base: '0', md: '130px', }}
                     right={{ base: '0', md: 'unset', }}
                   >
