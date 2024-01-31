@@ -118,8 +118,6 @@ const Slider = () => {
         }}
       >
         {sortByVote?.map((item, i) => {
-
-          /* get short description */
           let subString = item?.overview.split(' ')
           if (subString.length < 25) {
             subString = item?.overview
@@ -137,7 +135,6 @@ const Slider = () => {
                 }}
               >
                 <Center position="relative" h="full" w="full">
-                  {/* background image */}
                   <Box
                     position='absolute'
                     top='0'
@@ -168,11 +165,10 @@ const Slider = () => {
                       inset={'0'}
                     />
                   </Box>
-                  {/* name, desc */}
                   <Box
                     pos={'absolute'} maxW={'600px'} zIndex={20} transform={'translateY(-50%)'}
                     mx={{ base: '10px', md: 'unset' }}
-                    top={{ base: '55%', md: '55%', }}
+                    top={{ base: '40%', md: '45%', }}
                     left={{ base: '0', md: '130px', }}
                     right={{ base: '0', md: 'unset', }}
                   >
@@ -196,7 +192,6 @@ const Slider = () => {
                         {item?.title || item?.name}
                       </Heading>
                     </motion.div>
-                    {/* description */}
                     <motion.div
                       initial={{ opacity: 0, y: 50 }}
                       animate={i === activeSlide ? 'show' : 'hidden'}
@@ -208,7 +203,6 @@ const Slider = () => {
                         md: '18px',
                       }}>{subString}</Text>
                     </motion.div>
-                    {/* actions */}
                     <motion.div
                       initial={{ opacity: 0, y: 50 }}
                       animate={i === activeSlide ? 'show' : 'hidden'}
@@ -230,7 +224,6 @@ const Slider = () => {
                       </Box>
                     </motion.div>
                   </Box>
-                  {/* actor,... */}
                   <Box maxW={'500px'} pos={'absolute'} bottom='50px' zIndex={20} right={{
                     base: '0',
                     md: '130px',
@@ -244,7 +237,6 @@ const Slider = () => {
                       transition={{ duration: 0.7, delay: 1.2, ease: "easeOut" }}
                       variants={variants}
                     >
-
                       <Box textAlign='right' mb='15px'>
                         <Text color={'primaryColor'} fontWeight={'bold'} fontSize='22px'>Genres</Text>
                       </Box>
@@ -262,7 +254,6 @@ const Slider = () => {
                       </Box>
                     </motion.div>
                   </Box>
-                  {/* score */}
                   <Box pos='absolute' top='7%' right='4%' display={'flex'} alignItems={'center'} justifyContent={'center'}>
                     <Text
                       fontSize={{ base: '20px', md: '24px' }} color='#fff' fontWeight={'bold'}
@@ -276,7 +267,6 @@ const Slider = () => {
             );
           }
         })}
-        {/* button */}
         <SliderButton icon={ChevronLeftIcon} ref={prevRef} direction="left" />
         <SliderButton icon={ChevronRightIcon} ref={nextRef} direction="right" />
       </Swiper>
@@ -284,4 +274,4 @@ const Slider = () => {
   );
 };
 
-export default memo(Slider)
+export default memo(Slider);
