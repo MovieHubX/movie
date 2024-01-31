@@ -197,7 +197,7 @@ const NavInput = () => {
             fontSize="20px"
             color="textColor"
             cursor="pointer"
-            onClick={() => handleSearchWithKeyWord(searchText, false)} {/* Updated onClick here */}
+            onClick={() => handleSearchWithKeyWord(searchText, false)}
           >
             <Search2Icon />
           </Box>
