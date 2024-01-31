@@ -170,9 +170,9 @@ const Slider = () => {
                   </Box>
                   {/* name, desc */}
                   <Box
-                    pos={'absolute'} maxW={'600px'} zIndex={20} transform={'translateY(-50%)'}
+                    pos={'absolute'} maxW={'600px'} zIndex={20} transform={'translateY(-55%)'}  {/* Adjust translateY value */}
                     mx={{ base: '10px', md: 'unset' }}
-                    top={{ base: '47%', md: '55%', }}
+                    top={{ base: '40%', md: '50%', }}  {/* Adjust top value */}
                     left={{ base: '0', md: '130px', }}
                     right={{ base: '0', md: 'unset', }}
                   >
@@ -202,6 +202,7 @@ const Slider = () => {
                       animate={i === activeSlide ? 'show' : 'hidden'}
                       transition={{ duration: 0.5, delay: 0.7, ease: "easeOut" }}
                       variants={variants}
+                      style={{ marginTop: '10px' }}  {/* Add margin-top */}
                     >
                       <Text my='15px' fontSize={{
                         base: '14px', // Adjusted font size for mobile screens
@@ -214,6 +215,7 @@ const Slider = () => {
                       animate={i === activeSlide ? 'show' : 'hidden'}
                       transition={{ duration: 0.5, delay: 0.9, ease: "easeOut" }}
                       variants={variants}
+                      style={{ marginTop: '10px' }}  {/* Add margin-top */}
                     >
                       <Box
                         display={'flex'} 
