@@ -67,7 +67,7 @@ const Navigation = () => {
           <Flex h={"55px"} alignItems={"center"} justifyContent={"space-between"}>
             {/* Logo */}
             <Box fontWeight="extrabold" color="primaryColor" fontSize="lg" zIndex="1">
-              <Link to="/">MovieMax</Link>
+              <Link to="/">MovieHubX</Link>
             </Box>
 
             {/* Input */}
