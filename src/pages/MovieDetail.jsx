@@ -178,7 +178,7 @@ export const MovieDetail = () => {
             ref={player}
           >
             <VideoPlayer
-              embedSrc={`https://vidsrc.xyz/embed/movie?tmdb=${id}`}
+              <iframe src={`https://vidsrc.xyz/embed/movie?tmdb=${id}`} sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
             />
           </Box>
 
