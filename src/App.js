@@ -1,4 +1,4 @@
-import { Route, Routes, useHistory } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Layout from "src/components/Layout/Layout";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -20,7 +20,7 @@ import { getConfig, getGenres } from "./services/";
 
 function App() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(
@@ -49,7 +49,7 @@ function App() {
       // Prevent the default behavior (external navigation)
       event.preventDefault();
       // Handle internal navigation
-      history.push(target.pathname);
+      navigate(target.pathname);
     }
   };
 
@@ -61,7 +61,7 @@ function App() {
     return () => {
       document.removeEventListener("click", handleLinkClick);
     };
-  }, [history]);
+  }, [navigate]);
 
   return (
     <Layout>
