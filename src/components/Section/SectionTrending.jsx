@@ -5,6 +5,8 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import Film from "../Film/Film";
 import { getConfigSelector } from "../../redux/selector";
 import { useSelector } from "react-redux";
+import ButtonBg from "../Buttons/ButtonBg";
+
 
 const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek }) => {
   const { config } = useSelector(getConfigSelector);
