@@ -1,9 +1,9 @@
-import React, { Fragment, memo } from "react";
+import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons"; // Added arrow icons
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Keyboard } from "swiper";
+import { Keyboard, Pagination } from "swiper";
 import "swiper/css";
 import { motion } from "framer-motion";
 
@@ -14,14 +14,18 @@ import { useSelector } from "react-redux";
 
 const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek }) => {
   const { config } = useSelector(getConfigSelector);
-  const variants = {
-    week: { left: 0 },
-    day: { left: "50%" },
+  const [swiper, setSwiper] = useState(null);
+
+  const handleNext = () => {
+    if (swiper !== null) {
+      swiper.slideNext();
+    }
   };
-  const spring = {
-    type: "spring",
-    stiffness: 300,
-    damping: 30,
+
+  const handlePrev = () => {
+    if (swiper !== null) {
+      swiper.slidePrev();
+    }
   };
 
   return (
@@ -98,7 +102,9 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           },
         }}
         keyboard={true}
-        modules={[Keyboard]}
+        modules={[Keyboard, Pagination]}
+        onSwiper={setSwiper}
+        pagination={{ clickable: true }}
       >
         {data?.map((data, i) => {
           if (i < 18) {
@@ -122,8 +128,8 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
 
       {/* Arrow thingys */}
       <Box mt="10px">
-        <ChevronLeftIcon boxSize={6} color="blue.500" cursor="pointer" mr="10px" />
-        <ChevronRightIcon boxSize={6} color="blue.500" cursor="pointer" />
+        <ChevronLeftIcon boxSize={6} color="blue.500" cursor="pointer" onClick={handlePrev} mr="10px" />
+        <ChevronRightIcon boxSize={6} color="blue.500" cursor="pointer" onClick={handleNext} />
       </Box>
     </Box>
   );
