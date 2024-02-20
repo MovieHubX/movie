@@ -122,6 +122,41 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           return <Fragment key={data.id || i}></Fragment>;
         })}
       </Swiper>
+
+      {/* Second Row */}
+      <Swiper
+        slidesPerView={5} // 5 items per row
+        spaceBetween={15} // adjust as needed
+        breakpoints={{
+          768: {
+            slidesPerView: 5, // adjust for responsiveness
+          },
+          922: {
+            slidesPerView: 5, // adjust for responsiveness
+          },
+        }}
+        keyboard={true}
+        modules={[Keyboard]}
+      >
+        {data?.map((data, i) => {
+          if (i >= 10 && i < 20) { // 10 items for 2 rows
+            return (
+              <SwiperSlide key={data.id}>
+                <Film
+                  baseUrl={`${config?.images?.base_url}/original/`}
+                  media_type={data.media_type}
+                  id={data.id}
+                  vote_average={data.vote_average}
+                  poster_path={data.poster_path}
+                  title={data.title}
+                  name={data.name}
+                />
+              </SwiperSlide>
+            );
+          }
+          return <Fragment key={data.id || i}></Fragment>;
+        })}
+      </Swiper>
     </Box>
   );
 };
