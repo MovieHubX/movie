@@ -54,7 +54,7 @@ const Section = ({ data = [], name, type, link = '' }) => {
         modules={[Keyboard]}
       >
         {data?.map((data, i) => {
-          if (i < 18) {
+          if (i < 30) {
             return (
               <SwiperSlide key={data.id}>
                 <Film
