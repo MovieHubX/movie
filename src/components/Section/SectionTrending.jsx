@@ -90,14 +90,14 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
       </Flex>
 
       <Swiper
-        slidesPerView={3.2}
-        spaceBetween={15}
+        slidesPerView={3.2 * 3} // 3 rows of slides
+        spaceBetween={15} // adjust as needed
         breakpoints={{
           768: {
-            slidesPerView: 4.3,
+            slidesPerView: 4.3 * 3, // adjust for responsiveness
           },
           922: {
-            slidesPerView: 6.3,
+            slidesPerView: 6.3 * 3, // adjust for responsiveness
           },
         }}
         keyboard={true}
