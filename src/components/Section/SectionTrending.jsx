@@ -115,7 +115,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         modules={[Keyboard, Pagination]}
         onSwiper={setSwiper}
         pagination={{ clickable: true }}
-        paginationStyle={{ bottom: "20px" }} // Adjusted position of pagination dots
+        paginationStyle={{ bottom: "calc(1.5cm + 20px)" }} // Adjusted position of pagination dots
       >
         {data?.map((data, i) => {
           if (i < 18) {
