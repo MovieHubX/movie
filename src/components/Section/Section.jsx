@@ -13,6 +13,9 @@ import { useSelector } from "react-redux";
 
 const Section = ({ data = [], name, type, link = '' }) => {
   const { config } = useSelector(getConfigSelector);
+  
+  // Calculate the number of movies per row
+  const moviesPerRow = Math.ceil(data.length / 3);
 
   return (
     <Box mb="50px">
@@ -39,109 +42,37 @@ const Section = ({ data = [], name, type, link = '' }) => {
         }
       </Flex>
 
-      <Swiper
-        slidesPerView={3.2}
-        spaceBetween={15}
-        breakpoints={{
-          768: {
-            slidesPerView: 4.3,
-          },
-          922: {
-            slidesPerView: 6.3,
-          },
-        }}
-        keyboard={true}
-        modules={[Keyboard]}
-      >
-        {data?.map((data, i) => {
-          if (i < 30) {
-            return (
-              <SwiperSlide key={data.id}>
-                <Film
-                  baseUrl={`${config?.images?.base_url}/original/`}
-                  media_type={type}
-                  id={data.id}
-                  vote_average={data.vote_average}
-                  poster_path={data.poster_path}
-                  title={data.title}
-                  name={data.name}
-                />
-              </SwiperSlide>
-            );
-          }
-          return <Fragment key={data.id || i}></Fragment>;
-        })}
-      </Swiper>
-
-      {/* Second Row */}
-      <Swiper
-        slidesPerView={3.2}
-        spaceBetween={15}
-        breakpoints={{
-          768: {
-            slidesPerView: 4.3,
-          },
-          922: {
-            slidesPerView: 6.3,
-          },
-        }}
-        keyboard={true}
-        modules={[Keyboard]}
-      >
-        {data?.map((data, i) => {
-          if (i >= 18 && i < 36) {
-            return (
-              <SwiperSlide key={data.id}>
-                <Film
-                  baseUrl={`${config?.images?.base_url}/original/`}
-                  media_type={type}
-                  id={data.id}
-                  vote_average={data.vote_average}
-                  poster_path={data.poster_path}
-                  title={data.title}
-                  name={data.name}
-                />
-              </SwiperSlide>
-            );
-          }
-          return <Fragment key={data.id || i}></Fragment>;
-        })}
-      </Swiper>
-
-      {/* Third Row */}
-      <Swiper
-        slidesPerView={3.2}
-        spaceBetween={15}
-        breakpoints={{
-          768: {
-            slidesPerView: 4.3,
-          },
-          922: {
-            slidesPerView: 6.3,
-          },
-        }}
-        keyboard={true}
-        modules={[Keyboard]}
-      >
-        {data?.map((data, i) => {
-          if (i >= 36 && i < 54) {
-            return (
-              <SwiperSlide key={data.id}>
-                <Film
-                  baseUrl={`${config?.images?.base_url}/original/`}
-                  media_type={type}
-                  id={data.id}
-                  vote_average={data.vote_average}
-                  poster_path={data.poster_path}
-                  title={data.title}
-                  name={data.name}
-                />
-              </SwiperSlide>
-            );
-          }
-          return <Fragment key={data.id || i}></Fragment>;
-        })}
-      </Swiper>
+      {[...Array(3)].map((_, rowIndex) => (
+        <Swiper
+          key={rowIndex}
+          slidesPerView={3.2}
+          spaceBetween={15}
+          breakpoints={{
+            768: {
+              slidesPerView: 4.3,
+            },
+            922: {
+              slidesPerView: 6.3,
+            },
+          }}
+          keyboard={true}
+          modules={[Keyboard]}
+        >
+          {data.slice(rowIndex * moviesPerRow, (rowIndex + 1) * moviesPerRow).map((movie, i) => (
+            <SwiperSlide key={movie.id || i}>
+              <Film
+                baseUrl={`${config?.images?.base_url}/original/`}
+                media_type={type}
+                id={movie.id}
+                vote_average={movie.vote_average}
+                poster_path={movie.poster_path}
+                title={movie.title}
+                name={movie.name}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      ))}
     </Box>
   );
 };
