@@ -115,6 +115,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         modules={[Keyboard, Pagination]}
         onSwiper={setSwiper}
         pagination={{ clickable: true }}
+        paginationStyle={{ bottom: "20px" }} // Adjusted position of pagination dots
       >
         {data?.map((data, i) => {
           if (i < 18) {
@@ -138,10 +139,10 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
 
       {/* Arrow thingys */}
       <Box position="absolute" top="50%" transform="translateY(-50%)" left="0" zIndex={1}>
-        <ChevronLeftIcon boxSize={10} color="blue.500" cursor="pointer" onClick={handlePrev} />
+        <ChevronLeftIcon boxSize={12} color="blue.500" cursor="pointer" onClick={handlePrev} />
       </Box>
       <Box position="absolute" top="50%" transform="translateY(-50%)" right="0" zIndex={1}>
-        <ChevronRightIcon boxSize={10} color="blue.500" cursor="pointer" onClick={handleNext} />
+        <ChevronRightIcon boxSize={12} color="blue.500" cursor="pointer" onClick={handleNext} />
       </Box>
     </Box>
   );
