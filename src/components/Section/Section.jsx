@@ -14,8 +14,8 @@ import { useSelector } from "react-redux";
 const Section = ({ data = [], name, type, link = '' }) => {
   const { config } = useSelector(getConfigSelector);
   
-  // Calculate the number of movies per row
-  const moviesPerRow = Math.ceil(data.length / 3);
+  // Calculate the number of movies per row ensuring a full poster
+  const moviesPerRow = Math.floor((window.innerWidth - 50) / 200);
 
   return (
     <Box mb="50px">
@@ -45,14 +45,14 @@ const Section = ({ data = [], name, type, link = '' }) => {
       {[...Array(3)].map((_, rowIndex) => (
         <Swiper
           key={rowIndex}
-          slidesPerView={3.2}
+          slidesPerView={moviesPerRow > 6 ? 6 : moviesPerRow}
           spaceBetween={15}
           breakpoints={{
             768: {
-              slidesPerView: 4.3,
+              slidesPerView: moviesPerRow > 4.3 ? 4.3 : moviesPerRow,
             },
             922: {
-              slidesPerView: 6.3,
+              slidesPerView: moviesPerRow > 6.3 ? 6.3 : moviesPerRow,
             },
           }}
           keyboard={true}
