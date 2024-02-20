@@ -1,7 +1,7 @@
 import React, { Fragment, memo } from "react";
 import { Link } from "react-router-dom";
 import { Box, Flex, Heading } from "@chakra-ui/react";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons"; // Added arrow icons
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
 import "swiper/css";
@@ -99,10 +99,6 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         }}
         keyboard={true}
         modules={[Keyboard]}
-        navigation={{ 
-          prevEl: ".swiper-button-prev",
-          nextEl: ".swiper-button-next"
-        }}
       >
         {data?.map((data, i) => {
           if (i < 18) {
@@ -122,9 +118,13 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           }
           return <Fragment key={data.id || i}></Fragment>;
         })}
-        <div className="swiper-button-prev" style={{ color: "#3182ce" }}></div>
-        <div className="swiper-button-next" style={{ color: "#3182ce" }}></div>
       </Swiper>
+
+      {/* Arrow thingys */}
+      <Box mt="10px">
+        <ChevronLeftIcon boxSize={6} color="blue.500" cursor="pointer" mr="10px" />
+        <ChevronRightIcon boxSize={6} color="blue.500" cursor="pointer" />
+      </Box>
     </Box>
   );
 };
