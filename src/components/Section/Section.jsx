@@ -54,35 +54,100 @@ const Section = ({ data = [], name, type, link = '' }) => {
         }
       </Flex>
 
-      <Swiper
-        id="swiper-container"
-        slidesPerView={moviesPerRow}
-        spaceBetween={15}
-        breakpoints={{
-          768: {
-            slidesPerView: Math.min(moviesPerRow, 4.3),
-          },
-          922: {
-            slidesPerView: Math.min(moviesPerRow, 6.3),
-          },
-        }}
-        keyboard={true}
-        modules={[Keyboard]}
-      >
-        {data.map((movie, i) => (
-          <SwiperSlide key={movie.id || i}>
-            <Film
-              baseUrl={`${config?.images?.base_url}/original/`}
-              media_type={type}
-              id={movie.id}
-              vote_average={movie.vote_average}
-              poster_path={movie.poster_path}
-              title={movie.title}
-              name={movie.name}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div className="swiper-container">
+        <Swiper
+          slidesPerView={moviesPerRow}
+          spaceBetween={15}
+          breakpoints={{
+            768: {
+              slidesPerView: Math.min(moviesPerRow, 4.3),
+            },
+            922: {
+              slidesPerView: Math.min(moviesPerRow, 6.3),
+            },
+          }}
+          keyboard={true}
+          modules={[Keyboard]}
+        >
+          {data.map((movie, i) => (
+            <SwiperSlide key={movie.id || i}>
+              <Film
+                baseUrl={`${config?.images?.base_url}/original/`}
+                media_type={type}
+                id={movie.id}
+                vote_average={movie.vote_average}
+                poster_path={movie.poster_path}
+                title={movie.title}
+                name={movie.name}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
+      {/* Second Row */}
+      <div className="swiper-container">
+        <Swiper
+          slidesPerView={moviesPerRow}
+          spaceBetween={15}
+          breakpoints={{
+            768: {
+              slidesPerView: Math.min(moviesPerRow, 4.3),
+            },
+            922: {
+              slidesPerView: Math.min(moviesPerRow, 6.3),
+            },
+          }}
+          keyboard={true}
+          modules={[Keyboard]}
+        >
+          {data.map((movie, i) => (
+            <SwiperSlide key={movie.id || i}>
+              <Film
+                baseUrl={`${config?.images?.base_url}/original/`}
+                media_type={type}
+                id={movie.id}
+                vote_average={movie.vote_average}
+                poster_path={movie.poster_path}
+                title={movie.title}
+                name={movie.name}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
+      {/* Third Row */}
+      <div className="swiper-container">
+        <Swiper
+          slidesPerView={moviesPerRow}
+          spaceBetween={15}
+          breakpoints={{
+            768: {
+              slidesPerView: Math.min(moviesPerRow, 4.3),
+            },
+            922: {
+              slidesPerView: Math.min(moviesPerRow, 6.3),
+            },
+          }}
+          keyboard={true}
+          modules={[Keyboard]}
+        >
+          {data.map((movie, i) => (
+            <SwiperSlide key={movie.id || i}>
+              <Film
+                baseUrl={`${config?.images?.base_url}/original/`}
+                media_type={type}
+                id={movie.id}
+                vote_average={movie.vote_average}
+                poster_path={movie.poster_path}
+                title={movie.title}
+                name={movie.name}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </Box>
   );
 };
