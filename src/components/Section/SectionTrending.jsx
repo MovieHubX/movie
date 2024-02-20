@@ -7,7 +7,6 @@ import { getConfigSelector } from "../../redux/selector";
 import { useSelector } from "react-redux";
 import ButtonBg from "../Buttons/ButtonBg";
 
-
 const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek }) => {
   const { config } = useSelector(getConfigSelector);
 
@@ -84,11 +83,11 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
       </Flex>
 
       {/* Two rows of trending items */}
-      <Flex flexWrap="wrap">
+      <Flex flexWrap="wrap" justifyContent="space-between">
         {data?.map((item, index) => {
           if (index < 10) { // 10 items for 2 rows
             return (
-              <Box key={item.id} width={{ base: "50%", md: "20%" }}>
+              <Box key={item.id} width={{ base: "50%", md: "20%" }} marginBottom="20px">
                 <Film
                   baseUrl={`${config?.images?.base_url}/original/`}
                   media_type={item.media_type}
