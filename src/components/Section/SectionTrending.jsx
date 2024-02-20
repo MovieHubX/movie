@@ -1,9 +1,9 @@
 import React, { Fragment, memo } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading, Progress } from "@chakra-ui/react";
-import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
+import { Box, Flex, Heading } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Keyboard, Navigation } from "swiper";
+import { Keyboard } from "swiper";
 import "swiper/css";
 import { motion } from "framer-motion";
 
@@ -98,31 +98,33 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           },
         }}
         keyboard={true}
-        modules={[Keyboard, Navigation]}
+        modules={[Keyboard]}
+        navigation={{ 
+          prevEl: ".swiper-button-prev",
+          nextEl: ".swiper-button-next"
+        }}
       >
         {data?.map((data, i) => {
           if (i < 18) {
             return (
               <SwiperSlide key={data.id}>
-                <Box border="1px solid gray" borderRadius="md" p={2}>
-                  <Film
-                    baseUrl={`${config?.images?.base_url}/original/`}
-                    media_type={data.media_type}
-                    id={data.id}
-                    vote_average={data.vote_average}
-                    poster_path={data.poster_path}
-                    title={data.title}
-                    name={data.name}
-                  />
-                </Box>
+                <Film
+                  baseUrl={`${config?.images?.base_url}/original/`}
+                  media_type={data.media_type}
+                  id={data.id}
+                  vote_average={data.vote_average}
+                  poster_path={data.poster_path}
+                  title={data.title}
+                  name={data.name}
+                />
               </SwiperSlide>
             );
           }
           return <Fragment key={data.id || i}></Fragment>;
         })}
+        <div className="swiper-button-prev" style={{ color: "#3182ce" }}></div>
+        <div className="swiper-button-next" style={{ color: "#3182ce" }}></div>
       </Swiper>
-      {/* Progress Bar */}
-      <Progress value={(data.length / 18) * 100} size="sm" colorScheme="primary" />
     </Box>
   );
 };
