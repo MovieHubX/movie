@@ -138,10 +138,10 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
 
       {/* Arrow thingys */}
       <Box position="absolute" top="50%" transform="translateY(-50%)" left="0" zIndex={1}>
-        <ChevronLeftIcon boxSize={6} color="blue.500" cursor="pointer" onClick={handlePrev} />
+        <ChevronLeftIcon boxSize={10} color="blue.500" cursor="pointer" onClick={handlePrev} />
       </Box>
       <Box position="absolute" top="50%" transform="translateY(-50%)" right="0" zIndex={1}>
-        <ChevronRightIcon boxSize={6} color="blue.500" cursor="pointer" onClick={handleNext} />
+        <ChevronRightIcon boxSize={10} color="blue.500" cursor="pointer" onClick={handleNext} />
       </Box>
     </Box>
   );
