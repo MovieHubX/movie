@@ -39,7 +39,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
   };
 
   return (
-    <Box mb="50px">
+    <Box mb="50px" position="relative">
       <Flex mb="30px" justify="space-between" align="center">
         <Flex justify={"center"} align="center" columnGap={"8"}>
           {/* heading */}
@@ -137,9 +137,9 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
       </Swiper>
 
       {/* Arrow thingys */}
-      <Box mt="10px">
-        <ChevronLeftIcon boxSize={6} color="blue.500" cursor="pointer" onClick={handlePrev} mr="10px" />
-        <ChevronRightIcon boxSize={6} color="blue.500" cursor="pointer" onClick={handleNext} />
+      <Box mt="10px" position="absolute" top="50%" transform="translateY(-50%)">
+        <ChevronLeftIcon boxSize={6} color="blue.500" cursor="pointer" onClick={handlePrev} left="0" />
+        <ChevronRightIcon boxSize={6} color="blue.500" cursor="pointer" onClick={handleNext} right="0" />
       </Box>
     </Box>
   );
