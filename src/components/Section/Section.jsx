@@ -10,6 +10,7 @@ import ButtonBg from "../Buttons/ButtonBg";
 import Film from "../Film/Film";
 import { getConfigSelector } from "../../redux/selector";
 import { useSelector } from "react-redux";
+
 const Section = ({ data = [], name, type, link = '' }) => {
   const { config } = useSelector(getConfigSelector);
 
@@ -54,6 +55,76 @@ const Section = ({ data = [], name, type, link = '' }) => {
       >
         {data?.map((data, i) => {
           if (i < 18) {
+            return (
+              <SwiperSlide key={data.id}>
+                <Film
+                  baseUrl={`${config?.images?.base_url}/original/`}
+                  media_type={type}
+                  id={data.id}
+                  vote_average={data.vote_average}
+                  poster_path={data.poster_path}
+                  title={data.title}
+                  name={data.name}
+                />
+              </SwiperSlide>
+            );
+          }
+          return <Fragment key={data.id || i}></Fragment>;
+        })}
+      </Swiper>
+
+      {/* Second Row */}
+      <Swiper
+        slidesPerView={3.2}
+        spaceBetween={15}
+        breakpoints={{
+          768: {
+            slidesPerView: 4.3,
+          },
+          922: {
+            slidesPerView: 6.3,
+          },
+        }}
+        keyboard={true}
+        modules={[Keyboard]}
+      >
+        {data?.map((data, i) => {
+          if (i >= 18 && i < 36) {
+            return (
+              <SwiperSlide key={data.id}>
+                <Film
+                  baseUrl={`${config?.images?.base_url}/original/`}
+                  media_type={type}
+                  id={data.id}
+                  vote_average={data.vote_average}
+                  poster_path={data.poster_path}
+                  title={data.title}
+                  name={data.name}
+                />
+              </SwiperSlide>
+            );
+          }
+          return <Fragment key={data.id || i}></Fragment>;
+        })}
+      </Swiper>
+
+      {/* Third Row */}
+      <Swiper
+        slidesPerView={3.2}
+        spaceBetween={15}
+        breakpoints={{
+          768: {
+            slidesPerView: 4.3,
+          },
+          922: {
+            slidesPerView: 6.3,
+          },
+        }}
+        keyboard={true}
+        modules={[Keyboard]}
+      >
+        {data?.map((data, i) => {
+          if (i >= 36 && i < 54) {
             return (
               <SwiperSlide key={data.id}>
                 <Film
