@@ -1,6 +1,6 @@
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons"; // Added arrow icons
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
@@ -62,8 +62,8 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
       </Flex>
 
       {/* Progress bar container */}
-      <Box>
-        <Box display="flex" bg="#fff">
+      <Box mb="20px">
+        <Box display="flex" bg="#fff" borderRadius="2px">
           {data.map((_, index) => (
             <Box
               key={index}
