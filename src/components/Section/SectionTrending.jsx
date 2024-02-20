@@ -28,6 +28,16 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
     }
   };
 
+  const variants = {
+    week: { left: 0 },
+    day: { left: "50%" },
+  };
+  const spring = {
+    type: "spring",
+    stiffness: 300,
+    damping: 30,
+  };
+
   return (
     <Box mb="50px">
       <Flex mb="30px" justify="space-between" align="center">
