@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from "react";
+import React, { Fragment, memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
@@ -13,9 +13,21 @@ import { useSelector } from "react-redux";
 
 const Section = ({ data = [], name, type, link = '' }) => {
   const { config } = useSelector(getConfigSelector);
-  
-  // Calculate the number of movies per row ensuring a full poster
-  const moviesPerRow = Math.floor((window.innerWidth - 50) / 200);
+  const [moviesPerRow, setMoviesPerRow] = useState(3);
+
+  useEffect(() => {
+    const calculateMoviesPerRow = () => {
+      const containerWidth = document.getElementById("swiper-container")?.offsetWidth;
+      if (containerWidth) {
+        const newMoviesPerRow = Math.floor(containerWidth / 200); // Assuming poster width of 200px
+        setMoviesPerRow(newMoviesPerRow);
+      }
+    };
+
+    calculateMoviesPerRow();
+    window.addEventListener("resize", calculateMoviesPerRow);
+    return () => window.removeEventListener("resize", calculateMoviesPerRow);
+  }, []);
 
   return (
     <Box mb="50px">
@@ -42,37 +54,35 @@ const Section = ({ data = [], name, type, link = '' }) => {
         }
       </Flex>
 
-      {[...Array(3)].map((_, rowIndex) => (
-        <Swiper
-          key={rowIndex}
-          slidesPerView={moviesPerRow > 6 ? 6 : moviesPerRow}
-          spaceBetween={15}
-          breakpoints={{
-            768: {
-              slidesPerView: moviesPerRow > 4.3 ? 4.3 : moviesPerRow,
-            },
-            922: {
-              slidesPerView: moviesPerRow > 6.3 ? 6.3 : moviesPerRow,
-            },
-          }}
-          keyboard={true}
-          modules={[Keyboard]}
-        >
-          {data.slice(rowIndex * moviesPerRow, (rowIndex + 1) * moviesPerRow).map((movie, i) => (
-            <SwiperSlide key={movie.id || i}>
-              <Film
-                baseUrl={`${config?.images?.base_url}/original/`}
-                media_type={type}
-                id={movie.id}
-                vote_average={movie.vote_average}
-                poster_path={movie.poster_path}
-                title={movie.title}
-                name={movie.name}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      ))}
+      <Swiper
+        id="swiper-container"
+        slidesPerView={moviesPerRow}
+        spaceBetween={15}
+        breakpoints={{
+          768: {
+            slidesPerView: Math.min(moviesPerRow, 4.3),
+          },
+          922: {
+            slidesPerView: Math.min(moviesPerRow, 6.3),
+          },
+        }}
+        keyboard={true}
+        modules={[Keyboard]}
+      >
+        {data.map((movie, i) => (
+          <SwiperSlide key={movie.id || i}>
+            <Film
+              baseUrl={`${config?.images?.base_url}/original/`}
+              media_type={type}
+              id={movie.id}
+              vote_average={movie.vote_average}
+              poster_path={movie.poster_path}
+              title={movie.title}
+              name={movie.name}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </Box>
   );
 };
