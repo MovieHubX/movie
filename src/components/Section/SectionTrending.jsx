@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons"; // Added arrow icons
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Keyboard, Pagination } from "swiper";
+import { Keyboard } from "swiper";
 import "swiper/css";
 import { motion } from "framer-motion";
 
@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek }) => {
   const { config } = useSelector(getConfigSelector);
   const [swiper, setSwiper] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const handleNext = () => {
     if (swiper !== null) {
@@ -28,14 +29,8 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
     }
   };
 
-  const variants = {
-    week: { left: 0 },
-    day: { left: "50%" },
-  };
-  const spring = {
-    type: "spring",
-    stiffness: 300,
-    damping: 30,
+  const handleSlideChange = (swiper) => {
+    setActiveIndex(swiper.activeIndex);
   };
 
   return (
@@ -71,27 +66,25 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             cursor="pointer"
             textAlign={"center"}
           >
-            <motion.div
-              initial="week"
-              variants={variants}
-              transition={spring}
-              animate={trendingInWeek ? "week" : "day"}
-              style={{ position: "absolute", top: 0, height: "100%", width: "50%" }}
+            <Box
+              w="50%"
+              color={trendingInWeek ? "#fff" : "primaryColor"}
+              pos={"relative"}
+              bg="transparent"
+              zIndex={1}
+              onClick={() => setTrendingInWeek((prev) => !prev)}
             >
-              <Box rounded="3xl" w="full" h="full" bg={"primaryColor"} zIndex="0"></Box>
-            </motion.div>
-            {/* This Week */}
-            <Box w={"50%"} onClick={() => setTrendingInWeek((prev) => !prev)}>
-              <Box color={trendingInWeek ? "#fff" : "primaryColor"} pos={"relative"} bg="transparent" zIndex={1}>
-                This Week
-              </Box>
+              This Week
             </Box>
-
-            {/* Today */}
-            <Box w={"50%"} onClick={() => setTrendingInWeek((prev) => !prev)}>
-              <Box pos={"relative"} color={trendingInWeek ? "primaryColor" : "#fff"} bg="transparent" zIndex={1}>
-                Today
-              </Box>
+            <Box
+              w="50%"
+              color={trendingInWeek ? "primaryColor" : "#fff"}
+              pos={"relative"}
+              bg="transparent"
+              zIndex={1}
+              onClick={() => setTrendingInWeek((prev) => !prev)}
+            >
+              Today
             </Box>
           </Flex>
         </Flex>
@@ -112,10 +105,9 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           },
         }}
         keyboard={true}
-        modules={[Keyboard, Pagination]}
+        modules={[Keyboard]}
         onSwiper={setSwiper}
-        pagination={{ clickable: true }}
-        paginationStyle={{ bottom: "calc(1.5cm + 20px)" }} // Adjusted position of pagination dots
+        onSlideChange={handleSlideChange}
       >
         {data?.map((data, i) => {
           if (i < 18) {
@@ -143,6 +135,22 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
       </Box>
       <Box position="absolute" top="50%" transform="translateY(-50%)" right="0" zIndex={1}>
         <ChevronRightIcon boxSize={12} color="blue.500" cursor="pointer" onClick={handleNext} />
+      </Box>
+
+      {/* Custom pagination */}
+      <Box position="absolute" bottom="20px" left="50%" transform="translateX(-50%)" zIndex={1}>
+        <Box display="flex">
+          {data.map((_, index) => (
+            <Box
+              key={index}
+              bg={index === activeIndex ? "primaryColor" : "transparent"}
+              h="4px"
+              w="12px"
+              mx="2px"
+              borderRadius="2px"
+            />
+          ))}
+        </Box>
       </Box>
     </Box>
   );
