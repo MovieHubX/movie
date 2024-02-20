@@ -25,29 +25,6 @@ const Section = ({ data = [], name, type, link = '' }) => {
     return () => window.removeEventListener("resize", calculateMoviesPerRow);
   }, []);
 
-  const numRows = Math.ceil(data.length / moviesPerRow);
-  const movieRows = [];
-
-  for (let i = 0; i < numRows; i++) {
-    const moviesInRow = data.slice(i * moviesPerRow, (i + 1) * moviesPerRow);
-    movieRows.push(
-      <SimpleGrid key={i} columns={[1, 2, moviesPerRow]} spacing={6} mb={6}>
-        {moviesInRow.map((movie, j) => (
-          <Film
-            key={movie.id || j}
-            baseUrl={`${config?.images?.base_url}/original/`}
-            media_type={type}
-            id={movie.id}
-            vote_average={movie.vote_average}
-            poster_path={movie.poster_path}
-            title={movie.title}
-            name={movie.name}
-          />
-        ))}
-      </SimpleGrid>
-    );
-  }
-
   return (
     <Box mb="50px" id="section-container">
       <Flex mb="30px" justify="space-between" align="center">
@@ -70,7 +47,20 @@ const Section = ({ data = [], name, type, link = '' }) => {
           </Link>
         )}
       </Flex>
-      {movieRows}
+      <SimpleGrid columns={[1, 2, moviesPerRow]} spacing={6} mb={6}>
+        {data.map((movie, index) => (
+          <Film
+            key={index}
+            baseUrl={`${config?.images?.base_url}/original/`}
+            media_type={type}
+            id={movie.id}
+            vote_average={movie.vote_average}
+            poster_path={movie.poster_path}
+            title={movie.title}
+            name={movie.name}
+          />
+        ))}
+      </SimpleGrid>
     </Box>
   );
 };
