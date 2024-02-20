@@ -105,7 +105,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             return (
               <SwiperSlide key={data.id}>
                 <Film
-                  baseUrl={`${config?.images?.base_url}/original/`}
+                  baseUrl={`${config?.images?.base_url}/w300/`}
                   media_type={data.media_type}
                   id={data.id}
                   vote_average={data.vote_average}
