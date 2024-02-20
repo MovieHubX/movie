@@ -15,22 +15,24 @@ import { useSelector } from "react-redux";
 const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek }) => {
   const { config } = useSelector(getConfigSelector);
   const [swiper, setSwiper] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   const handleNext = () => {
     if (swiper !== null) {
       swiper.slideNext();
+      setProgress(progress + 1);
     }
   };
 
   const handlePrev = () => {
     if (swiper !== null) {
       swiper.slidePrev();
+      setProgress(progress - 1);
     }
   };
 
   const handleSlideChange = (swiper) => {
-    setActiveIndex(swiper.activeIndex);
+    setProgress(swiper.activeIndex);
   };
 
   return (
@@ -50,43 +52,19 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
               {data?.homeSectionName || name}
             </Heading>
           </Box>
-          {/* change time */}
-          <Flex
-            overflow={"hidden"}
-            display={{ base: "none", md: "flex" }}
-            rounded="3xl"
-            border={"rgba(50, 138, 241, 1) 1px solid"}
-            justify={"space-between"}
-            align="center"
-            w={"234px"}
-            py="5px"
-            fontWeight="bold"
-            color="#fff"
-            position="relative"
-            cursor="pointer"
-            textAlign={"center"}
-          >
-            <Box
-              w="50%"
-              color={trendingInWeek ? "#fff" : "primaryColor"}
-              pos={"relative"}
-              bg="transparent"
-              zIndex={1}
-              onClick={() => setTrendingInWeek((prev) => !prev)}
-            >
-              This Week
-            </Box>
-            <Box
-              w="50%"
-              color={trendingInWeek ? "primaryColor" : "#fff"}
-              pos={"relative"}
-              bg="transparent"
-              zIndex={1}
-              onClick={() => setTrendingInWeek((prev) => !prev)}
-            >
-              Today
-            </Box>
-          </Flex>
+          {/* Custom pagination */}
+          <Box display="flex">
+            {data.map((_, index) => (
+              <Box
+                key={index}
+                bg={index === progress ? "primaryColor" : "transparent"}
+                h="4px"
+                w="12px"
+                mx="2px"
+                borderRadius="2px"
+              />
+            ))}
+          </Box>
         </Flex>
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
           <ButtonBg>
@@ -135,22 +113,6 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
       </Box>
       <Box position="absolute" top="50%" transform="translateY(-50%)" right="0" zIndex={1}>
         <ChevronRightIcon boxSize={12} color="blue.500" cursor="pointer" onClick={handleNext} />
-      </Box>
-
-      {/* Custom pagination */}
-      <Box position="absolute" bottom="20px" left="50%" transform="translateX(-50%)" zIndex={1}>
-        <Box display="flex">
-          {data.map((_, index) => (
-            <Box
-              key={index}
-              bg={index === activeIndex ? "primaryColor" : "transparent"}
-              h="4px"
-              w="12px"
-              mx="2px"
-              borderRadius="2px"
-            />
-          ))}
-        </Box>
       </Box>
     </Box>
   );
