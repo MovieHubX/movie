@@ -8,6 +8,7 @@ import "swiper/css";
 import { motion } from "framer-motion";
 
 import ButtonBg from "../Buttons/ButtonBg";
+import Film from "../Film/Film";
 import { getConfigSelector } from "../../redux/selector";
 import { useSelector } from "react-redux";
 
@@ -96,7 +97,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
       </Flex>
 
       <Swiper
-        slidesPerView={1}
+        slidesPerView={2}
         spaceBetween={15}
         breakpoints={{
           768: {
@@ -112,16 +113,15 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           if (i < 18) {
             return (
               <SwiperSlide key={data.id}>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Box
-                    h="300px"
-                    background={`url(${config?.images?.secure_base_url}/original${data.backdrop_path}) no-repeat center center / cover`}
-                  />
-                </motion.div>
+                <Film
+                  baseUrl={`${config?.images?.base_url}/original/`}
+                  media_type={data.media_type}
+                  id={data.id}
+                  vote_average={data.vote_average}
+                  poster_path={data.poster_path}
+                  title={data.title}
+                  name={data.name}
+                />
               </SwiperSlide>
             );
           }
