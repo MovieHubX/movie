@@ -2,18 +2,32 @@ import React, { Fragment, memo } from "react";
 import { Link } from "react-router-dom";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Keyboard } from "swiper";
+import "swiper/css";
+import { motion } from "framer-motion";
+
+import ButtonBg from "../Buttons/ButtonBg";
 import Film from "../Film/Film";
 import { getConfigSelector } from "../../redux/selector";
 import { useSelector } from "react-redux";
-import ButtonBg from "../Buttons/ButtonBg";
 
 const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek }) => {
   const { config } = useSelector(getConfigSelector);
+  const variants = {
+    week: { left: 0 },
+    day: { left: "50%" },
+  };
+  const spring = {
+    type: "spring",
+    stiffness: 300,
+    damping: 30,
+  };
 
   return (
     <Box mb="50px">
       <Flex mb="30px" justify="space-between" align="center">
-        <Flex justify="center" align="center" columnGap={8}>
+        <Flex justify={"center"} align="center" columnGap={"8"}>
           {/* heading */}
           <Box>
             <Heading
@@ -29,46 +43,39 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           </Box>
           {/* change time */}
           <Flex
-            overflow="hidden"
+            overflow={"hidden"}
             display={{ base: "none", md: "flex" }}
             rounded="3xl"
-            border="rgba(50, 138, 241, 1) 1px solid"
-            justify="space-between"
+            border={"rgba(50, 138, 241, 1) 1px solid"}
+            justify={"space-between"}
             align="center"
-            w="234px"
+            w={"234px"}
             py="5px"
             fontWeight="bold"
             color="#fff"
             position="relative"
             cursor="pointer"
-            textAlign="center"
+            textAlign={"center"}
           >
-            {/* This Week */}
-            <Box
-              w="50%"
-              onClick={() => setTrendingInWeek((prev) => !prev)}
+            <motion.div
+              initial="week"
+              variants={variants}
+              transition={spring}
+              animate={trendingInWeek ? "week" : "day"}
+              style={{ position: "absolute", top: 0, height: "100%", width: "50%" }}
             >
-              <Box
-                color={trendingInWeek ? "#fff" : "primaryColor"}
-                pos="relative"
-                bg="transparent"
-                zIndex={1}
-              >
+              <Box rounded="3xl" w="full" h="full" bg={"primaryColor"} zIndex="0"></Box>
+            </motion.div>
+            {/* This Week */}
+            <Box w={"50%"} onClick={() => setTrendingInWeek((prev) => !prev)}>
+              <Box color={trendingInWeek ? "#fff" : "primaryColor"} pos={"relative"} bg="transparent" zIndex={1}>
                 This Week
               </Box>
             </Box>
 
             {/* Today */}
-            <Box
-              w="50%"
-              onClick={() => setTrendingInWeek((prev) => !prev)}
-            >
-              <Box
-                pos="relative"
-                color={trendingInWeek ? "primaryColor" : "#fff"}
-                bg="transparent"
-                zIndex={1}
-              >
+            <Box w={"50%"} onClick={() => setTrendingInWeek((prev) => !prev)}>
+              <Box pos={"relative"} color={trendingInWeek ? "primaryColor" : "#fff"} bg="transparent" zIndex={1}>
                 Today
               </Box>
             </Box>
@@ -82,27 +89,36 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         </Link>
       </Flex>
 
-      {/* Two rows of trending items */}
-      <Flex flexWrap="wrap" justifyContent="space-between">
-        {data?.map((item, index) => {
-          if (index < 10) { // 10 items for 2 rows
+      <Swiper
+        slidesPerView={1}
+        spaceBetween={15}
+        breakpoints={{
+          768: {
+            slidesPerView: 4,
+          },
+        }}
+        keyboard={true}
+        modules={[Keyboard]}
+      >
+        {data?.map((data, i) => {
+          if (i < 18) {
             return (
-              <Box key={item.id} width={{ base: "50%", md: "20%" }} marginBottom="20px">
+              <SwiperSlide key={data.id}>
                 <Film
                   baseUrl={`${config?.images?.base_url}/original/`}
-                  media_type={item.media_type}
-                  id={item.id}
-                  vote_average={item.vote_average}
-                  poster_path={item.poster_path}
-                  title={item.title}
-                  name={item.name}
+                  media_type={data.media_type}
+                  id={data.id}
+                  vote_average={data.vote_average}
+                  poster_path={data.poster_path}
+                  title={data.title}
+                  name={data.name}
                 />
-              </Box>
+              </SwiperSlide>
             );
           }
-          return null;
+          return <Fragment key={data.id || i}></Fragment>;
         })}
-      </Flex>
+      </Swiper>
     </Box>
   );
 };
