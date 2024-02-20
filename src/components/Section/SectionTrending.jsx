@@ -1,12 +1,11 @@
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading } from "@chakra-ui/react";
-import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons"; // Added arrow icons
+import { Box, Flex, Heading, SimpleGrid } from "@chakra-ui/react";
+import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
 import "swiper/css";
 import { motion } from "framer-motion";
-
 import ButtonBg from "../Buttons/ButtonBg";
 import Film from "../Film/Film";
 import { getConfigSelector } from "../../redux/selector";
@@ -90,24 +89,26 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         onSwiper={setSwiper}
         onSlideChange={handleSlideChange}
       >
-        {data?.map((data, i) => {
-          if (i < 18) {
-            return (
-              <SwiperSlide key={data.id}>
-                <Film
-                  baseUrl={`${config?.images?.base_url}/original/`}
-                  media_type={data.media_type}
-                  id={data.id}
-                  vote_average={data.vote_average}
-                  poster_path={data.poster_path}
-                  title={data.title}
-                  name={data.name}
-                />
-              </SwiperSlide>
-            );
-          }
-          return <Fragment key={data.id || i}></Fragment>;
-        })}
+        <SimpleGrid columns={[1, 2, 4]} spacing={6}>
+          {data?.map((data, i) => {
+            if (i < 18) {
+              return (
+                <SwiperSlide key={data.id}>
+                  <Film
+                    baseUrl={`${config?.images?.base_url}/original/`}
+                    media_type={data.media_type}
+                    id={data.id}
+                    vote_average={data.vote_average}
+                    poster_path={data.poster_path}
+                    title={data.title}
+                    name={data.name}
+                  />
+                </SwiperSlide>
+              );
+            }
+            return <Fragment key={data.id || i}></Fragment>;
+          })}
+        </SimpleGrid>
       </Swiper>
 
       {/* Arrow buttons */}
