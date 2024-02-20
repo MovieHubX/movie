@@ -1,6 +1,6 @@
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading, Spacer } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons"; // Added arrow icons
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
@@ -70,8 +70,8 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
               bg={index <= progress ? "primaryColor" : "transparent"}
               h="4px"
               flex="1"
-              mx="1px"
-              borderRadius="2px"
+              mx="-1px" // Adjusted margin to remove white space between dots
+              borderRadius="0" // Removed border radius to make it seamless
             />
           ))}
         </Box>
