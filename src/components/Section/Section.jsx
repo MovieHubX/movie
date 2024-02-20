@@ -5,6 +5,7 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import Film from "../Film/Film";
 import { getConfigSelector } from "../../redux/selector";
 import { useSelector } from "react-redux";
+import ButtonBg from "../Buttons/ButtonBg"; 
 
 const Section = ({ data = [], name, type, link = '' }) => {
   const { config } = useSelector(getConfigSelector);
