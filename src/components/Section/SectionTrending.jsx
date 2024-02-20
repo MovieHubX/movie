@@ -61,8 +61,8 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         </Link>
       </Flex>
 
-      {/* Progress bar container with border */}
-      <Box border="1px solid #E2E8F0" borderRadius="2px" p="2px">
+      {/* Progress bar container */}
+      <Box>
         <Box display="flex" bg="#fff">
           {data.map((_, index) => (
             <Box
@@ -110,7 +110,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         })}
       </Swiper>
 
-      {/* Arrow thingys */}
+      {/* Arrow buttons */}
       <Box position="absolute" top="50%" transform="translateY(-50%)" left="0" zIndex={1}>
         <ChevronLeftIcon boxSize={12} color="blue.500" cursor="pointer" onClick={handlePrev} />
       </Box>
