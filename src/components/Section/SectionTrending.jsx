@@ -52,19 +52,6 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
               {data?.homeSectionName || name}
             </Heading>
           </Box>
-          {/* Custom pagination */}
-          <Box display="flex">
-            {data.map((_, index) => (
-              <Box
-                key={index}
-                bg={index === progress ? "primaryColor" : "transparent"}
-                h="4px"
-                w="12px"
-                mx="2px"
-                borderRadius="2px"
-              />
-            ))}
-          </Box>
         </Flex>
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
           <ButtonBg>
@@ -73,6 +60,22 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           </ButtonBg>
         </Link>
       </Flex>
+
+      {/* Progress bar container with border */}
+      <Box border="1px solid #E2E8F0" borderRadius="2px" p="2px">
+        <Box display="flex" bg="#fff">
+          {data.map((_, index) => (
+            <Box
+              key={index}
+              bg={index <= progress ? "primaryColor" : "transparent"}
+              h="4px"
+              flex="1"
+              mx="1px"
+              borderRadius="2px"
+            />
+          ))}
+        </Box>
+      </Box>
 
       <Swiper
         slidesPerView={2}
