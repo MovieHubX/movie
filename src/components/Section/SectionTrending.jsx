@@ -64,6 +64,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         </Stack>
         {/* more button */}
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
+          <ButtonBg px={2} minW="initial">
           <ButtonBg>
             More
             <ArrowForwardIcon ml={2} />
