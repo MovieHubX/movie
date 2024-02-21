@@ -15,7 +15,7 @@ const SectionTrending = ({ data = [], name }) => {
   const { config } = useSelector(getConfigSelector);
   const [swiper, setSwiper] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [trendingInWeek, setTrendingInWeek] = useState(true); // Added state for toggling day/week trending
+  const [trendingInWeek, setTrendingInWeek] = useState(true);
 
   const handleNext = () => {
     if (swiper !== null) {
@@ -55,8 +55,8 @@ const SectionTrending = ({ data = [], name }) => {
           {/* Change time period */}
           <Flex align="center">
             <motion.div
-              initial={{ x: 0 }}
-              animate={{ x: trendingInWeek ? 0 : "100%" }}
+              initial={{ x: trendingInWeek ? 0 : "50%" }}
+              animate={{ x: trendingInWeek ? 0 : "50%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               style={{
                 display: "flex",
