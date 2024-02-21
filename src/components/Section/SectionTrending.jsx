@@ -51,7 +51,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         {/* switcher */}
         <Stack
           direction={{ base: "column", md: "row" }}
-          spacing={{ base: "4", md: "5" }}
+          spacing={{ base: "4", md: "2" }}
         >
           <Button
             size="sm"
@@ -59,7 +59,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             variant={trendingInWeek ? "solid" : "outline"}
             colorScheme={trendingInWeek ? "blue" : "gray"}
           >
-            {trendingInWeek ? "Weekly" : "Daily"} Trending
+            {trendingInWeek ? "Weekly‏‏‎ ‎‏‏‎ ‎" : "Daily‎‎‎‎‏‏‎ ‎‏‏‎ ‎"} Trending
           </Button>
         </Stack>
         {/* more button */}
