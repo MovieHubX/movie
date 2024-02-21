@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import { Box, Flex, Heading, SimpleGrid, Button, Stack } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Keyboard } from "swiper";
 import "swiper/css";
-import { motion } from "framer-motion";
 import ButtonBg from "../Buttons/ButtonBg";
 import Film from "../Film/Film";
 import { useSelector } from "react-redux";
@@ -38,26 +36,27 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
     <Box mb="50px" position="relative">
       <Flex
         mb="30px"
-        justify={{ base: "space-around", md: "space-between" }}
+        justify="space-between"
         align="center"
-        direction={{ base: "column", md: "row" }}
+        wrap="wrap" // Allows items to wrap as needed on smaller screens
       >
         {/* heading */}
         <Heading
           textTransform="capitalize"
-          fontSize={{
-            base: "xl",
-            md: "2xl",
-            lg: "3xl",
-          }}
+          fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
+          flex="1" // Ensure heading takes up space flexibly
+          minWidth="120px" // Minimum width to prevent overly squeezing on small screens
         >
           {data?.homeSectionName || name}
         </Heading>
         {/* switcher */}
         <Stack
-          direction={{ base: "column", md: "row" }}
-          spacing={{ base: "4", md: "2" }}
-          align="center" // Center align items in the stack for better mobile appearance
+          direction="row"
+          spacing="4"
+          align="center"
+          flex="1" // Allows the switcher stack to flexibly take up space
+          justify="center" // Center content within the stack for all screen sizes
+          minWidth="150px" // Minimum width to ensure layout consistency
         >
           <Button
             size="sm"
@@ -70,7 +69,8 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         </Stack>
         {/* more button */}
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
-          <ButtonBg>
+          <ButtonBg minWidth="100px" // Ensures "More" button has a consistent size
+          >
             More
             <ArrowForwardIcon ml={2} />
           </ButtonBg>
