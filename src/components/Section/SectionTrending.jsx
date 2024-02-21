@@ -1,6 +1,6 @@
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading, SimpleGrid, Button, Stack } from "@chakra-ui/react";
+import { Box, Flex, Heading, SimpleGrid, Button, Stack, useBreakpointValue } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
@@ -15,6 +15,9 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
   const { config } = useSelector(getConfigSelector);
   const [swiper, setSwiper] = useState(null);
   const [progress, setProgress] = useState(0);
+  
+  // Determine margin for switcher stack based on screen size
+  const switcherMarginRight = useBreakpointValue({ base: "20px", md: "0" });
 
   const handleNext = () => {
     if (swiper !== null && progress < data.length - 1) {
@@ -52,6 +55,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         <Stack
           direction={{ base: "column", md: "row" }}
           spacing={{ base: "4", md: "2" }}
+          marginRight={switcherMarginRight} // Apply margin based on screen size
         >
           <Button
             size="sm"
@@ -59,7 +63,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             variant={trendingInWeek ? "solid" : "outline"}
             colorScheme={trendingInWeek ? "blue" : "gray"}
           >
-            {trendingInWeek ? "Weekly‏‏‎ ‎‏‏‎ ‎" : "Daily‎‎‎‎‏‏‎ ‎‏‏‎ ‎"} Trending
+            {trendingInWeek ? "Weekly ‏‏‎‎" : "Daily‎‎‎‎‏‏‎ "} Trending
           </Button>
         </Stack>
         {/* more button */}
