@@ -38,20 +38,16 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
     <Box mb="50px" position="relative">
       <Flex mb="30px" justify="space-between" align="center">
         {/* heading */}
-        <ButtonBg pointerEvents="none">
-          <Button
-            as="div" // Render as div instead of button
-            disabled // Disable the button
-            textTransform="capitalize"
-            fontSize={{
-              base: "xl",
-              md: "2xl",
-              lg: "3xl",
-            }}
-          >
-            {data?.homeSectionName || name}
-          </Button>
-        </ButtonBg>
+        <Heading
+          textTransform="capitalize"
+          fontSize={{
+            base: "xl",
+            md: "2xl",
+            lg: "3xl",
+          }}
+        >
+          {data?.homeSectionName || name} &nbsp;&nbsp;&nbsp;
+        </Heading>
         {/* switcher */}
         <Stack
           direction={{ base: "column", md: "row" }}
