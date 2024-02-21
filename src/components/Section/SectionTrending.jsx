@@ -1,11 +1,10 @@
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading, SimpleGrid, Button, Stack } from "@chakra-ui/react";
+import { Box, Flex, Heading, SimpleGrid, Button, useBreakpointValue } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
 import "swiper/css";
-import { motion } from "framer-motion";
 import ButtonBg from "../Buttons/ButtonBg";
 import Film from "../Film/Film";
 import { getConfigSelector } from "../../redux/selector";
@@ -34,9 +33,12 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
     setProgress(swiper.activeIndex);
   };
 
+  // Adjust button alignment based on screen size
+  const alignButton = useBreakpointValue({ base: "flex-end", md: "center" });
+
   return (
     <Box mb="50px" position="relative">
-      <Flex mb="30px" justify="space-between" align="center">
+      <Flex mb="30px" justify="space-between" align="center" direction={{ base: "column", md: "row" }}>
         <Heading
           textTransform="capitalize"
           fontSize={{
@@ -44,36 +46,28 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             md: "2xl",
             lg: "3xl",
           }}
+          mb={{ base: 4, md: 0 }} // Add margin-bottom on mobile for spacing
         >
           {data?.homeSectionName || name}
         </Heading>
-        <Flex
-          justify={{ base: "flex-end", md: "center" }}
-          align="center"
-          width={{ base: "full", md: "auto" }}
-        >
-          <Stack
-            direction={{ base: "row", md: "row" }}
-            spacing="4"
-            align="center"
+        <Flex justify={alignButton} align="center" w={{ base: "full", md: "auto" }}>
+          <Button
+            size="sm"
+            onClick={() => setTrendingInWeek(prev => !prev)}
+            variant={trendingInWeek ? "solid" : "outline"}
+            colorScheme={trendingInWeek ? "blue" : "gray"}
+            leftIcon={<span>{trendingInWeek ? "📅" : "📆"}</span>}
+            mb={{ base: 2, md: 0 }} // Add margin-bottom on mobile for spacing
           >
-            <Button
-              size="sm"
-              onClick={() => setTrendingInWeek(prev => !prev)}
-              variant={trendingInWeek ? "solid" : "outline"}
-              colorScheme="blue"
-              px={{ base: 2, md: 4 }} // Adjust padding for mobile
-            >
-              {trendingInWeek ? "This Week" : "Today"}
-            </Button>
-          </Stack>
+            {trendingInWeek ? "This Week" : "Today"}
+          </Button>
+          <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
+            <ButtonBg>
+              More
+              <ArrowForwardIcon ml={2} />
+            </ButtonBg>
+          </Link>
         </Flex>
-        <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
-          <ButtonBg>
-            More
-            <ArrowForwardIcon ml={2} />
-          </ButtonBg>
-        </Link>
       </Flex>
 
       <Swiper
