@@ -1,10 +1,11 @@
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading, SimpleGrid, Button, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, Heading, SimpleGrid, Button, Stack } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
 import "swiper/css";
+import { motion } from "framer-motion";
 import ButtonBg from "../Buttons/ButtonBg";
 import Film from "../Film/Film";
 import { getConfigSelector } from "../../redux/selector";
@@ -33,44 +34,86 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
     setProgress(swiper.activeIndex);
   };
 
-  const alignSwitcherRight = useBreakpointValue({ base: true, md: false });
-
   return (
     <Box mb="50px" position="relative">
-      <Flex direction="column" align="center" mb="30px">
+      <Flex mb="30px" justify="space-between" align="center">
+        {/* heading */}
         <Heading
           textTransform="capitalize"
-          fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
-          mb={{ base: 4, md: 5 }}
+          fontSize={{
+            base: "xl",
+            md: "2xl",
+            lg: "3xl",
+          }}
         >
           {data?.homeSectionName || name}
         </Heading>
-        <Flex width="full" justify={{ base: "space-between", md: "center" }} align="center">
-          {alignSwitcherRight ? (
-            <Box flex="1"></Box> // Empty box to push the switcher and More button to the right on mobile
-          ) : null}
+        {/* switcher */}
+        <Stack
+          direction={{ base: "column", md: "row" }}
+          spacing={{ base: "4", md: "2" }}
+        >
           <Button
             size="sm"
             onClick={() => setTrendingInWeek(prev => !prev)}
             variant={trendingInWeek ? "solid" : "outline"}
-            colorScheme="blue"
-            mr={{ base: 0, md: 4 }}
+            colorScheme={trendingInWeek ? "blue" : "gray"}
+            leftIcon={<span>{trendingInWeek ? "📅" : "📆"}</span>}
           >
-            {trendingInWeek ? "This Week" : "Today"}
+            {trendingInWeek ? "Weekly" : "Daily"} Trending
           </Button>
-          <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
-            <ButtonBg>
-              More
-              <ArrowForwardIcon ml={2} />
-            </ButtonBg>
-          </Link>
-          {alignSwitcherRight ? (
-            <Box flex="1"></Box> // Dummy box to balance the space on mobile, if needed
-          ) : null}
-        </Flex>
+        </Stack>
+        {/* more button */}
+        <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
+          <ButtonBg>
+            More
+            <ArrowForwardIcon ml={2} />
+          </ButtonBg>
+        </Link>
       </Flex>
 
-      {/* Swiper and other components remain the same */}
+      <Swiper
+        slidesPerView={2}
+        spaceBetween={15}
+        breakpoints={{
+          768: {
+            slidesPerView: 4,
+          },
+        }}
+        keyboard={true}
+        modules={[Keyboard]}
+        onSwiper={setSwiper}
+        onSlideChange={handleSlideChange}
+      >
+        <SimpleGrid columns={[1, 2, 4]} spacing={6}>
+          {data?.map((data, i) => {
+            if (i < 18) {
+              return (
+                <SwiperSlide key={data.id}>
+                  <Film
+                    baseUrl={`${config?.images?.base_url}/original/`}
+                    media_type={data.media_type}
+                    id={data.id}
+                    vote_average={data.vote_average}
+                    poster_path={data.poster_path}
+                    title={data.title}
+                    name={data.name}
+                  />
+                </SwiperSlide>
+              );
+            }
+            return <Fragment key={data.id || i}></Fragment>;
+          })}
+        </SimpleGrid>
+      </Swiper>
+
+      {/* Arrow buttons */}
+      <Box position="absolute" top="50%" transform="translateY(-50%)" left="0" zIndex={1}>
+        <ChevronLeftIcon boxSize={12} color="blue.500" cursor="pointer" onClick={handlePrev} />
+      </Box>
+      <Box position="absolute" top="50%" transform="translateY(-50%)" right="0" zIndex={1}>
+        <ChevronRightIcon boxSize={12} color="blue.500" cursor="pointer" onClick={handleNext} />
+      </Box>
     </Box>
   );
 };
