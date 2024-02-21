@@ -11,10 +11,11 @@ import Film from "../Film/Film";
 import { getConfigSelector } from "../../redux/selector";
 import { useSelector } from "react-redux";
 
-const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek }) => {
+const SectionTrending = ({ data = [], name }) => {
   const { config } = useSelector(getConfigSelector);
   const [swiper, setSwiper] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [trendingInWeek, setTrendingInWeek] = useState(true); // Added state for toggling day/week trending
 
   const handleNext = () => {
     if (swiper !== null) {
@@ -48,9 +49,27 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
                 lg: "3xl",
               }}
             >
-              {data?.homeSectionName || name}
+              {name}
             </Heading>
           </Box>
+          {/* Change time period */}
+          <Flex align="center">
+            <Box
+              mr={4}
+              cursor="pointer"
+              onClick={() => setTrendingInWeek(true)}
+              color={trendingInWeek ? "blue.500" : "gray.500"}
+            >
+              Week
+            </Box>
+            <Box
+              cursor="pointer"
+              onClick={() => setTrendingInWeek(false)}
+              color={!trendingInWeek ? "blue.500" : "gray.500"}
+            >
+              Day
+            </Box>
+          </Flex>
         </Flex>
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
           <ButtonBg>
