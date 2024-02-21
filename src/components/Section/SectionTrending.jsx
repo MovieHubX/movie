@@ -1,6 +1,6 @@
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading, SimpleGrid, Button } from "@chakra-ui/react";
+import { Box, Flex, Heading, SimpleGrid, Button, Stack } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
@@ -52,32 +52,20 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             </Heading>
           </Box>
           {/* change time */}
-          <Flex
-            overflow={"hidden"}
-            rounded="3xl"
-            border={"rgba(50, 138, 241, 1) 1px solid"}
-            justify={"space-between"}
-            align="center"
-            py="5px"
-            fontWeight="bold"
-            color="#fff"
-            position="relative"
-            cursor="pointer"
-            textAlign={"center"}
-            display={{ base: "flex", md: "none" }} // Adjusted display property for smaller screens
-            w={"auto"} // Adjusted width for smaller screens
+          <Stack
+            direction={{ base: "column", md: "row" }}
+            spacing={{ base: "4", md: "2" }}
           >
-            {/* Switcher Button */}
             <Button
-              size="sm" // Adjusted size to make it smaller
+              size="sm"
               onClick={() => setTrendingInWeek(prev => !prev)}
-              variant={trendingInWeek ? "solid" : "outline"} // Added different variant for better visibility
+              variant={trendingInWeek ? "solid" : "outline"}
               colorScheme={trendingInWeek ? "blue" : "gray"}
-              leftIcon={<span>{trendingInWeek ? "📅" : "📆"}</span>} // Added icons for better indication
+              leftIcon={<span>{trendingInWeek ? "📅" : "📆"}</span>}
             >
               {trendingInWeek ? "Weekly" : "Daily"} Trending
             </Button>
-          </Flex>
+          </Stack>
         </Flex>
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
           <ButtonBg>
