@@ -54,21 +54,50 @@ const SectionTrending = ({ data = [], name }) => {
           </Box>
           {/* Change time period */}
           <Flex align="center">
-            <Box
-              mr={4}
-              cursor="pointer"
-              onClick={() => setTrendingInWeek(true)}
-              color={trendingInWeek ? "blue.500" : "gray.500"}
+            <motion.div
+              initial={{ x: 0 }}
+              animate={{ x: trendingInWeek ? 0 : "100%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              style={{
+                display: "flex",
+                position: "relative",
+                overflow: "hidden",
+                borderRadius: "3xl",
+                border: "rgba(50, 138, 241, 1) 1px solid",
+                width: "234px",
+                py: "5px",
+              }}
             >
-              Week
-            </Box>
-            <Box
-              cursor="pointer"
-              onClick={() => setTrendingInWeek(false)}
-              color={!trendingInWeek ? "blue.500" : "gray.500"}
-            >
-              Day
-            </Box>
+              <Box
+                bg="primaryColor"
+                h="100%"
+                w="50%"
+                zIndex="0"
+                position="absolute"
+                top="0"
+                left="0"
+              ></Box>
+              <Box
+                w="50%"
+                fontWeight="bold"
+                color={trendingInWeek ? "#fff" : "primaryColor"}
+                cursor="pointer"
+                textAlign="center"
+                onClick={() => setTrendingInWeek(true)}
+              >
+                This Week
+              </Box>
+              <Box
+                w="50%"
+                fontWeight="bold"
+                color={!trendingInWeek ? "#fff" : "primaryColor"}
+                cursor="pointer"
+                textAlign="center"
+                onClick={() => setTrendingInWeek(false)}
+              >
+                Today
+              </Box>
+            </motion.div>
           </Flex>
         </Flex>
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
