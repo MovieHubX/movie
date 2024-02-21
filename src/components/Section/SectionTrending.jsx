@@ -17,21 +17,32 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
   const [progress, setProgress] = useState(0);
 
   const handleNext = () => {
-    if (swiper !== null) {
+    if (swiper !== null && progress < data.length - 1) {
       swiper.slideNext();
-      setProgress(prev => (prev + 1) % data.length);
+      setProgress(prev => prev + 1);
     }
   };
 
   const handlePrev = () => {
-    if (swiper !== null) {
+    if (swiper !== null && progress > 0) {
       swiper.slidePrev();
-      setProgress(prev => (prev - 1 + data.length) % data.length);
+      setProgress(prev => prev - 1);
     }
   };
 
   const handleSlideChange = (swiper) => {
     setProgress(swiper.activeIndex);
+  };
+
+  const progressVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
+
+  const spring = {
+    type: "spring",
+    stiffness: 100,
+    damping: 20,
   };
 
   return (
@@ -71,7 +82,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             <motion.div
               initial="week"
               variants={{ week: { left: 0 }, day: { left: "50%" } }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              transition={spring}
               animate={trendingInWeek ? "week" : "day"}
               style={{ position: "absolute", top: 0, height: "100%", width: "50%", backgroundColor: trendingInWeek ? "#3182ce" : "#63b3ed", borderRadius: "3xl" }}
             >
@@ -104,7 +115,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           {data.map((_, index) => (
             <Box
               key={index}
-              bg={index === progress ? "#3182ce" : "#cbd5e0"}
+              bg={index <= progress ? "#3182ce" : "#cbd5e0"}
               h="4px"
               flex="1"
               mx="-1px" // Adjusted margin to remove white space between dots
