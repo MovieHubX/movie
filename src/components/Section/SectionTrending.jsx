@@ -65,15 +65,17 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             cursor="pointer"
             textAlign={"center"}
             display={{ base: "flex", md: "none" }} // Adjusted display property for smaller screens
-            w={"100%"} // Adjusted width for smaller screens
+            w={"auto"} // Adjusted width for smaller screens
           >
             {/* Switcher Button */}
             <Button
+              size="sm" // Adjusted size to make it smaller
               onClick={() => setTrendingInWeek(prev => !prev)}
-              variant="ghost"
+              variant={trendingInWeek ? "solid" : "outline"} // Added different variant for better visibility
               colorScheme={trendingInWeek ? "blue" : "gray"}
+              leftIcon={<span>{trendingInWeek ? "📅" : "📆"}</span>} // Added icons for better indication
             >
-              {trendingInWeek ? "This Week" : "Today"}
+              {trendingInWeek ? "Weekly" : "Daily"} Trending
             </Button>
           </Flex>
         </Flex>
