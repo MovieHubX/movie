@@ -37,21 +37,17 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
   return (
     <Box mb="50px" position="relative">
       <Flex mb="30px" justify="space-between" align="center">
-        {/* heading */}
-        <Box>
-          <Heading
-            textTransform="capitalize"
-            fontSize={{
-              base: "xl",
-              md: "2xl",
-              lg: "3xl",
-            }}
-          >
-            {data?.homeSectionName || name}
-          </Heading>
-        </Box>
-        {/* change time */}
-        <Box display={{ base: "none", md: "block" }}>
+        <Heading
+          textTransform="capitalize"
+          fontSize={{
+            base: "xl",
+            md: "2xl",
+            lg: "3xl",
+          }}
+        >
+          {data?.homeSectionName || name}
+        </Heading>
+        <Flex justify="center" align="center">
           <Stack
             direction={{ base: "column", md: "row" }}
             spacing={{ base: "4", md: "2" }}
@@ -66,7 +62,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
               {trendingInWeek ? "Weekly" : "Daily"} Trending
             </Button>
           </Stack>
-        </Box>
+        </Flex>
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
           <ButtonBg>
             More
