@@ -28,7 +28,7 @@
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "swiper": "^8.2.2",
-    "react-spring": "^9.4.2" // Added react-spring here
+    "react-spring": "^9.4.2"
   },
   "scripts": {
     "start": "react-scripts start",
