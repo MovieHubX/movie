@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { Box, Flex, Heading, SimpleGrid, Button, Stack } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Keyboard } from "swiper";
 import "swiper/css";
+import { motion } from "framer-motion";
 import ButtonBg from "../Buttons/ButtonBg";
 import Film from "../Film/Film";
-import { useSelector } from "react-redux";
 import { getConfigSelector } from "../../redux/selector";
+import { useSelector } from "react-redux";
 
 const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek }) => {
   const { config } = useSelector(getConfigSelector);
@@ -17,14 +19,14 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
   const handleNext = () => {
     if (swiper !== null && progress < data.length - 1) {
       swiper.slideNext();
-      setProgress((prev) => prev + 1);
+      setProgress(prev => prev + 1);
     }
   };
 
   const handlePrev = () => {
     if (swiper !== null && progress > 0) {
       swiper.slidePrev();
-      setProgress((prev) => prev - 1);
+      setProgress(prev => prev - 1);
     }
   };
 
@@ -34,33 +36,26 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
 
   return (
     <Box mb="50px" position="relative">
-      <Flex
-        mb="30px"
-        justify="space-between"
-        align="center"
-        wrap="wrap" // Allows items to wrap as needed on smaller screens
-      >
+      <Flex mb="30px" justify="space-between" align="left">
         {/* heading */}
         <Heading
           textTransform="capitalize"
-          fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
-          flex="1" // Ensure heading takes up space flexibly
-          minWidth="120px" // Minimum width to prevent overly squeezing on small screens
+          fontSize={{
+            base: "xl",
+            md: "2xl",
+            lg: "3xl",
+          }}
         >
           {data?.homeSectionName || name}
         </Heading>
         {/* switcher */}
         <Stack
-          direction="row"
-          spacing="4"
-          align="center"
-          flex="1" // Allows the switcher stack to flexibly take up space
-          justify="center" // Center content within the stack for all screen sizes
-          minWidth="150px" // Minimum width to ensure layout consistency
+          direction={{ base: "column", md: "row" }}
+          spacing={{ base: "4", md: "2" }}
         >
           <Button
             size="sm"
-            onClick={() => setTrendingInWeek((prev) => !prev)}
+            onClick={() => setTrendingInWeek(prev => !prev)}
             variant={trendingInWeek ? "solid" : "outline"}
             colorScheme={trendingInWeek ? "blue" : "gray"}
           >
@@ -69,8 +64,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         </Stack>
         {/* more button */}
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
-          <ButtonBg minWidth="100px" // Ensures "More" button has a consistent size
-          >
+          <ButtonBg>
             More
             <ArrowForwardIcon ml={2} />
           </ButtonBg>
