@@ -35,10 +35,7 @@ const Section = ({ data = [], name, type, link = '' }) => {
         }
       </Flex>
 
-      <SimpleGrid
-        columns={{ base: 1, sm: 2, md: 3, lg: 3 }}
-        spacing="4"
-      >
+      <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 6 }} spacing="4">
         {data?.map((dataItem, i) => {
           if (i < 18) {
             return (
