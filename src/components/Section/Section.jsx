@@ -1,6 +1,6 @@
 import React, { Fragment, memo } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, SimpleGrid } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import Film from "../Film/Film";
 import ButtonBg from "../Buttons/ButtonBg";
@@ -35,7 +35,7 @@ const Section = ({ data = [], name, type, link = '' }) => {
         }
       </Flex>
 
-      <Flex flexWrap="wrap" justifyContent="space-between">
+      <SimpleGrid columns={{ base: 2, md: 3, lg: 6 }} spacing="4">
         {data?.map((dataItem, i) => {
           if (i < 18) {
             return (
@@ -53,7 +53,7 @@ const Section = ({ data = [], name, type, link = '' }) => {
           }
           return null;
         })}
-      </Flex>
+      </SimpleGrid>
     </Box>
   );
 };
