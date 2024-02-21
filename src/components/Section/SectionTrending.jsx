@@ -1,6 +1,6 @@
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading, SimpleGrid, Button } from "@chakra-ui/react";
+import { Box, Flex, Heading, SimpleGrid, Button, Stack } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
@@ -38,7 +38,9 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
     <Box mb="50px" position="relative">
       <Flex mb="30px" justify="space-between" align="center">
         {/* heading */}
-        <Heading
+        <Button
+          as="div" // Render as div instead of button
+          disabled // Disable the button
           textTransform="capitalize"
           fontSize={{
             base: "xl",
@@ -47,16 +49,21 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           }}
         >
           {data?.homeSectionName || name}
-        </Heading>
-        {/* switcher */}
-        <Button
-          size="sm"
-          onClick={() => setTrendingInWeek(prev => !prev)}
-          variant={trendingInWeek ? "solid" : "outline"}
-          colorScheme={trendingInWeek ? "blue" : "gray"}
-        >
-          {trendingInWeek ? "Weekly ‏‏‎‎" : "Daily‎‎‎‎‏‏‎ "} Trending
         </Button>
+        {/* switcher */}
+        <Stack
+          direction={{ base: "column", md: "row" }}
+          spacing={{ base: "4", md: "2" }}
+        >
+          <Button
+            size="sm"
+            onClick={() => setTrendingInWeek(prev => !prev)}
+            variant={trendingInWeek ? "solid" : "outline"}
+            colorScheme={trendingInWeek ? "blue" : "gray"}
+          >
+            {trendingInWeek ? "Weekly ‏‏‎‎" : "Daily‎‎‎‎‏‏‎ "} Trending
+          </Button>
+        </Stack>
         {/* more button */}
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
           <ButtonBg>
