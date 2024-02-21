@@ -5,30 +5,33 @@ import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
 import "swiper/css";
+import { motion } from "framer-motion";
+import ButtonBg from "../Buttons/ButtonBg";
+import Film from "../Film/Film";
 import { getConfigSelector } from "../../redux/selector";
 import { useSelector } from "react-redux";
 
-import Film from "../Film/Film";
-import ButtonBg from "../Buttons/ButtonBg";
-
 const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek }) => {
   const { config } = useSelector(getConfigSelector);
+  const [swiper, setSwiper] = useState(null);
   const [progress, setProgress] = useState(0);
+
+  const handleNext = () => {
+    if (swiper !== null && progress < data.length - 1) {
+      swiper.slideNext();
+      setProgress(prev => prev + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (swiper !== null && progress > 0) {
+      swiper.slidePrev();
+      setProgress(prev => prev - 1);
+    }
+  };
 
   const handleSlideChange = (swiper) => {
     setProgress(swiper.activeIndex);
-  };
-
-  const handleNext = (swiper) => {
-    if (progress < data.length - 1) {
-      swiper.slideNext();
-    }
-  };
-
-  const handlePrev = (swiper) => {
-    if (progress > 0) {
-      swiper.slidePrev();
-    }
   };
 
   return (
@@ -65,41 +68,25 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             textAlign={"center"}
           >
             {/* This Week */}
-            <Box
-              w={"50%"}
-              onClick={() => setTrendingInWeek((prev) => !prev)}
-              color={trendingInWeek ? "#fff" : "#63b3ed"}
-              pos={"relative"}
-              bg="transparent"
-              zIndex={1}
-            >
-              This Week
-            </Box>
-            {/* Today */}
-            <Box
-              w={"50%"}
-              onClick={() => setTrendingInWeek((prev) => !prev)}
-              pos={"relative"}
-              color={trendingInWeek ? "#63b3ed" : "#fff"}
-              bg="transparent"
-              zIndex={1}
-            >
-              Today
-            </Box>
             <motion.div
               initial="week"
               variants={{ week: { left: 0 }, day: { left: "50%" } }}
-              transition={{ type: "spring", stiffness: 100, damping: 20 }}
               animate={trendingInWeek ? "week" : "day"}
-              style={{
-                position: "absolute",
-                top: 0,
-                height: "100%",
-                width: "50%",
-                backgroundColor: trendingInWeek ? "#3182ce" : "#63b3ed",
-                borderRadius: "3xl",
-              }}
-            ></motion.div>
+              style={{ position: "absolute", top: 0, height: "100%", width: "50%", backgroundColor: trendingInWeek ? "#3182ce" : "#63b3ed", borderRadius: "3xl" }}
+            >
+            </motion.div>
+            <Box w={"50%"} onClick={() => setTrendingInWeek(prev => !prev)}>
+              <Box color={trendingInWeek ? "#fff" : "#63b3ed"} pos={"relative"} bg="transparent" zIndex={1}>
+                This Week
+              </Box>
+            </Box>
+
+            {/* Today */}
+            <Box w={"50%"} onClick={() => setTrendingInWeek(prev => !prev)}>
+              <Box pos={"relative"} color={trendingInWeek ? "#63b3ed" : "#fff"} bg="transparent" zIndex={1}>
+                Today
+              </Box>
+            </Box>
           </Flex>
         </Flex>
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
@@ -116,11 +103,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           {data.map((_, index) => (
             <Box
               key={index}
-              bg={index <= progress ? "#3182ce" : "#cbd5e0"}
-              h="4px"
-              flex="1"
-              mx="-1px" // Adjusted margin to remove white space between dots
-              borderRadius="0" // Removed border radius to make it seamless
+              className={`dot ${index <= progress ? 'filled' : ''}`}
             />
           ))}
         </Box>
@@ -136,6 +119,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         }}
         keyboard={true}
         modules={[Keyboard]}
+        onSwiper={setSwiper}
         onSlideChange={handleSlideChange}
       >
         <SimpleGrid columns={[1, 2, 4]} spacing={6}>
@@ -162,10 +146,10 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
 
       {/* Arrow buttons */}
       <Box position="absolute" top="50%" transform="translateY(-50%)" left="0" zIndex={1}>
-        <ChevronLeftIcon boxSize={12} color="blue.500" cursor="pointer" onClick={() => handlePrev(swiper)} />
+        <ChevronLeftIcon boxSize={12} color="blue.500" cursor="pointer" onClick={handlePrev} />
       </Box>
       <Box position="absolute" top="50%" transform="translateY(-50%)" right="0" zIndex={1}>
-        <ChevronRightIcon boxSize={12} color="blue.500" cursor="pointer" onClick={() => handleNext(swiper)} />
+        <ChevronRightIcon boxSize={12} color="blue.500" cursor="pointer" onClick={handleNext} />
       </Box>
     </Box>
   );
