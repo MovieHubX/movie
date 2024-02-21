@@ -35,7 +35,16 @@ const Section = ({ data = [], name, type, link = '' }) => {
         }
       </Flex>
 
-      <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 6 }} spacing="4">
+      <SimpleGrid
+        columns={{ base: 2, sm: 2, md: 4, lg: 6 }}
+        spacing="4"
+        sx={{
+          '@media (max-width: 480px)': {
+            // Override the SimpleGrid columns for screens up to 480px width
+            gridTemplateColumns: 'repeat(3, 1fr)',
+          },
+        }}
+      >
         {data?.map((dataItem, i) => {
           if (i < 18) {
             return (
