@@ -58,7 +58,6 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             onClick={() => setTrendingInWeek(prev => !prev)}
             variant={trendingInWeek ? "solid" : "outline"}
             colorScheme={trendingInWeek ? "blue" : "gray"}
-            leftIcon={<span>{trendingInWeek ? "📅" : "📆"}</span>}
           >
             {trendingInWeek ? "Weekly" : "Daily"} Trending
           </Button>
