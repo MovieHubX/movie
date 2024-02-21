@@ -19,29 +19,19 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
   const handleNext = () => {
     if (swiper !== null) {
       swiper.slideNext();
-      setProgress(progress + 1);
+      setProgress(prev => (prev + 1) % data.length);
     }
   };
 
   const handlePrev = () => {
     if (swiper !== null) {
       swiper.slidePrev();
-      setProgress(progress - 1);
+      setProgress(prev => (prev - 1 + data.length) % data.length);
     }
   };
 
   const handleSlideChange = (swiper) => {
     setProgress(swiper.activeIndex);
-  };
-
-  const variants = {
-    week: { left: 0 },
-    day: { left: "50%" },
-  };
-  const spring = {
-    type: "spring",
-    stiffness: 300,
-    damping: 30,
   };
 
   return (
@@ -77,25 +67,24 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             cursor="pointer"
             textAlign={"center"}
           >
+            {/* This Week */}
             <motion.div
               initial="week"
-              variants={variants}
-              transition={spring}
+              variants={{ week: { left: 0 }, day: { left: "50%" } }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
               animate={trendingInWeek ? "week" : "day"}
-              style={{ position: "absolute", top: 0, height: "100%", width: "50%" }}
+              style={{ position: "absolute", top: 0, height: "100%", width: "50%", backgroundColor: trendingInWeek ? "#3182ce" : "#63b3ed", borderRadius: "3xl" }}
             >
-              <Box rounded="3xl" w="full" h="full" bg={"primaryColor"} zIndex="0"></Box>
             </motion.div>
-            {/* This Week */}
-            <Box w={"50%"} onClick={() => setTrendingInWeek((prev) => !prev)}>
-              <Box color={trendingInWeek ? "#fff" : "primaryColor"} pos={"relative"} bg="transparent" zIndex={1}>
+            <Box w={"50%"} onClick={() => setTrendingInWeek(prev => !prev)}>
+              <Box color={trendingInWeek ? "#fff" : "#63b3ed"} pos={"relative"} bg="transparent" zIndex={1}>
                 This Week
               </Box>
             </Box>
 
             {/* Today */}
-            <Box w={"50%"} onClick={() => setTrendingInWeek((prev) => !prev)}>
-              <Box pos={"relative"} color={trendingInWeek ? "primaryColor" : "#fff"} bg="transparent" zIndex={1}>
+            <Box w={"50%"} onClick={() => setTrendingInWeek(prev => !prev)}>
+              <Box pos={"relative"} color={trendingInWeek ? "#63b3ed" : "#fff"} bg="transparent" zIndex={1}>
                 Today
               </Box>
             </Box>
@@ -111,11 +100,11 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
 
       {/* Progress bar container */}
       <Box mb="20px">
-        <Box display="flex" bg="#fff" borderRadius="2px">
+        <Box display="flex" bg="#fff" borderRadius="2px" overflow="hidden">
           {data.map((_, index) => (
             <Box
               key={index}
-              bg={index <= progress ? "primaryColor" : "transparent"}
+              bg={index === progress ? "#3182ce" : "#cbd5e0"}
               h="4px"
               flex="1"
               mx="-1px" // Adjusted margin to remove white space between dots
