@@ -1,42 +1,27 @@
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading, SimpleGrid } from "@chakra-ui/react";
-import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { Box, Flex, Heading } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
 import "swiper/css";
 import { motion } from "framer-motion";
+
 import ButtonBg from "../Buttons/ButtonBg";
 import Film from "../Film/Film";
 import { getConfigSelector } from "../../redux/selector";
 import { useSelector } from "react-redux";
 
-const SectionTrending = ({ data = [], name }) => {
+const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek }) => {
   const { config } = useSelector(getConfigSelector);
   const [swiper, setSwiper] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [trendingInWeek, setTrendingInWeek] = useState(true);
-
-  const handleNext = () => {
-    if (swiper !== null) {
-      swiper.slideNext();
-      setProgress(progress + 1);
-    }
-  };
-
-  const handlePrev = () => {
-    if (swiper !== null) {
-      swiper.slidePrev();
-      setProgress(progress - 1);
-    }
-  };
 
   const handleSlideChange = (swiper) => {
-    setProgress(swiper.activeIndex);
+    // Your existing slide change logic
   };
 
   return (
-    <Box mb="50px" position="relative">
+    <Box mb="50px">
       <Flex mb="30px" justify="space-between" align="center">
         <Flex justify={"center"} align="center" columnGap={"8"}>
           {/* heading */}
@@ -49,55 +34,61 @@ const SectionTrending = ({ data = [], name }) => {
                 lg: "3xl",
               }}
             >
-              {name}
+              {data?.homeSectionName || name}
             </Heading>
           </Box>
-          {/* Change time period */}
-          <Flex align="center">
+          {/* change time */}
+          <Flex
+            overflow={"hidden"}
+            rounded="3xl"
+            border={"rgba(50, 138, 241, 1) 1px solid"}
+            justify={"space-between"}
+            align="center"
+            w={"234px"}
+            py="5px"
+            fontWeight="bold"
+            color="#fff"
+            position="relative"
+            cursor="pointer"
+            textAlign={"center"}
+          >
             <motion.div
-              initial={{ x: trendingInWeek ? 0 : "50%" }}
-              animate={{ x: trendingInWeek ? 0 : "50%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              style={{
-                display: "flex",
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: "3xl",
-                border: "rgba(50, 138, 241, 1) 1px solid",
-                width: "234px",
-                py: "5px",
+              initial="week"
+              variants={{
+                week: { left: 0 },
+                day: { left: "50%" },
               }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+              }}
+              animate={trendingInWeek ? "week" : "day"}
+              style={{ position: "absolute", top: 0, height: "100%", width: "50%" }}
             >
+              <Box rounded="3xl" w="full" h="full" bg={"primaryColor"} zIndex="0"></Box>
+            </motion.div>
+            <Box w={"50%"} onClick={() => setTrendingInWeek(true)}>
               <Box
-                bg="primaryColor"
-                h="100%"
-                w="50%"
-                zIndex="0"
-                position="absolute"
-                top="0"
-                left="0"
-              ></Box>
-              <Box
-                w="50%"
-                fontWeight="bold"
                 color={trendingInWeek ? "#fff" : "primaryColor"}
-                cursor="pointer"
-                textAlign="center"
-                onClick={() => setTrendingInWeek(true)}
+                pos={"relative"}
+                bg="transparent"
+                zIndex={1}
               >
                 This Week
               </Box>
+            </Box>
+
+            <Box w={"50%"} onClick={() => setTrendingInWeek(false)}>
               <Box
-                w="50%"
-                fontWeight="bold"
-                color={!trendingInWeek ? "#fff" : "primaryColor"}
-                cursor="pointer"
-                textAlign="center"
-                onClick={() => setTrendingInWeek(false)}
+                pos={"relative"}
+                color={trendingInWeek ? "primaryColor" : "#fff"}
+                bg="transparent"
+                zIndex={1}
               >
                 Today
               </Box>
-            </motion.div>
+            </Box>
           </Flex>
         </Flex>
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
@@ -108,28 +99,15 @@ const SectionTrending = ({ data = [], name }) => {
         </Link>
       </Flex>
 
-      {/* Progress bar container */}
-      <Box mb="20px">
-        <Box display="flex" bg="#fff" borderRadius="2px">
-          {data.map((_, index) => (
-            <Box
-              key={index}
-              bg={index <= progress ? "primaryColor" : "transparent"}
-              h="4px"
-              flex="1"
-              mx="-1px" // Adjusted margin to remove white space between dots
-              borderRadius="0" // Removed border radius to make it seamless
-            />
-          ))}
-        </Box>
-      </Box>
-
       <Swiper
-        slidesPerView={2}
+        slidesPerView={3.2}
         spaceBetween={15}
         breakpoints={{
           768: {
-            slidesPerView: 4,
+            slidesPerView: 4.3,
+          },
+          922: {
+            slidesPerView: 6.3,
           },
         }}
         keyboard={true}
@@ -137,35 +115,25 @@ const SectionTrending = ({ data = [], name }) => {
         onSwiper={setSwiper}
         onSlideChange={handleSlideChange}
       >
-        <SimpleGrid columns={[1, 2, 4]} spacing={6}>
-          {data?.map((data, i) => {
-            if (i < 18) {
-              return (
-                <SwiperSlide key={data.id}>
-                  <Film
-                    baseUrl={`${config?.images?.base_url}/original/`}
-                    media_type={data.media_type}
-                    id={data.id}
-                    vote_average={data.vote_average}
-                    poster_path={data.poster_path}
-                    title={data.title}
-                    name={data.name}
-                  />
-                </SwiperSlide>
-              );
-            }
-            return <Fragment key={data.id || i}></Fragment>;
-          })}
-        </SimpleGrid>
+        {data?.map((data, i) => {
+          if (i < 18) {
+            return (
+              <SwiperSlide key={data.id}>
+                <Film
+                  baseUrl={`${config?.images?.base_url}/original/`}
+                  media_type={data.media_type}
+                  id={data.id}
+                  vote_average={data.vote_average}
+                  poster_path={data.poster_path}
+                  title={data.title}
+                  name={data.name}
+                />
+              </SwiperSlide>
+            );
+          }
+          return <Fragment key={data.id || i}></Fragment>;
+        })}
       </Swiper>
-
-      {/* Arrow buttons */}
-      <Box position="absolute" top="50%" transform="translateY(-50%)" left="0" zIndex={1}>
-        <ChevronLeftIcon boxSize={12} color="blue.500" cursor="pointer" onClick={handlePrev} />
-      </Box>
-      <Box position="absolute" top="50%" transform="translateY(-50%)" right="0" zIndex={1}>
-        <ChevronRightIcon boxSize={12} color="blue.500" cursor="pointer" onClick={handleNext} />
-      </Box>
     </Box>
   );
 };
