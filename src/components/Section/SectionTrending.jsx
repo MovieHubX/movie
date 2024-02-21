@@ -97,18 +97,6 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         </Link>
       </Flex>
 
-      {/* Progress bar container */}
-      <Box mb="20px">
-        <Box display="flex" bg="#fff" borderRadius="2px" overflow="hidden">
-          {data.map((_, index) => (
-            <Box
-              key={index}
-              className={`dot ${index <= progress ? 'filled' : ''}`}
-            />
-          ))}
-        </Box>
-      </Box>
-
       <Swiper
         slidesPerView={2}
         spaceBetween={15}
