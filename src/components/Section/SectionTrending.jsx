@@ -36,7 +36,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
 
   return (
     <Box mb="50px" position="relative">
-      <Flex mb="30px" justify="space-between" align="left">
+      <Flex mb="30px" justify="space-between" align="center">
         {/* heading */}
         <Heading
           textTransform="capitalize"
