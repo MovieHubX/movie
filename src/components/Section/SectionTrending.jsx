@@ -8,8 +8,8 @@ import "swiper/css";
 import { motion } from "framer-motion";
 import ButtonBg from "../Buttons/ButtonBg";
 import Film from "../Film/Film";
-import { getConfigSelector } from "../../redux/selector";
 import { useSelector } from "react-redux";
+import { getConfigSelector } from "../../redux/selector";
 
 const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek }) => {
   const { config } = useSelector(getConfigSelector);
@@ -19,14 +19,14 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
   const handleNext = () => {
     if (swiper !== null && progress < data.length - 1) {
       swiper.slideNext();
-      setProgress(prev => prev + 1);
+      setProgress((prev) => prev + 1);
     }
   };
 
   const handlePrev = () => {
     if (swiper !== null && progress > 0) {
       swiper.slidePrev();
-      setProgress(prev => prev - 1);
+      setProgress((prev) => prev - 1);
     }
   };
 
@@ -36,7 +36,12 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
 
   return (
     <Box mb="50px" position="relative">
-      <Flex mb="30px" justify="space-between" align="center">
+      <Flex
+        mb="30px"
+        justify={{ base: "space-around", md: "space-between" }}
+        align="center"
+        direction={{ base: "column", md: "row" }}
+      >
         {/* heading */}
         <Heading
           textTransform="capitalize"
@@ -52,10 +57,11 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         <Stack
           direction={{ base: "column", md: "row" }}
           spacing={{ base: "4", md: "2" }}
+          align="center" // Center align items in the stack for better mobile appearance
         >
           <Button
             size="sm"
-            onClick={() => setTrendingInWeek(prev => !prev)}
+            onClick={() => setTrendingInWeek((prev) => !prev)}
             variant={trendingInWeek ? "solid" : "outline"}
             colorScheme={trendingInWeek ? "blue" : "gray"}
           >
@@ -64,7 +70,6 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         </Stack>
         {/* more button */}
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
-          <ButtonBg px={2} minW="initial">
           <ButtonBg>
             More
             <ArrowForwardIcon ml={2} />
