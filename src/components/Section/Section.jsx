@@ -1,32 +1,17 @@
-import React, { Fragment, memo, useEffect, useState } from "react";
+import React, { Fragment, memo } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import Film from "../Film/Film";
+import ButtonBg from "../Buttons/ButtonBg";
 import { getConfigSelector } from "../../redux/selector";
 import { useSelector } from "react-redux";
-import ButtonBg from "../Buttons/ButtonBg"; 
 
 const Section = ({ data = [], name, type, link = '' }) => {
   const { config } = useSelector(getConfigSelector);
-  const [moviesPerRow, setMoviesPerRow] = useState(3);
-
-  useEffect(() => {
-    const calculateMoviesPerRow = () => {
-      const containerWidth = document.getElementById("section-container")?.offsetWidth;
-      if (containerWidth) {
-        const newMoviesPerRow = Math.floor(containerWidth / 200); // Assuming poster width of 200px
-        setMoviesPerRow(newMoviesPerRow);
-      }
-    };
-
-    calculateMoviesPerRow();
-    window.addEventListener("resize", calculateMoviesPerRow);
-    return () => window.removeEventListener("resize", calculateMoviesPerRow);
-  }, []);
 
   return (
-    <Box mb="50px" id="section-container">
+    <Box mb="50px">
       <Flex mb="30px" justify="space-between" align="center">
         <Heading
           textTransform="capitalize"
@@ -38,29 +23,37 @@ const Section = ({ data = [], name, type, link = '' }) => {
         >
           {data?.homeSectionName || name}
         </Heading>
-        {link && (
-          <Link to={link}>
-            <ButtonBg>
-              More
-              <ArrowForwardIcon ml={2} />
-            </ButtonBg>
-          </Link>
-        )}
+        {
+          link && (
+            <Link to={link}>
+              <ButtonBg>
+                More
+                <ArrowForwardIcon ml={2} />
+              </ButtonBg>
+            </Link>
+          )
+        }
       </Flex>
-      <SimpleGrid columns={[1, 2, moviesPerRow]} spacing={6} mb={6}>
-        {data.map((movie, index) => (
-          <Film
-            key={index}
-            baseUrl={`${config?.images?.base_url}/original/`}
-            media_type={type}
-            id={movie.id}
-            vote_average={movie.vote_average}
-            poster_path={movie.poster_path}
-            title={movie.title}
-            name={movie.name}
-          />
-        ))}
-      </SimpleGrid>
+
+      <Flex flexWrap="wrap" justifyContent="space-between">
+        {data?.map((dataItem, i) => {
+          if (i < 18) {
+            return (
+              <Film
+                key={dataItem.id}
+                baseUrl={`${config?.images?.base_url}/original/`}
+                media_type={type}
+                id={dataItem.id}
+                vote_average={dataItem.vote_average}
+                poster_path={dataItem.poster_path}
+                title={dataItem.title}
+                name={dataItem.name}
+              />
+            );
+          }
+          return null;
+        })}
+      </Flex>
     </Box>
   );
 };
