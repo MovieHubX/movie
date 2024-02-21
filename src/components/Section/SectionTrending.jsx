@@ -1,6 +1,6 @@
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex, Heading, SimpleGrid, Button } from "@chakra-ui/react";
 import { ArrowForwardIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
@@ -54,39 +54,27 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           {/* change time */}
           <Flex
             overflow={"hidden"}
-            display={{ base: "none", md: "flex" }}
             rounded="3xl"
             border={"rgba(50, 138, 241, 1) 1px solid"}
             justify={"space-between"}
             align="center"
-            w={"234px"}
             py="5px"
             fontWeight="bold"
             color="#fff"
             position="relative"
             cursor="pointer"
             textAlign={"center"}
+            display={{ base: "flex", md: "none" }} // Adjusted display property for smaller screens
+            w={"100%"} // Adjusted width for smaller screens
           >
-            {/* This Week */}
-            <motion.div
-              initial="week"
-              variants={{ week: { left: 0 }, day: { left: "50%" } }}
-              animate={trendingInWeek ? "week" : "day"}
-              style={{ position: "absolute", top: 0, height: "100%", width: "50%", backgroundColor: trendingInWeek ? "#3182ce" : "#63b3ed", borderRadius: "3xl" }}
+            {/* Switcher Button */}
+            <Button
+              onClick={() => setTrendingInWeek(prev => !prev)}
+              variant="ghost"
+              colorScheme={trendingInWeek ? "blue" : "gray"}
             >
-            </motion.div>
-            <Box w={"50%"} onClick={() => setTrendingInWeek(prev => !prev)}>
-              <Box color={trendingInWeek ? "#fff" : "#63b3ed"} pos={"relative"} bg="transparent" zIndex={1}>
-                This Week
-              </Box>
-            </Box>
-
-            {/* Today */}
-            <Box w={"50%"} onClick={() => setTrendingInWeek(prev => !prev)}>
-              <Box pos={"relative"} color={trendingInWeek ? "#63b3ed" : "#fff"} bg="transparent" zIndex={1}>
-                Today
-              </Box>
-            </Box>
+              {trendingInWeek ? "This Week" : "Today"}
+            </Button>
           </Flex>
         </Flex>
         <Link to={`/trending/${trendingInWeek ? "week" : "day"}`}>
