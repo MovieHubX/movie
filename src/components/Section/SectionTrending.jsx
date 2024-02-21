@@ -51,7 +51,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         {/* switcher */}
         <Stack
           direction={{ base: "column", md: "row" }}
-          spacing={{ base: "4", md: "2" }}
+          spacing={{ base: "4", md: "5" }}
         >
           <Button
             size="sm"
