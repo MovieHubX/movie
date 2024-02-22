@@ -145,7 +145,6 @@ const NavInput = () => {
         alignItems="center"
         justifyContent="space-between"
       >
-        {/* Logo and Navigation Links */
 
         {/* Conditional rendering of the Search Icon in the main nav bar */}
         {!isSearchOpen && (
@@ -155,7 +154,7 @@ const NavInput = () => {
             cursor="pointer"
             onClick={handleSearchIconClick}
           >
-            <Search2Icon />
+            <Search2Icon /> &nbsp;&nbsp;&nbsp;
           </Box>
         )}
       </Box>
