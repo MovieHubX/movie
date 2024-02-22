@@ -154,7 +154,7 @@ const NavInput = () => {
             cursor="pointer"
             onClick={handleSearchIconClick}
           >
-            <Search2Icon /> &nbsp;
+            <Search2Icon /> 
           </Box>
         )}
       </Box>
