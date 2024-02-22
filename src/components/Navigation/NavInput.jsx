@@ -155,7 +155,10 @@ const NavInput = () => {
             cursor="pointer"
             onClick={handleSearchIconClick}
           >
-            <Search2Icon />{' '}
+              <span style={{ marginRight: '10px' }}>
+                <Search2Icon />
+              </span>
+          
           </Box>
         )}
       </Box>
