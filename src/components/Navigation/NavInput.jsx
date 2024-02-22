@@ -154,7 +154,6 @@ const NavInput = () => {
             color="textColor"
             cursor="pointer"
             onClick={handleSearchIconClick}
-            style={{ marginLeft: '10px' }}
           >
             <Search2Icon /> 
           </Box>
