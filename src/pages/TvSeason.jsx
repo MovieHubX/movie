@@ -117,7 +117,7 @@ export const TvSeason = () => {
             ref={player}
           >
             <VideoPlayer
-              embedSrc={`https://blackvid.space/embed/tv?tmdb=${id}&season=${seasonId}&episode=${episodeNum}`}
+              embedSrc={`https://blackvid.space/embed?tmdb=${id}&season=${seasonId}&episode=${episodeNum}`}
             />
           </Box>
           {/* seasons */}
