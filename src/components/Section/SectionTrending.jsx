@@ -48,7 +48,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
         >
           {data?.homeSectionName || name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </Heading>
-        {/* switcher */}
+        {/* toggle button */}
         <Stack
           direction={{ base: "column", md: "row" }}
           spacing={{ base: "4", md: "2" }}
@@ -56,10 +56,10 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
           <Button
             size="sm"
             onClick={() => setTrendingInWeek(prev => !prev)}
-            variant={trendingInWeek ? "solid" : "outline"}
-            colorScheme={trendingInWeek ? "blue" : "gray"}
+            variant="outline"
+            colorScheme="blue"
           >
-            {trendingInWeek ? "Weekly ‏‏‎‎" : "Daily‎‎‎‎‏‏‎ "} Trending
+            {trendingInWeek ? "Weekly Trending" : "Daily Trending"}
           </Button>
         </Stack>
         {/* more button */}
