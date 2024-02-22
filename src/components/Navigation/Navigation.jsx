@@ -70,11 +70,16 @@ const Navigation = () => {
               <Link to="/">MovieHubX</Link>
             </Box>
 
-            {/* Menu */}
-            <Menu />
-
-            {/* Input */}
-            <NavInput />
+            {/* Right side content */}
+            <Box>
+              <Flex alignItems="center">
+                {/* Menu */}
+                <Menu />
+                
+                {/* Input */}
+                <NavInput />
+              </Flex>
+            </Box>
           </Flex>
         </Box>
       </Box>
