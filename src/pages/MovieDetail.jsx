@@ -178,7 +178,7 @@ export const MovieDetail = () => {
             ref={player}
           >
             <VideoPlayer
-              embedSrc={`https://vidsrc.xyz/embed/movie?tmdb=${id}`}
+              embedSrc={`https://blackvid.space/embed/movie?tmdb=${id}`}
             />
           </Box>
 
