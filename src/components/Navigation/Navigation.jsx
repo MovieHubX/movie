@@ -15,7 +15,6 @@ const Menu = () => {
           {navs.map((nav, index) => (
             <Box key={index} role={"group"} transition={"all 0.3s ease"} pos={"relative"}>
               <Box color="textColor" fontWeight={"bold"} _hover={{ color: "primaryColor" }}>
-                {/* Ensure proper base URL (href) for constructing the links */}
                 <Link to={nav.href}>{nav.name}</Link>
               </Box>
               {nav.subs && (
@@ -35,7 +34,6 @@ const Menu = () => {
                   >
                     {nav.subs.map((sub, index) => (
                       <Box key={index} w="max-content" fontWeight={"semibold"} transition={".1s all"} color="textColor" letterSpacing={"1.7"} _hover={{ color: "primaryColor" }}>
-                        {/* Ensure proper base URL (href) for constructing the links */}
                         <Link to={sub.href}>{sub.name}</Link>
                       </Box>
                     ))}
