@@ -46,7 +46,7 @@ const SectionTrending = ({ data = [], name, trendingInWeek, setTrendingInWeek })
             lg: "3xl",
           }}
         >
-          {data?.homeSectionName || name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {data?.homeSectionName || name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </Heading>
         {/* toggle button */}
         <Stack
