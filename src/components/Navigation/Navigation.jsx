@@ -34,7 +34,8 @@ const Menu = () => {
                   >
                     {nav.subs.map((sub, index) => (
                       <Box key={index} w="max-content" fontWeight={"semibold"} transition={".1s all"} color="textColor" letterSpacing={"1.7"} _hover={{ color: "primaryColor" }}>
-                        <Link to={sub.href}>{sub.name}</Link>
+                        {/* Construct proper URL by concatenating nav.href and sub.href */}
+                        <Link to={`${nav.href}${sub.href}`}>{sub.name}</Link>
                       </Box>
                     ))}
                   </Box>
@@ -50,36 +51,4 @@ const Menu = () => {
   );
 };
 
-const Navigation = () => {
-  return (
-    <Box position={"relative"}>
-      <Box
-        position="fixed"
-        top="0"
-        left="0"
-        right="0"
-        w="full"
-        zIndex="100"
-        boxShadow="rgba(0, 0, 0, 0.15) 0px 5px 15px"
-        bg={"primaryDarkColor"}
-      >
-        <Box layerStyle={"containerStyles"}>
-          <Flex h={"55px"} alignItems={"center"} justifyContent={"space-between"}>
-            {/* Logo */}
-            <Box fontWeight="extrabold" color="primaryColor" fontSize="lg" zIndex="1">
-              <Link to="/">MovieHubX</Link>
-            </Box>
-
-            {/* Input */}
-            <NavInput />
-
-            {/* Menu */}
-            <Menu />
-          </Flex>
-        </Box>
-      </Box>
-    </Box>
-  );
-};
-
-export default memo(Navigation);
+export default Menu;
