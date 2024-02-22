@@ -67,13 +67,16 @@ const Navigation = () => {
               <Link to="/">MovieHubX</Link>
             </Box>
 
-            {/* Spacer for space between logo and search input */}
+            {/* Spacer for space between logo and search icon */}
             <Spacer />
 
-            {/* Search input */}
+            {/* Search Input */}
             <NavInput />
 
-            {/* Right side content */}
+            {/* Spacer for space between search icon and nav links */}
+            <Spacer />
+
+            {/* Menu */}
             <Menu />
           </Flex>
         </Box>
