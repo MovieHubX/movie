@@ -67,11 +67,11 @@ const Navigation = () => {
               <Link to="/">MovieHubX</Link>
             </Box>
 
-            {/* Center content */}
-            <NavInput />
-
-            {/* Spacer for space between input and nav links */}
+            {/* Spacer for space between logo and search input */}
             <Spacer />
+
+            {/* Search input */}
+            <NavInput />
 
             {/* Right side content */}
             <Menu />
