@@ -50,7 +50,7 @@ const Menu = () => {
 };
 
 const Navigation = () => {
-  const navInputMargin = useBreakpointValue({ base: 0, lg: 5 }); // Adjust the margin as needed
+  const isLargeScreen = useBreakpointValue({ base: false, lg: true });
 
   return (
     <Box position={"relative"}>
@@ -71,11 +71,13 @@ const Navigation = () => {
               <Link to="/">MovieHubX</Link>
             </Box>
 
-            {/* Input with margin */}
-            <NavInput ml={navInputMargin} />
+            {/* Input with conditional margin */}
+            <Box ml={isLargeScreen ? 5 : 0}>
+              <NavInput />
+            </Box>
 
-            {/* Wrapped Menu with margin */}
-            <Box ml={5} mt={2}> {/* Added mt={2} for moving it down */}
+            {/* Wrapped Menu */}
+            <Box ml={5} mt={2}>
               <Menu />
             </Box>
           </Flex>
