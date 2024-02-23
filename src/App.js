@@ -1,7 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from "src/components/Layout/Layout";
-// import Layout from "./components/Layout/Layout";
-
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -22,18 +20,24 @@ import { getConfig, getGenres } from "./services/";
 
 function App() {
   const dispatch = useDispatch();
+
   useEffect(() => {
+    console.log("Fetching configuration...");
     dispatch(
       getConfig({
         path: "configuration",
       })
     );
+
+    console.log("Fetching movie genres...");
     dispatch(
       getGenres({
         path: "genre/movie/list",
         type: 'movie'
       })
     );
+    
+    console.log("Fetching TV genres...");
     dispatch(
       getGenres({
         path: "genre/tv/list",
@@ -65,7 +69,6 @@ function App() {
 
         <Route exact path="/trending/week" element={<TrendingWeek />}></Route>
         <Route exact path="/trending/day" element={<TrendingDay />}></Route>
-
 
         <Route path='*' exact={true} element={<NotFound />} />
       </Routes>
