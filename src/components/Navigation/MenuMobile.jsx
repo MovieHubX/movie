@@ -27,21 +27,22 @@ const MenuMobile = ({ navs }) => {
 
   return (
     <>
-      <Button
-        onClick={onOpen}
-        rounded="full"
-        variant="link"
-        cursor="pointer"
-        minW={0}
-        color="textColor"
-        _active={{
-          color: "primaryColor",
-        }}
-        display={{ lg: "none" }}
-        mt={10} // Adjusted margin top by a few pixels
-      >
-        <HamburgerIcon fontSize="2xl" />
-      </Button>
+      <div style={{ marginTop: "10px" }}> {/* Adjusted margin top by a few pixels */}
+        <Button
+          onClick={onOpen}
+          rounded="full"
+          variant="link"
+          cursor="pointer"
+          minW={0}
+          color="textColor"
+          _active={{
+            color: "primaryColor",
+          }}
+          display={{ lg: "none" }}
+        >
+          <HamburgerIcon fontSize="2xl" />
+        </Button>
+      </div>
       <Drawer placement={"right"} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent bg="transparent">
