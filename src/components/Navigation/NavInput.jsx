@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-// Disabling exhaustive-deps rule for React hooks to avoid unnecessary warnings
-
 import { Search2Icon } from "@chakra-ui/icons";
 import { Box, Input } from "@chakra-ui/react";
 import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
@@ -103,7 +100,7 @@ const NavInput = () => {
     handleSearchWithKeyWord(searchText, true);
   };
 
-  // Effect to handle keyboard for closing the search bar
+  // Effect to handle keyboard for closing the search bar and clicking elsewhere to close it
   useEffect(() => {
     const handleEscapeKey = (e) => {
       if (e.key === "Escape") {
@@ -121,15 +118,24 @@ const NavInput = () => {
       setIsShow(false);
     };
 
+    const handleClickOutside = (e) => {
+      if (!searchInput.current.contains(e.target)) {
+        setIsShow(false);
+        setIsSearchOpen(false);
+      }
+    };
+
     document.addEventListener("keydown", handleEscapeKey);
     searchInput.current.addEventListener("focus", handleInputFocus);
     searchInput.current.addEventListener("blur", handleInputBlur);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Cleanup event listeners on component unmount
     return () => {
       document.removeEventListener("keydown", handleEscapeKey);
       searchInput.current.removeEventListener("focus", handleInputFocus);
       searchInput.current.removeEventListener("blur", handleInputBlur);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -166,6 +172,7 @@ const NavInput = () => {
 
       {/* Search Bar */}
       <Box
+        ref={searchInput}
         position="absolute"
         top="55px"
         left="0"
