@@ -67,7 +67,7 @@ function App() {
         <Route exact path="/trending/week" element={<TrendingWeek />}></Route>
         <Route exact path="/trending/day" element={<TrendingDay />}></Route>
 
-      
+        <Route path='*' exact={true} element={<NotFound />} />
       </Routes>
     </Layout>
   );
