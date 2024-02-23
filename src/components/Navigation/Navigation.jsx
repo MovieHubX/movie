@@ -9,9 +9,9 @@ import { navs } from "../Constans";
 const Menu = () => {
   return (
     <Flex alignItems={"center"}>
-      <Stack direction={"row"} spacing={7} ml={0}>
+      <Stack direction={"row"} spacing={7} ml={5}>
         {/* Menu desktop */}
-        <HStack spacing="30px" display={{ base: "none", lg: "flex" }}>
+        <HStack spacing="10px" display={{ base: "none", lg: "flex" }}> {/* Reduced spacing */}
           {navs.map((nav, index) => (
             <Box key={index} role={"group"} transition={"all 0.3s ease"} pos={"relative"}>
               <Box color="textColor" fontWeight={"bold"} _hover={{ color: "primaryColor" }}>
@@ -71,10 +71,10 @@ const Navigation = () => {
             </Box>
 
             {/* Input with margin */}
-            <NavInput ml={5} />
+            <NavInput ml={2} /> {/* Reduced margin to 2px */}
 
             {/* Wrapped Menu with margin */}
-            <Box ml={5} mt={1}> {/* Added mt={2} for moving it down */}
+            <Box ml={2} mt={2}> {/* Reduced margin to 2px */}
               <Menu />
             </Box>
           </Flex>
