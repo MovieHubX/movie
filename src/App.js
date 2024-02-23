@@ -22,14 +22,12 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("Fetching configuration...");
     dispatch(
       getConfig({
         path: "configuration",
       })
     );
 
-    console.log("Fetching movie genres...");
     dispatch(
       getGenres({
         path: "genre/movie/list",
@@ -37,7 +35,6 @@ function App() {
       })
     );
     
-    console.log("Fetching TV genres...");
     dispatch(
       getGenres({
         path: "genre/tv/list",
