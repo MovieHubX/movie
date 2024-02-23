@@ -1,3 +1,4 @@
+// Movie.jsx
 import { Box, Flex, Heading } from '@chakra-ui/react'
 import React, { useCallback, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
@@ -13,6 +14,7 @@ const HeadingLookup = {
   upcoming: 'Upcoming Movies',
   'top_rated': 'Top Rated Movies'
 }
+
 export const Movie = ({ type = 'popular' }) => {
   const dispatch = useDispatch()
   let pageCount = useRef(0)
@@ -20,7 +22,7 @@ export const Movie = ({ type = 'popular' }) => {
   const handleDispatchAction = useCallback(() => {
     dispatch(
       fetchMoviesData({
-        path: `movie/${type}`,
+        path: `movie/${type}`, // Interpolate type correctly here
         params: { page: ++pageCount.current },
       })
     );
@@ -31,6 +33,7 @@ export const Movie = ({ type = 'popular' }) => {
     handleDispatchAction();
     window.scrollTo(0, 0);
   }, [type, handleDispatchAction]);
+
   return (
     <Box mt={'50px'}>
       <Flex mb="30px" justify="space-between" align="center">
