@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+
 const Film = ({ baseUrl, media_type, id, vote_average, poster_path, title, name }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const skeletonImg = useRef()
@@ -17,11 +18,11 @@ const Film = ({ baseUrl, media_type, id, vote_average, poster_path, title, name 
     lg: "43vh",
   });
 
+  console.log("Film Component Rendered with Props:", { baseUrl, media_type, id, vote_average, poster_path, title, name });
+
   return (
     <>
-      <Link
-        to={`/${media_type}/${id}`}
-      >
+      <Link to={`/${media_type}/${id}`}>
         <Flex
           direction="column"
           justify="space-between"
