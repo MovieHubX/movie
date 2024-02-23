@@ -70,8 +70,6 @@ const Navigation = () => {
               <Link to="/">MovieHubX</Link>
             </Box>
 
-            {/* Input with margin */}
-            <NavInput ml={1} />
 
             {/* Wrapped Menu with margin */}
             <Box ml={5} mt={2}> {/* Added mt={2} for moving it down */}
