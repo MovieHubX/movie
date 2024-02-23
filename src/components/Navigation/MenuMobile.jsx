@@ -27,7 +27,7 @@ const MenuMobile = ({ navs }) => {
 
   return (
     <>
-      <div style={{ marginTop: "5px" }}> {/* Adjusted margin top slightly */}
+      <div style={{ marginTop: "3px" }}> {/* Adjusted margin top slightly */}
         <Button
           onClick={onOpen}
           rounded="full"
