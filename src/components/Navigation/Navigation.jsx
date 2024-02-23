@@ -9,7 +9,7 @@ import { navs } from "../Constans";
 const Menu = () => {
   return (
     <Flex alignItems={"center"}>
-      <Stack direction={"row"} spacing={7} ml={5}>
+      <Stack direction={"row"} spacing={7} ml={2}>
         {/* Menu desktop */}
         <HStack spacing="30px" display={{ base: "none", lg: "flex" }}>
           {navs.map((nav, index) => (
@@ -71,7 +71,7 @@ const Navigation = () => {
             </Box>
 
             {/* Input with margin */}
-            <NavInput ml={0} />
+            <NavInput ml={5} />
 
             {/* Wrapped Menu with margin */}
             <Box ml={5} mt={1}> {/* Added mt={2} for moving it down */}
