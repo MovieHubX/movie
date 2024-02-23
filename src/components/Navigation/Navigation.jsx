@@ -9,12 +9,11 @@ import { navs } from "../Constans";
 const Menu = () => {
   return (
     <Flex alignItems={"center"}>
-      <Stack direction={"row"} spacing={7}>
+      <Stack direction={"row"} spacing={7} ml={5}> {/* Added ml={5} for spacing */}
         {/* Menu desktop */}
         <HStack spacing="30px" display={{ base: "none", lg: "flex" }}>
           {navs.map((nav, index) => (
             <Box key={index} role={"group"} transition={"all 0.3s ease"} pos={"relative"}>
-              {' / '} {/* Add a separator */}
               <Box color="textColor" fontWeight={"bold"} _hover={{ color: "primaryColor" }}>
                 <Link to={nav.href}>{nav.name}</Link>
               </Box>
@@ -71,8 +70,8 @@ const Navigation = () => {
               <Link to="/">MovieHubX</Link>
             </Box>
 
-            {/* Input */}
-            <NavInput />
+            {/* Input with margin */}
+            <NavInput ml={5} /> {/* Added ml={5} for spacing */}
 
             {/* Menu */}
             <Menu />
