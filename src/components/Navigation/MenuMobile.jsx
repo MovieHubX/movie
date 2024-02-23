@@ -90,20 +90,22 @@ const MenuMobile = ({ navs }) => {
                     <Link onClick={onClose} to={nav.href}>
                       {nav.name}
                     </Link>
-                    <motion.div
-                      animate={
-                        activeSubMenuIndex === index
-                          ? { rotate: 90 }
-                          : { rotate: 0 }
-                      }
-                      transition={{ duration: 0.25 }}
-                    >
-                      <ChevronRightIcon
-                        boxSize={6}
-                        fontWeight="medium"
-                        transition={"all .  2s"}
-                      />
-                    </motion.div>
+                    {nav.subs && ( // Only render ChevronRightIcon if there are subsections
+                      <motion.div
+                        animate={
+                          activeSubMenuIndex === index
+                            ? { rotate: 90 }
+                            : { rotate: 0 }
+                        }
+                        transition={{ duration: 0.25 }}
+                      >
+                        <ChevronRightIcon
+                          boxSize={6}
+                          fontWeight="medium"
+                          transition={"all .  2s"}
+                        />
+                      </motion.div>
+                    )}
                   </Flex>
                 </Box>
                 {nav.subs && (
