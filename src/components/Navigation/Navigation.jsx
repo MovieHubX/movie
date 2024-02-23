@@ -14,10 +14,10 @@ const Menu = () => {
         <HStack spacing="30px" display={{ base: "none", lg: "flex" }}>
           {navs.map((nav, index) => (
             <Box key={index} role={"group"} transition={"all 0.3s ease"} pos={"relative"}>
+              {' / '} {/* Add a separator */}
               <Box color="textColor" fontWeight={"bold"} _hover={{ color: "primaryColor" }}>
                 <Link to={nav.href}>{nav.name}</Link>
               </Box>
-              {' / '} {/* Add a separator */}
               {nav.subs && (
                 <>
                   <Box
