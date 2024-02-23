@@ -17,6 +17,7 @@ const Menu = () => {
               <Box color="textColor" fontWeight={"bold"} _hover={{ color: "primaryColor" }}>
                 <Link to={nav.href}>{nav.name}</Link>
               </Box>
+              {' / '} {/* Add a separator */}
               {nav.subs && (
                 <>
                   <Box
