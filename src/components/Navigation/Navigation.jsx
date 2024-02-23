@@ -9,7 +9,7 @@ import { navs } from "../Constans";
 const Menu = () => {
   return (
     <Flex alignItems={"center"}>
-      <Stack direction={"row"} spacing={7} ml={2}>
+      <Stack direction={"row"} spacing={7}>
         {/* Menu desktop */}
         <HStack spacing="30px" display={{ base: "none", lg: "flex" }}>
           {navs.map((nav, index) => (
@@ -70,13 +70,11 @@ const Navigation = () => {
               <Link to="/">MovieHubX</Link>
             </Box>
 
-            {/* Input with margin */}
-            <NavInput ml={2} />
+            {/* Input */}
+            <NavInput />
 
-            {/* Wrapped Menu with margin */}
-            <Box ml={5} mt={2}> {/* Added mt={2} for moving it down */}
-              <Menu />
-            </Box>
+            {/* Menu */}
+            <Menu />
           </Flex>
         </Box>
       </Box>
