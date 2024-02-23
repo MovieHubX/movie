@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
-
-import { Box, Flex, HStack, Stack } from "@chakra-ui/react";
+import { Box, Flex, HStack, Stack, useBreakpointValue } from "@chakra-ui/react";
 import MenuMobile from "./MenuMobile";
 import NavInput from "./NavInput";
 import { navs } from "../Constans";
@@ -9,7 +8,7 @@ import { navs } from "../Constans";
 const Menu = () => {
   return (
     <Flex alignItems={"center"}>
-      <Stack direction={"row"} spacing={7}>
+      <Stack direction={"row"} spacing={7} ml={5}>
         {/* Menu desktop */}
         <HStack spacing="30px" display={{ base: "none", lg: "flex" }}>
           {navs.map((nav, index) => (
@@ -51,6 +50,8 @@ const Menu = () => {
 };
 
 const Navigation = () => {
+  const navInputMargin = useBreakpointValue({ base: 0, lg: 5 }); // Adjust the margin as needed
+
   return (
     <Box position={"relative"}>
       <Box
@@ -71,7 +72,7 @@ const Navigation = () => {
             </Box>
 
             {/* Input with margin */}
-            <NavInput ml={5} />
+            <NavInput ml={navInputMargin} />
 
             {/* Wrapped Menu with margin */}
             <Box ml={5} mt={2}> {/* Added mt={2} for moving it down */}
