@@ -18,11 +18,22 @@ const Film = ({ baseUrl, media_type, id, vote_average, poster_path, title, name 
     lg: "43vh",
   });
 
-  console.log("Film Component Rendered with Props:", { baseUrl, media_type, id, vote_average, poster_path, title, name });
+  // Log props to debug
+  console.log("Film Component Props:", {
+    baseUrl,
+    media_type,
+    id,
+    vote_average,
+    poster_path,
+    title,
+    name
+  });
 
   return (
     <>
-      <Link to={`/${media_type}/${id}`}>
+      <Link
+        to={`/${media_type}/${id}`}
+      >
         <Flex
           direction="column"
           justify="space-between"
