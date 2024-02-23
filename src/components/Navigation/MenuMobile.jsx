@@ -38,7 +38,7 @@ const MenuMobile = ({ navs }) => {
           color: "primaryColor",
         }}
         display={{ lg: "none" }}
-        mt={2} // Adjusted margin top by a few pixels
+        mt={10} // Adjusted margin top by a few pixels
       >
         <HamburgerIcon fontSize="2xl" />
       </Button>
