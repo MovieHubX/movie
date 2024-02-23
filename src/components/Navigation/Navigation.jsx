@@ -71,10 +71,10 @@ const Navigation = () => {
             </Box>
 
             {/* Input with margin */}
-            <NavInput ml={5} />
+            <NavInput ml={1} />
 
             {/* Wrapped Menu with margin */}
-            <Box ml={5} mt={2}> {/* Added mt={2} for moving it down */}
+            <Box ml={1} mt={1}> {/* Added mt={2} for moving it down */}
               <Menu />
             </Box>
           </Flex>
