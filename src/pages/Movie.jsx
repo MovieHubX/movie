@@ -112,5 +112,3 @@ const Movie = ({ type = 'popular' }) => {
     </Box>
   );
 };
-
-export default memo(Movie);
