@@ -1,92 +1,59 @@
-import React, { useCallback, useEffect, useRef } from 'react';
-import { Box, Flex, Heading } from '@chakra-ui/react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getMovieSelector, getConfigSelector } from '../redux/selector'; // Assuming the correct path to the selectors
-import Film from '../components/Film/Film';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const HeadingLookup = {
-  popular: 'Popular Movies',
-  now_playing: 'Now Playing Movies',
-  upcoming: 'Upcoming Movies',
-  top_rated: 'Top Rated Movies',
-};
+import Section from "src/components/Section/Section";
+import SectionTrending from "src/components/Section/SectionTrending";
 
-export const Movie = ({ type = 'popular' }) => {
+import { getHomSelector } from "src/redux/selector";
+import { fetchHomeApi } from "src/services/getHomeSlice";
+
+export const Home = () => {
   const dispatch = useDispatch();
-  let pageCount = useRef(0);
-  const { value, status, page } = useSelector(getMovieSelector);
-  const config = useSelector(getConfigSelector); // Fetching config directly from Redux state
 
-  const handleDispatchAction = useCallback(() => {
+  const { value, status } = useSelector(getHomSelector);
+  const [trendingInWeek, setTrendingInWeek] = useState(true);
+  
+  useEffect(() => {
+    // get trending
     dispatch(
-      fetchMoviesData({
-        path: `movie/${type}`,
-        params: { page: ++pageCount.current },
+      fetchHomeApi({
+        path: 'trending/all/week',
+        type: 'trending_week'
       })
     );
-  }, [dispatch, type]);
-
-  useEffect(() => {
-    pageCount.current = 0;
-    handleDispatchAction();
-    window.scrollTo(0, 0);
-  }, [type, handleDispatchAction]);
-
+    dispatch(
+      fetchHomeApi({
+        path: 'trending/all/day',
+        type: 'trending_day'
+      })
+    );
+    // popular movies
+    dispatch(
+      fetchHomeApi({
+        path: "movie/popular",
+        type: 'movie'
+      })
+    );
+    // popular tv
+    dispatch(
+      fetchHomeApi({
+        path: "tv/popular",
+        type: 'tv'
+      })
+    );
+  }, []);
   return (
-    <Box mt={'50px'}>
-      <Flex mb="30px" justify="space-between" align="center">
-        <Heading
-          textTransform="capitalize"
-          fontSize={{
-            base: 'xl',
-            md: '2xl',
-            lg: '3xl',
-          }}
-        >
-          {HeadingLookup[type]}
-        </Heading>
-      </Flex>
-      <Flex
-        mt="50px"
-        display="flex"
-        alignItems="flex-start"
-        justifyContent={'center'}
-        flexWrap="wrap"
-        overflow="hidden"
-      >
-        {value?.map((item, index) => {
-          if (Boolean(item.backdrop_path)) {
-            return (
-              <Box
-                key={`${item.id}-${index}`}
-                w={{
-                  base: 'calc(33.334% - 10px)',
-                  md: 'calc(25% - 15px)',
-                  lg: 'calc(16.667% - 15px)',
-                }}
-                mb="50px"
-                mx={{
-                  base: '5px',
-                  md: '7.5px',
-                }}
-              >
-                <Film
-                  baseUrl={`${config?.images?.base_url}/original/`}
-                  media_type={item.media_type}
-                  id={item.id}
-                  vote_average={item.vote_average || 0}
-                  poster_path={item.poster_path}
-                  title={item.title}
-                  name={item.name}
-                />
-              </Box>
-            );
-          }
-          return null;
-        })}
-      </Flex>
-      {status === 'loading' && <p>Loading...</p>}
-      {status === 'error' && <p>Error fetching data.</p>}
-    </Box>
+    <>
+      {
+        status === 'done' && (
+          <>
+          <SectionTrending data={trendingInWeek ? value.trending_week : value.trending_day} name="Trending" trendingInWeek={trendingInWeek} setTrendingInWeek={setTrendingInWeek} />
+          <Section link="/movie/popular" data={value.movie} name="Popular Movie" type='movie' />
+          <Section link="/tv/popular" data={value.tv} name="Popular Series" type='tv' />
+          </>
+        )
+      }
+    </>
   );
 };
