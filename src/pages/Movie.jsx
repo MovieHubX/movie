@@ -1,48 +1,44 @@
-import React, { Fragment, memo, useEffect, useRef } from "react";
+import React, { Fragment, memo, useCallback, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Box, Flex, Heading, SimpleGrid } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import Film from "../src/components/Film/Film";
-import ButtonBg from "../src/components/Buttons/ButtonBg";
-import { getConfigSelector, getMovieSelector } from "../src/redux/selector";
+import Film from "../../components/Film/Film";
+import ButtonBg from "../../components/Buttons/ButtonBg";
+import { getConfigSelector, getMovieSelector } from "../../redux/selector";
 import { useSelector, useDispatch } from "react-redux";
-import { getMovieSlice } from "../src/services";
+import { fetchMoviesData } from "../../services";
+import Loading from "../../components/Loading/Loading";
 
 const HeadingLookup = {
-  popular: "Popular Movies",
-  now_playing: "Now Playing Movies",
-  upcoming: "Upcoming Movies",
-  top_rated: "Top Rated Movies",
-};
+  popular: 'Popular Movies',
+  'now_playing': 'Now Playing Movies',
+  upcoming: 'Upcoming Movies',
+  'top_rated': 'Top Rated Movies'
+}
 
-const Movie = ({ type = "popular" }) => {
+const Movie = ({ type = 'popular' }) => {
   const dispatch = useDispatch();
   const { config } = useSelector(getConfigSelector);
   const { value, status, page } = useSelector(getMovieSelector);
-  const pageCount = useRef(0);
+  let pageCount = useRef(0);
+
+  const handleDispatchAction = useCallback(() => {
+    dispatch(
+      fetchMoviesData({
+        path: `movie/${type}`,
+        params: { page: ++pageCount.current },
+      })
+    );
+  }, [dispatch, type]);
 
   useEffect(() => {
     pageCount.current = 0;
-    dispatch(
-      fetchMoviesData({
-        path: `movie/${type}`,
-        params: { page: 1 },
-      })
-    );
+    handleDispatchAction();
     window.scrollTo(0, 0);
-  }, [dispatch, type]);
-
-  const loadMoreMovies = () => {
-    dispatch(
-      fetchMoviesData({
-        path: `movie/${type}`,
-        params: { page: page + 1 },
-      })
-    );
-  };
+  }, [type, handleDispatchAction]);
 
   return (
-    <Box mt="50px">
+    <Box mt={'50px'}>
       <Flex mb="30px" justify="space-between" align="center">
         <Heading
           textTransform="capitalize"
@@ -60,46 +56,57 @@ const Movie = ({ type = "popular" }) => {
         columns={{ base: 2, sm: 2, md: 4, lg: 6 }}
         spacing="4"
         sx={{
-          "@media (max-width: 480px)": {
-            gridTemplateColumns: "repeat(3, 1fr)",
+          '@media (max-width: 480px)': {
+            // Override the SimpleGrid columns for screens up to 480px width
+            gridTemplateColumns: 'repeat(3, 1fr)',
           },
         }}
       >
-        {value?.map((dataItem, i) => {
-          if (i < 18 && Boolean(dataItem.backdrop_path)) {
-            return (
-              <Box
-                key={`${dataItem.id}-${i}`}
-                w={{
-                  base: "calc(33.334% - 10px)",
-                  md: "calc(25% - 15px)",
-                  lg: "calc(16.667% - 15px)",
-                }}
-                mb="50px"
-                mx={{
-                  base: "5px",
-                  md: "7.5px",
-                }}
-              >
-                <Film
-                  baseUrl={`${config?.images?.base_url}/original/`}
-                  media_type={dataItem.media_type}
-                  id={dataItem.id}
-                  vote_average={dataItem.vote_average || 0}
-                  poster_path={dataItem.poster_path}
-                  title={dataItem.title}
-                  name={dataItem.name}
-                />
-              </Box>
-            );
-          }
-          return null;
-        })}
+        {value && value.map((movie, index) => (
+          <Box
+            key={movie.id}
+            w={{
+              base: "calc(33.334% - 10px)",
+              md: "calc(25% - 15px)",
+              lg: "calc(16.667% - 15px)",
+            }}
+            mb="50px"
+            mx={{
+              base: "5px",
+              md: "7.5px",
+            }}
+          >
+            <Film
+              baseUrl={`${config?.images?.base_url}/original/`}
+              media_type="movie"
+              id={movie.id}
+              vote_average={movie.vote_average || 0}
+              poster_path={movie.poster_path}
+              title={movie.title}
+              name={movie.name}
+            />
+          </Box>
+        ))}
       </SimpleGrid>
 
       {status === "loading" && (
-        <Flex justify="center" my="30px">
-          <ButtonBg onClick={loadMoreMovies}>Load More</ButtonBg>
+        <Box mt="4" textAlign="center">
+          <Loading />
+        </Box>
+      )}
+
+      {status === "error" && (
+        <Box mt="4" textAlign="center">
+          Error fetching data.
+        </Box>
+      )}
+
+      {status === "done" && page < 10 && (
+        <Flex justifyContent="center" mt="4">
+          <ButtonBg onClick={handleDispatchAction}>
+            Load More
+            <ArrowForwardIcon ml={2} />
+          </ButtonBg>
         </Flex>
       )}
     </Box>
