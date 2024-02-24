@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Box, Flex, Heading, Center } from '@chakra-ui/react';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
-import Film from '../components/Film/Film';
-import Loading from '../components/Loading/Loading';
-import { getConfigSelector, getMovieSelector } from '../redux/selector'; // Adjust the path as needed
-import { fetchMoviesData } from '../services'; // Adjust the path as needed
+import { getMovieSelector, getConfigSelector } from 'src/redux/selector'; // Assuming the correct path to the selectors
+import Film from '../Film/Film';
 
 const HeadingLookup = {
   popular: 'Popular Movies',
@@ -15,19 +13,17 @@ const HeadingLookup = {
 
 export const Movie = ({ type = 'popular' }) => {
   const dispatch = useDispatch();
-  const { config } = useSelector(getConfigSelector);
-  const { value: listFilm, status, page } = useSelector(getMovieSelector);
-  const [loading, setLoading] = useState(false);
   let pageCount = useRef(0);
+  const { value, status, page } = useSelector(getMovieSelector);
+  const config = useSelector(getConfigSelector); // Fetching config directly from Redux state
 
   const handleDispatchAction = useCallback(() => {
-    setLoading(true);
     dispatch(
       fetchMoviesData({
         path: `movie/${type}`,
         params: { page: ++pageCount.current },
       })
-    ).finally(() => setLoading(false));
+    );
   }, [dispatch, type]);
 
   useEffect(() => {
@@ -35,12 +31,6 @@ export const Movie = ({ type = 'popular' }) => {
     handleDispatchAction();
     window.scrollTo(0, 0);
   }, [type, handleDispatchAction]);
-
-  const loadMore = () => {
-    if (!loading) {
-      handleDispatchAction();
-    }
-  };
 
   return (
     <Box mt={'50px'}>
@@ -64,7 +54,7 @@ export const Movie = ({ type = 'popular' }) => {
         flexWrap="wrap"
         overflow="hidden"
       >
-        {listFilm?.map((item, index) => {
+        {value?.map((item, index) => {
           if (Boolean(item.backdrop_path)) {
             return (
               <Box
@@ -95,18 +85,8 @@ export const Movie = ({ type = 'popular' }) => {
           return null;
         })}
       </Flex>
-      {status === 'loading' && (
-        <Center mt="50px">
-          <Loading />
-        </Center>
-      )}
-      {status === 'done' && listFilm.length > 0 && (
-        <Center mt="50px">
-          <button onClick={loadMore} disabled={loading}>
-            {loading ? 'Loading...' : 'Load More'}
-          </button>
-        </Center>
-      )}
+      {status === 'loading' && <p>Loading...</p>}
+      {status === 'error' && <p>Error fetching data.</p>}
     </Box>
   );
 };
