@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getMovieSelector, getConfigSelector } from 'src/redux/selector'; // Assuming the correct path to the selectors
-import Film from '../Film/Film';
+import { getMovieSelector, getConfigSelector } from '../../redux/selector'; // Assuming the correct path to the selectors
+import Film from '../../components/Film/Film';
 
 const HeadingLookup = {
   popular: 'Popular Movies',
