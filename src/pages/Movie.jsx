@@ -1,34 +1,31 @@
-import React, { Fragment, memo, useCallback, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { Box, Flex, Heading, SimpleGrid } from "@chakra-ui/react";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
-import Film from "../components/Film/Film";
-import ButtonBg from "../components/Buttons/ButtonBg";
-import { getConfigSelector, getMovieSelector } from "../redux/selector";
-import { useSelector, useDispatch } from "react-redux";
-import Loading from "../components/Loading/Loading";
-import { fetchMoviesData } from '../services';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Box, Flex, Heading, Center } from '@chakra-ui/react';
+import { useSelector, useDispatch } from 'react-redux';
+import Film from '../components/Film/Film';
+import Loading from '../components/Loading/Loading';
 
 const HeadingLookup = {
   popular: 'Popular Movies',
-  'now_playing': 'Now Playing Movies',
+  now_playing: 'Now Playing Movies',
   upcoming: 'Upcoming Movies',
-  'top_rated': 'Top Rated Movies'
-}
+  top_rated: 'Top Rated Movies',
+};
 
-const Movie = ({ type = 'popular' }) => {
+export const Movie = ({ type = 'popular' }) => {
   const dispatch = useDispatch();
   const { config } = useSelector(getConfigSelector);
-  const { value, status, page } = useSelector(getMovieSelector);
+  const { value: listFilm, status, page } = useSelector(getMovieSelector);
+  const [loading, setLoading] = useState(false);
   let pageCount = useRef(0);
 
   const handleDispatchAction = useCallback(() => {
+    setLoading(true);
     dispatch(
       fetchMoviesData({
         path: `movie/${type}`,
         params: { page: ++pageCount.current },
       })
-    );
+    ).finally(() => setLoading(false));
   }, [dispatch, type]);
 
   useEffect(() => {
@@ -37,77 +34,76 @@ const Movie = ({ type = 'popular' }) => {
     window.scrollTo(0, 0);
   }, [type, handleDispatchAction]);
 
+  const loadMore = () => {
+    if (!loading) {
+      handleDispatchAction();
+    }
+  };
+
   return (
     <Box mt={'50px'}>
       <Flex mb="30px" justify="space-between" align="center">
         <Heading
           textTransform="capitalize"
           fontSize={{
-            base: "xl",
-            md: "2xl",
-            lg: "3xl",
+            base: 'xl',
+            md: '2xl',
+            lg: '3xl',
           }}
         >
           {HeadingLookup[type]}
         </Heading>
       </Flex>
-
-      <SimpleGrid
-        columns={{ base: 2, sm: 2, md: 4, lg: 6 }}
-        spacing="4"
-        sx={{
-          '@media (max-width: 480px)': {
-            // Override the SimpleGrid columns for screens up to 480px width
-            gridTemplateColumns: 'repeat(3, 1fr)',
-          },
-        }}
+      <Flex
+        mt="50px"
+        display="flex"
+        alignItems="flex-start"
+        justifyContent={'center'}
+        flexWrap="wrap"
+        overflow="hidden"
       >
-        {value && value.map((movie, index) => (
-          <Box
-            key={movie.id}
-            w={{
-              base: "calc(33.334% - 10px)",
-              md: "calc(25% - 15px)",
-              lg: "calc(16.667% - 15px)",
-            }}
-            mb="50px"
-            mx={{
-              base: "5px",
-              md: "7.5px",
-            }}
-          >
-            <Film
-              baseUrl={`${config?.images?.base_url}/original/`}
-              media_type="movie"
-              id={movie.id}
-              vote_average={movie.vote_average || 0}
-              poster_path={movie.poster_path}
-              title={movie.title}
-              name={movie.name}
-            />
-          </Box>
-        ))}
-      </SimpleGrid>
-
-      {status === "loading" && (
-        <Box mt="4" textAlign="center">
+        {listFilm?.map((item, index) => {
+          if (Boolean(item.backdrop_path)) {
+            return (
+              <Box
+                key={`${item.id}-${index}`}
+                w={{
+                  base: 'calc(33.334% - 10px)',
+                  md: 'calc(25% - 15px)',
+                  lg: 'calc(16.667% - 15px)',
+                }}
+                mb="50px"
+                mx={{
+                  base: '5px',
+                  md: '7.5px',
+                }}
+              >
+                <Film
+                  baseUrl={`${config?.images?.base_url}/original/`}
+                  media_type={item.media_type}
+                  id={item.id}
+                  vote_average={item.vote_average || 0}
+                  poster_path={item.poster_path}
+                  title={item.title}
+                  name={item.name}
+                />
+              </Box>
+            );
+          }
+          return null;
+        })}
+      </Flex>
+      {status === 'loading' && (
+        <Center mt="50px">
           <Loading />
-        </Box>
+        </Center>
       )}
-
-      {status === "error" && (
-        <Box mt="4" textAlign="center">
-          Error fetching data.
-        </Box>
-      )}
-
-      {status === "done" && page < 10 && (
-        <Flex justifyContent="center" mt="4">
-          <ButtonBg onClick={handleDispatchAction}>
-            Load More
-            <ArrowForwardIcon ml={2} />
-          </ButtonBg>
-        </Flex>
+      {status === 'done' && listFilm.length > 0 && (
+        <Center mt="50px">
+          <button onClick={loadMore} disabled={loading}>
+            {loading ? 'Loading...' : 'Load More'}
+          </button>
+        </Center>
       )}
     </Box>
   );
