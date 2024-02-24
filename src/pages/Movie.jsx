@@ -2,12 +2,12 @@ import React, { Fragment, memo, useCallback, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Box, Flex, Heading, SimpleGrid } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import Film from "../../components/Film/Film";
-import ButtonBg from "../../components/Buttons/ButtonBg";
+import Film from "../src/components/Film/Film";
+import ButtonBg from "../src/components/Buttons/ButtonBg";
 import { getConfigSelector, getMovieSelector } from "../../redux/selector";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchMoviesData } from "../../services";
-import Loading from "../../components/Loading/Loading";
+import { fetchMoviesData } from "../src/services";
+import Loading from "../src/components/Loading/Loading";
 
 const HeadingLookup = {
   popular: 'Popular Movies',
