@@ -112,4 +112,4 @@ const Movie = ({ type = 'popular' }) => {
   );
 };
 
-export default memo(Movie);
+export default Movie;
