@@ -6,7 +6,7 @@ import Film from "../src/components/Film/Film";
 import ButtonBg from "../src/components/Buttons/ButtonBg";
 import { getConfigSelector, getMovieSelector } from "../src/redux/selector";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchMoviesData } from "../src/services";
+import { getMovieSlice } from "../src/services";
 
 const HeadingLookup = {
   popular: "Popular Movies",
