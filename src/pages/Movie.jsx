@@ -7,6 +7,7 @@ import ButtonBg from "../components/Buttons/ButtonBg";
 import { getConfigSelector, getMovieSelector } from "../redux/selector";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "../components/Loading/Loading";
+import { fetchMoviesData } from '../services';
 
 const HeadingLookup = {
   popular: 'Popular Movies',
@@ -112,4 +113,4 @@ const Movie = ({ type = 'popular' }) => {
   );
 };
 
-export default Movie;
+export default memo(Movie);
