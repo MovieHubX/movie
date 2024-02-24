@@ -3,6 +3,8 @@ import { Box, Flex, Heading, Center } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
 import Film from '../components/Film/Film';
 import Loading from '../components/Loading/Loading';
+import { getConfigSelector, getMovieSelector } from '../redux/selector'; // Adjust the path as needed
+import { fetchMoviesData } from '../services'; // Adjust the path as needed
 
 const HeadingLookup = {
   popular: 'Popular Movies',
