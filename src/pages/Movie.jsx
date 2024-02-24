@@ -4,7 +4,7 @@ import { Box, Flex, Heading, SimpleGrid } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import Film from "../Film/Film";
 import ButtonBg from "../Buttons/ButtonBg";
-import { getConfigSelector, getMovieSelector } from "../../redux/selector";
+import { getConfigSelector, getMovieSelector } from "../src/redux/selector";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMoviesData } from "../src/services";
 
