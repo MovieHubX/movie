@@ -1,7 +1,7 @@
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import ListFilmLayout from 'src/components/Layout/ListFilmLayout'; // Import ListFilmLayout
+import ListFilmLayout from 'src/components/Layout/ListFilmInfinity.jsx; // Import ListFilmLayout
 
 import { getMovieSelector } from 'src/redux/selector';
 import { fetchMoviesData } from 'src/services';
