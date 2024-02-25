@@ -1,59 +1,54 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Box, Flex, Heading } from '@chakra-ui/react';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import ListFilmLayout from 'src/components/Layout/ListFilmLayout'; // Import ListFilmLayout
 
-import Section from "src/components/Section/Section";
-import SectionTrending from "src/components/Section/SectionTrending";
+import { getMovieSelector } from 'src/redux/selector';
+import { fetchMoviesData } from 'src/services';
 
-import { getHomSelector } from "src/redux/selector";
-import { fetchHomeApi } from "src/services/getHomeSlice";
+const HeadingLookup = {
+  popular: 'Popular Movies',
+  'now_playing': 'Now Playing Movies',
+  upcoming: 'Upcoming Movies',
+  'top_rated': 'Top Rated Movies'
+};
 
-export const Home = () => {
+export const Movie = ({ type = 'popular' }) => {
   const dispatch = useDispatch();
-
-  const { value, status } = useSelector(getHomSelector);
-  const [trendingInWeek, setTrendingInWeek] = useState(true);
+  let pageCount = useRef(0);
+  const { value, status, page } = useSelector(getMovieSelector);
   
+  const handleDispatchAction = useCallback(() => {
+    dispatch(
+      fetchMoviesData({
+        path: `movie/${type}`,
+        params: { page: ++pageCount.current },
+      })
+    );
+  }, [dispatch, type]);
+
   useEffect(() => {
-    // get trending
-    dispatch(
-      fetchHomeApi({
-        path: 'trending/all/week',
-        type: 'trending_week'
-      })
-    );
-    dispatch(
-      fetchHomeApi({
-        path: 'trending/all/day',
-        type: 'trending_day'
-      })
-    );
-    // popular movies
-    dispatch(
-      fetchHomeApi({
-        path: "movie/popular",
-        type: 'movie'
-      })
-    );
-    // popular tv
-    dispatch(
-      fetchHomeApi({
-        path: "tv/popular",
-        type: 'tv'
-      })
-    );
-  }, []);
+    pageCount.current = 0;
+    handleDispatchAction();
+    window.scrollTo(0, 0);
+  }, [type, handleDispatchAction]);
+
   return (
-    <>
-      {
-        status === 'done' && (
-          <>
-          <SectionTrending data={trendingInWeek ? value.trending_week : value.trending_day} name="Trending" trendingInWeek={trendingInWeek} setTrendingInWeek={setTrendingInWeek} />
-          <Section link="/movie/popular" data={value.movie} name="Popular Movie" type='movie' />
-          <Section link="/tv/popular" data={value.tv} name="Popular Series" type='tv' />
-          </>
-        )
-      }
-    </>
-  );
+    <Box mt={'50px'}>
+      <Flex mb="30px" justify="space-between" align="center">
+        <Heading
+          textTransform="capitalize"
+          fontSize={{
+            base: "xl",
+            md: "2xl",
+            lg: "3xl",
+          }}
+        >
+          {HeadingLookup[type]}
+        </Heading>
+      </Flex>
+      {/* Replace ListFilmInfinity with ListFilmLayout */}
+      <ListFilmLayout listFilm={value || []} />
+    </Box>
+  )
 };
