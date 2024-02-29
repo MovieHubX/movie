@@ -1,63 +1,68 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { memo } from "react";
+import { Flex, Box, Center } from "@chakra-ui/react";
 
-import Section from "src/components/Section/Section";
-import SectionTrending from "src/components/Section/SectionTrending";
+import Film from "../Film/Film";
+import { getConfigSelector } from "../../redux/selector";
+import { useSelector } from "react-redux";
 
-import { getHomSelector } from "src/redux/selector";
-import { fetchHomeApi } from "src/services/getHomeSlice";
-
-// Import the ListFilmLayout component
-import ListFilmLayout from "../ListFilmLayout/ListFilmLayout";
-
-export const Home = () => {
-  const dispatch = useDispatch();
-
-  const { value, status } = useSelector(getHomSelector);
-  const [trendingInWeek, setTrendingInWeek] = useState(true);
-  
-  useEffect(() => {
-    // get trending
-    dispatch(
-      fetchHomeApi({
-        path: 'trending/all/week',
-        type: 'trending_week'
-      })
-    );
-    dispatch(
-      fetchHomeApi({
-        path: 'trending/all/day',
-        type: 'trending_day'
-      })
-    );
-    // popular movies
-    dispatch(
-      fetchHomeApi({
-        path: "movie/popular",
-        type: 'movie'
-      })
-    );
-    // popular tv
-    dispatch(
-      fetchHomeApi({
-        path: "tv/popular",
-        type: 'tv'
-      })
-    );
-  }, []);
+const ListFilmLayout = ({ listFilm }) => {
+  const { config } = useSelector(getConfigSelector);
 
   return (
     <>
+      <Flex
+        mt="50px"
+        display="flex"
+        alignItems="flex-start"
+        justifyContent={'center'}
+        flexWrap="wrap"
+        overflow='hidden'
+        mx={{
+          base: "-5px",
+          md: "-7.5px",
+        }}
+      >
+        {listFilm?.map((item) => {
+          if (Boolean(item.backdrop_path)) {
+            return (
+              <Box
+                key={item.id}
+                w={{
+                  base: "calc(33.334% - 10px)",
+                  md: "calc(25% - 15px)",
+                  lg: "calc(16.667% - 15px)",
+                }}
+                mb="50px"
+                mx={{
+                  base: "5px",
+                  md: "7.5px",
+                }}
+              >
+                <Film
+                  baseUrl={`${config?.images?.base_url}/original/`}
+                  media_type={item.media_type}
+                  id={item.id}
+                  vote_average={item.vote_average || 0}
+                  poster_path={item.poster_path}
+                  title={item.title}
+                  name={item.name}
+                />
+              </Box>
+            );
+          }
+          return null;
+        })}
+
+      </Flex>
       {
-        status === 'done' && (
-          <>
-            <SectionTrending data={trendingInWeek ? value.trending_week : value.trending_day} name="Trending" trendingInWeek={trendingInWeek} setTrendingInWeek={setTrendingInWeek} />
-            {/* Replace ListFilmInfinity with ListFilmLayout */}
-            <ListFilmLayout listFilm={value.movie} />
-            <ListFilmLayout listFilm={value.tv} />
-          </>
-        )
+        listFilm?.length === 0 &&
+        <Center textAlign={'center'} w='full' mt='50px' overflow='hidden' fontSize={'18px'} fontWeight='500' letterSpacing={'1.5px'}>
+          Not found. Please try somethings else
+        </Center>
       }
     </>
+
   );
 };
+
+export default memo(ListFilmLayout);
