@@ -117,7 +117,7 @@ export const TvSeason = () => {
             ref={player}
           >
             <VideoPlayer
-              embedSrc={'https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${seasonId}&episode=${episodeNum}&sub_url=https%3A%2F%2Fvidsrc.me%2Fsample.srt&ds_langs=en,de'}
+              embedSrc={`https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${seasonId}&episode=${episodeNum}&sub_url=https%3A%2F%2Fvidsrc.me%2Fsample.srt&ds_langs=en,de'}
             />
           </Box>
           {/* seasons */}
