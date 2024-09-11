@@ -178,7 +178,7 @@ export const MovieDetail = () => {
             ref={player}
           >
             <VideoPlayer
-              embedSrc={`https://vidsrc.xyz/embed/movie?tmdb=${id}`}
+              embedSrc={`https://vidlink.pro/movie/${id}`}
             />
           </Box>
 
