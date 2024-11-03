@@ -117,7 +117,7 @@ export const TvSeason = () => {
             ref={player}
           >
             <VideoPlayer
-              embedSrc={`https://vidlink.pro/tv/${id}${seasonId}/${episodeNum}`}
+              embedSrc={`https://vidlink.pro/tv/${id}/${seasonId}/${episodeNum}`}
             />
           </Box>
           {/* seasons */}
